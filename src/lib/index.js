@@ -3,10 +3,10 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 13:49:19
+ * @LastEditTime : 2019-12-26 14:42:46
  */
-import Button from './lib/button';
-import Modal from './lib/modal';
+import Button from './button';
+import Modal from './modal';
 
 
 const component = {
