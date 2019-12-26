@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 09:20:02
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-25 14:34:32
+ * @LastEditTime : 2019-12-26 15:24:07
  -->
 <template>
     <button :class="['ruyi-button' ,'ruyi-button-' + type, loading ? 'ruyi-button-loading' : null]"

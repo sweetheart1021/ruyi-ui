@@ -1,0 +1,100 @@
+<!--
+ * @Descripttion: radio
+ * @Author: lvjing
+ * @Date: 2019-12-25 15:22:14
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2019-12-25 18:52:57
+ -->
+<template>
+    <label class="ruyi-raido-wapper" @click="handleChecked">
+        <span :class="['ruyi-radio', label === currentValue ? 'ruyi-radio-checked':null]">
+            <span class="ruyi-radio-inner" v-if="label === currentValue"></span>
+        </span>
+        <span :class="label === currentValue ? 'ruyi-radio-checked-label': null ">
+            <slot>{{ label }}</slot>
+        </span>
+    </label>
+</template>
+
+<script>
+export default {
+    name: 'radio',
+    props: {
+        value: {
+            type: [String, Number, Boolean]
+        },
+        label: {
+            type: [String, Number, Boolean]
+        }
+    },
+    data() {
+        return {
+            currentValue: this.value
+        }
+    },
+    watch: {
+        value: {
+            handler(val) {
+                this.currentValue = val;
+            },
+            immediate: true
+        }
+    },
+    methods: {
+        handleChecked() {
+            this.$emit('input', this.label);
+            if (this.$parent.$options._componentTag === 'ruyi-radio-group') {
+                this.$parent.currentValue = this.label;
+            }
+        }
+    }
+}
+</script>
+
+<style lang="less" scoped>
+@import '../../styles/index.less';
+.ruyi-raido-wapper{
+    cursor: pointer;
+    font-size: 14px;
+    -webkit-user-select: none;
+    -moz-user-select:none;
+    -o-user-select:none;
+    -ms-user-select:none;
+}
+.ruyi-radio{
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    border: 1px solid #dcdee2;
+    border-radius: 90px;
+    line-height: 1;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin-right: 5px;
+    position: relative;
+    box-sizing: border-box;
+    .ruyi-radio-inner{
+        width: 8px;
+        height: 8px;
+        display: inline-block;
+        background: @primary-color;
+        transition: background-color 0.2s ease-in-out;
+        border-radius: 90px;
+        line-height: 1;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
+.ruyi-radio-checked{
+    border-color: @primary-color;
+    transition: border-color 0.2s  ease-in-out, box-shadow 0.2s ease-in-out;
+    box-shadow: 0 0 0 2px rgba(45, 140, 240, 0.2);
+}
+.ruyi-radio-checked-label{
+    color: @primary-color;
+    transition: color 0.2s  ease-in-out;
+}
+
+</style>

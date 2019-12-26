@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 14:44:39
+ * @LastEditTime : 2019-12-26 15:08:41
  */
 var path = require('path')
 var webpack = require('webpack')
@@ -15,8 +15,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         publicPath: '/dist/',
-        // filename: 'build.js',
-        filename: 'ruyi-ui.js',
+        filename: 'build.js',
+        // filename: 'ruyi-ui.js',
         library: 'ruyi',
         libraryTarget: 'umd',
         umdNamedDefine: true
