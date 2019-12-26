@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 17:31:38
+ * @LastEditTime : 2019-12-26 21:30:56
  -->
 <template>
     <div>
@@ -86,8 +86,24 @@
             <p>对话框内容</p>
         </ruyi-drawer>
         <div style="margin-top: 20px">
-            <ruyi-select style="width: 200px" v-model="selectValue">
+            <ruyi-select style="width: 200px" v-model="selectValue"
+                @change="handleSelectChange" clearable>
+                <ruyi-option :value='1'>苹果</ruyi-option>
+                <ruyi-option :value='2' label='香蕉' diabled></ruyi-option>
+                <ruyi-option :value='3' label='橘子'></ruyi-option>
+                <ruyi-option :value='4' label='西瓜'></ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 220px" v-model="selectValue">
                 <div slot="no-data">好像没有数据</div>
+                <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 200px" v-model="selectValue" disabled>
+                <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 200px" v-model="selectValue" filterable>
+                <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 200px" v-model="selectValue" clearable>
                 <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
             </ruyi-select>
         </div>
@@ -107,7 +123,7 @@ export default {
             switchValue2: false,
             modal: false,
             drawer: false,
-            selectValue: 1
+            selectValue: 2
         }
     },
     methods: {
@@ -140,6 +156,9 @@ export default {
             setTimeout(() => {
                 this.modal = false;
             }, 3000)
+        },
+        handleSelectChange(val) {
+            console.log('select change之后的值', val)
         }
     }
 }

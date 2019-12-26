@@ -39,7 +39,7 @@
         <div class="ruyi-input-append" v-if="append && type === 'text'">
             <slot name="append"></slot>
         </div>
-        <template v-if="clearable">
+        <template v-if="clearable && value">
             <i class="iconfont icon-qingkong" @click="handleClearAble"></i>
         </template>
         <template v-if="search">

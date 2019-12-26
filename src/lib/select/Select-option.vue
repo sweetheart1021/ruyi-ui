@@ -6,9 +6,11 @@
  * @LastEditTime : 2019-12-26 19:08:32
  -->
 <template>
-    <li :class="['ruyi-select-item', value === currentValue ? 'ruyi-select-item-checked' : null]"
+    <li :class="['ruyi-select-item', value === currentValue ? 'ruyi-select-item-checked' : null,
+        diabled ? 'ruyi-select-item-disabled' : null]"
         @click.stop="handleClick">
         <slot>{{ label }}</slot>
+        <i class="iconfont icon-gou" v-if="value === currentValue" :style="diabled ? {color: '#c5c8ce'} : null"></i>
     </li>
 </template>
 
@@ -20,6 +22,10 @@ export default {
         },
         value: {
             type: [String, Number]
+        },
+        diabled: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -27,19 +33,9 @@ export default {
             currentValue: ''
         }
     },
-    watch: {
-        currentValue: {
-            handler(val) {
-                if (val === this.value) {
-                    let label = this.label ? this.label : this.$slots.default[0].text;
-                    this.$parent.$parent.currentLabel = label
-                }
-            },
-            immediate: true
-        }
-    },
     methods: {
         handleClick() {
+            if (this.diabled) return;
             this.$parent.$parent.currentValue = this.value;
             document.body.click();
         }
@@ -58,6 +54,7 @@ export default {
     cursor: pointer;
     height: 32px;
     box-sizing: border-box;
+    position: relative;
 }
 .ruyi-select-item:hover{
     background: #f3f3f3;
@@ -66,6 +63,22 @@ export default {
     color: @primary-color;
     background: #f3f3f3;
     transition: background .2s ease-in-out;
+}
+
+.icon-gou{
+    font-size: 12px;
+    position: absolute;
+    right: 14px;
+    top: 10px;
+    color: @primary-color;
+}
+
+.ruyi-select-item-disabled{
+    cursor: not-allowed;
+    color: #c5c8ce;
+}
+.ruyi-select-item-disabled:hover{
+    background: white;
 }
 
 ::-webkit-scrollbar {
