@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 09:46:42
+ * @LastEditTime : 2019-12-27 12:33:26
  */
 import Button from './button';
 import Input from './input';
@@ -14,6 +14,7 @@ import Radio from './radio';
 import Switch from './switch';
 import Select from './select';
 import Tooltip from './tooltip'
+import Poptip from './poptip'
 
 
 const component = {
@@ -28,7 +29,8 @@ const component = {
     RuyiSwitch: Switch,
     RuyiSelect: Select,
     RuyiOption: Select.Option,
-    RuyiTooltip: Tooltip
+    RuyiTooltip: Tooltip,
+    RuyiPoptip: Poptip
 }
 
 const install = function(Vue, opts={}) {

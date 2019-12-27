@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 11:28:52
+ * @LastEditTime : 2019-12-27 13:30:45
  -->
 <template>
     <div>
@@ -121,6 +121,29 @@
             <ruyi-tooltip content='这里是content内容' trigger='click'>
                 这里是tooltip
             </ruyi-tooltip>
+            <ruyi-tooltip content='这里是content内容' placement='top-start'>
+                <ruyi-button>方位</ruyi-button>
+            </ruyi-tooltip>
+            <ruyi-tooltip content='这里是content内容' placement='top-start' disabled>
+                <ruyi-button>禁用</ruyi-button>
+            </ruyi-tooltip>
+        </div>
+        <div style="margin-top: 20px">
+            <ruyi-poptip content='这里是content内容' title="这里是title">
+                <ruyi-button>这里是poptip</ruyi-button>
+            </ruyi-poptip>
+            <ruyi-poptip content='这里是content内容' trigger='click'>
+                <div slot="title">这里是title</div>
+                这里是poptip
+            </ruyi-poptip>
+            <ruyi-poptip  trigger='click'>
+                <div slot="title">这里是title</div>
+                <ruyi-button>没有content</ruyi-button>
+            </ruyi-poptip>
+            <ruyi-poptip  placement='top-start'>
+                <div slot="content">这里是content</div>
+                <ruyi-button>没有title</ruyi-button>
+            </ruyi-poptip>
         </div>
     </div>
 </template>

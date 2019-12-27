@@ -1,15 +1,21 @@
 <!--
- * @Descripttion: Tooltip 文字提示
+ * @Descripttion:  poptip 气泡提示
  * @Author: lvjing
- * @Date: 2019-12-27 09:45:43
+ * @Date: 2019-12-27 12:31:45
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 13:08:05
+ * @LastEditTime : 2019-12-27 13:31:01
  -->
 <template>
-    <popper :trigger="trigger" append-to-body :options="{'placement': placement}" :disabled='disabled'
-        :delay-on-mouse-over='delayIn' :delay-on-mouse-out='delayOut' root-class='ruyi-tooltip'>
+    <popper :trigger="trigger" append-to-body :options="{'placement': placement}"
+        :delay-on-mouse-over='delayIn' :delay-on-mouse-out='delayOut' root-class='ruyi-poptip'>
         <div class="popper">
-            <slot name="content">{{ content }}</slot>
+            <div class="ruyi-poptip-title" v-if="titleSlot"
+                :style="contentSlot ? null : 'border-bottom: none; padding-bottom: 0px'">
+                <slot name="title">{{ title }}</slot>
+            </div>
+            <div class="ruyi-poptip-content" v-if="contentSlot">
+                <slot name="content">{{ content }}</slot>
+            </div>
         </div>
 
         <span slot="reference">
@@ -26,9 +32,8 @@ export default {
         popper: VuePopper
     },
     props: {
-        disabled: {
-            type: Boolean,
-            default: false
+        title: {
+            type: [String, Number]
         },
         content: {
             type: [String, Number]
@@ -62,12 +67,22 @@ export default {
             },
             default: 'top'
         }
+    },
+    computed: {
+        titleSlot() {
+            let title = this.title ? this.title : this.$slots.title
+            return title
+        },
+        contentSlot() {
+            let content = this.content ? this.content : this.$slots.content
+            return content
+        }
     }
 }
 </script>
 
 <style lang="less">
-.ruyi-tooltip{
+.ruyi-poptip{
     .popper[x-placement^="bottom"]{
         margin-top: 14px;
     }
@@ -81,26 +96,24 @@ export default {
         margin-right: 8px;
     }
     .popper{
-        color: rgb(255, 255, 255);
-        background: rgb(48, 49, 51);
+        min-width: 150px;
+        color: #17233d;
         border: none;
-        padding: 10px;
+        padding: 5px 0;
         overflow-wrap: break-word;
-        border-radius: 4px;
+        border-radius: 2px;
         font-size: 12px;
-        box-shadow: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2);
     }
-    .popper[x-placement^="top"] .popper__arrow{
-        border-color: rgb(48, 49, 51) transparent transparent transparent !important;
+    .ruyi-poptip-title{
+        font-size: 14px;
+        border-bottom: 1px solid #e8eaec;
+        padding: 0 3px 5px 3px;
     }
-    .popper[x-placement^="right"] .popper__arrow {
-        border-color: transparent rgb(48, 49, 51) transparent transparent !important;
-    }
-    .popper[x-placement^="bottom"] .popper__arrow{
-        border-color: transparent transparent rgb(48, 49, 51) transparent !important;
-    }
-    .popper[x-placement^="left"] .popper__arrow {
-        border-color: transparent transparent transparent rgb(48, 49, 51)  !important;
+    .ruyi-poptip-content{
+        padding: 5px 3px 3px;
+        font-size: 14px;
+        color: #515a6e
     }
 }
 </style>
