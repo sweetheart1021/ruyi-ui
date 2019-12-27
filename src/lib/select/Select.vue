@@ -3,14 +3,14 @@
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 21:45:32
+ * @LastEditTime : 2019-12-27 09:56:33
  -->
 <template>
     <div class="ruyi-select" ref="ruyi-select">
         <!-- @documentClick='handleDocumentClick' -->
         <popper trigger="click" @show='handlePopperTogger' @hide='handlePopperTogger'
             tagName='div' visible-arrow :disabled='disabled'>
-            <div class="ruyi-select-options-wapper popper" :style="optionWapperWidth">
+            <div class="ruyi-select-options-wapper" :style="optionWapperWidth">
                 <template v-if="slots">
                     <ul>
                         <slot></slot>
@@ -27,15 +27,19 @@
             </div>
 
             <div :class="['ruyi-select-wapper', reverse && !disabled ? 'ruyi-select-wapper-focus' : null,
-                disabled ? 'ruyi-select-disabled' : null]" slot="reference" :contenteditable="filterable"
+                disabled ? 'ruyi-select-disabled' : null]" slot="reference"
                 @input="handleFilterInput"
                 @mouseenter="handleMouseenter"
                 @mouseleave="handleMouseleave">
                 {{ currentLabel }}
-                <span class="ruyi-select-placeholder" v-if="currentLabel === undefined || currentLabel === ''">{{ placeholder }}</span>
+                <span class="ruyi-select-placeholder"
+                    v-if="currentLabel === undefined || currentLabel === ''">
+                    {{ placeholder }}
+                </span>
                 <i :class="['iconfont icon-icon32210', reverse && !disabled ? 'is-reverse' : null]"
                     ref="icon-icon32210"></i>
-                <i class="iconfont icon-qingkong" v-if="clearable && currentLabel !== undefined && currentLabel !== ''"
+                <i class="iconfont icon-qingkong"
+                    v-if="clearable && currentLabel !== undefined && currentLabel !== ''"
                     @click.stop="hgandleClearable"></i>
             </div>
         </popper>
@@ -104,7 +108,7 @@ export default {
             reverse: false,
             currentValue: this.value,
             currentLabel: '',
-            optionWapperWidth: '',
+            optionWapperWidth: ''
         }
     },
     methods: {
@@ -248,7 +252,9 @@ export default {
 .select-no-option{
     font-size: 14px;
     text-align: center;
-    padding: 20px;
+    padding: 26px;
+    cursor: not-allowed;
+    user-select: none;
     i{
         margin-right: 5px;
     }

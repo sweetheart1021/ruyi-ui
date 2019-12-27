@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 21:30:56
+ * @LastEditTime : 2019-12-27 11:28:52
  -->
 <template>
     <div>
@@ -89,13 +89,16 @@
             <ruyi-select style="width: 200px" v-model="selectValue"
                 @change="handleSelectChange" clearable>
                 <ruyi-option :value='1'>苹果</ruyi-option>
-                <ruyi-option :value='2' label='香蕉' diabled></ruyi-option>
+                <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
                 <ruyi-option :value='3' label='橘子'></ruyi-option>
                 <ruyi-option :value='4' label='西瓜'></ruyi-option>
             </ruyi-select>
             <ruyi-select style="width: 220px" v-model="selectValue">
                 <div slot="no-data">好像没有数据</div>
-                <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
+                <ruyi-option v-for="item in 0" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 200px" v-model="selectValue">
+                <ruyi-option v-for="item in 0" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
             </ruyi-select>
             <ruyi-select style="width: 200px" v-model="selectValue" disabled>
                 <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
@@ -106,6 +109,18 @@
             <ruyi-select style="width: 200px" v-model="selectValue" clearable>
                 <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
             </ruyi-select>
+        </div>
+        <div style="margin-top: 20px">
+            <ruyi-tooltip content='这里是content内容'>
+                <ruyi-button>content</ruyi-button>
+            </ruyi-tooltip>
+            <ruyi-tooltip :delay-in='1000' :delay-out='1000'>
+                <span slot="content">这里是slot内容</span>
+                <ruyi-button type='primary'>slot</ruyi-button>
+            </ruyi-tooltip>
+            <ruyi-tooltip content='这里是content内容' trigger='click'>
+                这里是tooltip
+            </ruyi-tooltip>
         </div>
     </div>
 </template>

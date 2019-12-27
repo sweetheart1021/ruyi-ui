@@ -3,14 +3,15 @@
  * @Author: lvjing
  * @Date: 2019-12-26 16:15:05
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 19:08:32
+ * @LastEditTime : 2019-12-27 09:37:26
  -->
 <template>
     <li :class="['ruyi-select-item', value === currentValue ? 'ruyi-select-item-checked' : null,
         diabled ? 'ruyi-select-item-disabled' : null]"
         @click.stop="handleClick">
         <slot>{{ label }}</slot>
-        <i class="iconfont icon-gou" v-if="value === currentValue" :style="diabled ? {color: '#c5c8ce'} : null"></i>
+        <i class="iconfont icon-gou" v-if="value === currentValue && (!diabled && !showDiabled)" :style="diabled ? {color: '#c5c8ce'} : null"></i>
+        <i class="iconfont icon-ban" v-if="diabled && showDiabled"></i>
     </li>
 </template>
 
@@ -24,6 +25,11 @@ export default {
             type: [String, Number]
         },
         diabled: {
+            type: Boolean,
+            default: false
+        },
+        // 显示禁用图标
+        showDiabled: {
             type: Boolean,
             default: false
         }
@@ -71,6 +77,12 @@ export default {
     right: 14px;
     top: 10px;
     color: @primary-color;
+}
+.icon-ban{
+    position: absolute;
+    right: 14px;
+    top: 10px;
+    font-size: 12px;
 }
 
 .ruyi-select-item-disabled{
