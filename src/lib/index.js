@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 12:33:26
+ * @LastEditTime : 2019-12-27 15:29:42
  */
 import Button from './button';
 import Input from './input';
@@ -13,8 +13,9 @@ import Checkbox from './checkbox';
 import Radio from './radio';
 import Switch from './switch';
 import Select from './select';
-import Tooltip from './tooltip'
-import Poptip from './poptip'
+import Tooltip from './tooltip';
+import Poptip from './poptip';
+import Message from './message';
 
 
 const component = {
@@ -30,13 +31,14 @@ const component = {
     RuyiSelect: Select,
     RuyiOption: Select.Option,
     RuyiTooltip: Tooltip,
-    RuyiPoptip: Poptip
+    RuyiPoptip: Poptip,
 }
 
 const install = function(Vue, opts={}) {
     Object.keys(component).forEach(key => {
         Vue.component(key, component[key]);
     });
+    Vue.prototype.$ruyimessage = Message;
 }
 
 if (typeof window !== undefined && window.Vue) {

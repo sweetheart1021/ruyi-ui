@@ -3,14 +3,14 @@
  * @Author: lvjing
  * @Date: 2019-12-25 09:20:02
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 15:24:07
+ * @LastEditTime : 2019-12-27 14:03:30
  -->
 <template>
     <button :class="['ruyi-button' ,'ruyi-button-' + type, loading ? 'ruyi-button-loading' : null]"
         @click="handleClick"
         :disabled="disabled">
         <i class="iconfont icon-xingzhuang" v-if="loading"></i>
-        <span>
+        <span class="ruyi-button-span">
             <slot></slot>
         </span>
     </button>
@@ -55,6 +55,7 @@ export default {
     box-sizing: border-box;
     line-height: 1;
     border:1px solid #dcdee2;
+    color: #515a6e;
 }
 .ruyi-button:disabled{
     background: #f7f7f7;

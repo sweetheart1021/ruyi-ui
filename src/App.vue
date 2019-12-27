@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 13:30:45
+ * @LastEditTime : 2019-12-27 15:48:11
  -->
 <template>
     <div>
@@ -145,6 +145,12 @@
                 <ruyi-button>没有title</ruyi-button>
             </ruyi-poptip>
         </div>
+        <div style="margin-top: 20px">
+            <ruyi-button type='primary' @click="handleShowMessage('success')">显示成功</ruyi-button>
+            <ruyi-button type='primary' @click="handleShowMessage('warning')">显示警告</ruyi-button>
+            <ruyi-button type='primary' @click="handleShowMessage('error')">显示失败</ruyi-button>
+            <ruyi-button type='primary' @click="handleShowMessage">显示默认</ruyi-button>
+        </div>
     </div>
 </template>
 
@@ -197,6 +203,14 @@ export default {
         },
         handleSelectChange(val) {
             console.log('select change之后的值', val)
+        },
+        handleShowMessage(type) {
+            if (type) {
+                this.$ruyimessage[type](`这是一条${type}消息`);
+            } else {
+                this.$ruyimessage("默认信息")
+            }
+
         }
     }
 }
