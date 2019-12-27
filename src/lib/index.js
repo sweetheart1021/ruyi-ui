@@ -16,6 +16,7 @@ import Select from './select';
 import Tooltip from './tooltip';
 import Poptip from './poptip';
 import Message from './message';
+import Table from './table';
 
 
 const component = {
@@ -32,6 +33,7 @@ const component = {
     RuyiOption: Select.Option,
     RuyiTooltip: Tooltip,
     RuyiPoptip: Poptip,
+    RuyiTable: Table
 }
 
 const install = function(Vue, opts={}) {

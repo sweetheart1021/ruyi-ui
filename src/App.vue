@@ -146,9 +146,12 @@
             </ruyi-poptip>
         </div>
         <div style="margin-top: 20px">
-            <ruyi-button type='primary' @click="handleShowMessage('success')">显示成功</ruyi-button>
-            <ruyi-button type='primary' @click="handleShowMessage('warning')">显示警告</ruyi-button>
-            <ruyi-button type='primary' @click="handleShowMessage('error')">显示失败</ruyi-button>
+            <ruyi-table :columns='columns' :data='data' height='300px'></ruyi-table>
+        </div>
+        <div style="margin-top: 20px">
+            <ruyi-button type='success' @click="handleShowMessage('success')">显示成功</ruyi-button>
+            <ruyi-button type='warning' @click="handleShowMessage('warning')">显示警告</ruyi-button>
+            <ruyi-button type='danger' @click="handleShowMessage('error')">显示失败</ruyi-button>
             <ruyi-button type='primary' @click="handleShowMessage">显示默认</ruyi-button>
         </div>
     </div>
@@ -167,7 +170,53 @@ export default {
             switchValue2: false,
             modal: false,
             drawer: false,
-            selectValue: 2
+            selectValue: 2,
+            columns: [
+                {title: '姓名', key: 'name', width: 100},
+                {title: '年龄', key: 'age', width: 100},
+                {title: '性别', key: 'sex', width: 100},
+                {title: '身高', key: 'height', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+                {title: '体重', key: 'weight', width: 100},
+            ],
+            data: [
+                {age: 20, height: 165, weight: 65, sex: 1, name: '小王'},
+                {name: '小张', age: 21, sex: 2, height: 175, weight: 75},
+                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85},
+                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95},
+                {age: 20, height: 165, weight: 65, sex: 1, name: '小王'},
+                {name: '小张', age: 21, sex: 2, height: 175, weight: 75},
+                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85},
+                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95},
+                {age: 20, height: 165, weight: 65, sex: 1, name: '小王'},
+                {name: '小张', age: 21, sex: 2, height: 175, weight: 75},
+                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85},
+                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95},
+            ]
         }
     },
     methods: {

@@ -1,9 +1,9 @@
 <!--
- * @Descripttion:
+ * @Descripttion: message
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 18:19:48
+ * @LastEditTime : 2019-12-27 20:04:17
  -->
 <template>
     <div class="ruyi-message-content">
@@ -38,11 +38,11 @@ export default {
         },
         handleClose() {
             this.hideType = true;
-            // setTimeout(() => {
-            //     // this.visible = false;
-            //     this.$destroy(true);
-            //     this.$el.parentNode.removeChild(this.$el);
-            // }, 1000);
+            setTimeout(() => {
+                // this.visible = false;
+                this.$destroy(true);
+                this.$el.parentNode.removeChild(this.$el);
+            }, 1000);
         }
     },
     mounted() {
