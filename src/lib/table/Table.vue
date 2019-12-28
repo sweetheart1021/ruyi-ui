@@ -1,9 +1,9 @@
 <template>
-    <div style="">
+    <div>
         <div class="ruyi-table-header">
-            <table cellspacing='0' cellpadding='0' class="ruyi-table">
+            <table cellspacing='0' cellpadding='0' class="ruyi-table" ref="ruyi-table-header">
                 <colgroup>
-                    <col :width='item.width ? item.width : width/columns.length' 
+                    <col :width='item.width ? item.width : width + 30' 
                         v-for="(item, index) in columns" :key="index"/>
                 </colgroup>
                 <thead>
@@ -14,10 +14,10 @@
                 </thead>
             </table>
         </div>
-        <div class="ruyi-table-body">
+        <div class="ruyi-table-body" ref="ruyi-table-body">
             <table cellspacing='0' cellpadding='0' class="ruyi-table">
                 <colgroup>
-                    <col :width='item.width ? item.width : width/columns.length' 
+                    <col :width='item.width ? item.width : width + 30' 
                         v-for="(item, index) in columns" :key="index"/>
                 </colgroup>
                 <tbody>
@@ -52,7 +52,11 @@ export default {
         }
     },
     mounted() {
-        this.width = this.$el.offsetWidth;
+        this.width = this.$el.offsetWidth / this.columns.length;
+        this.$refs['ruyi-table-body'].addEventListener("scroll", () => {
+            let scrollLeft = this.$refs['ruyi-table-body'].scrollLeft;
+            this.$refs['ruyi-table-header'].setAttribute('style', `right: ${scrollLeft}px; position: relative;`)
+        });
     }
 }
 </script>
@@ -61,22 +65,30 @@ export default {
 @import '../../styles/index.less';
 .ruyi-table{
     width: 100%;
-    border: 1px solid #dcdee2;
     border-bottom: none;
     border-collapse: collapse; 
     border-spacing:0;
     overflow-x: auto;
+    table-layout: fixed;
+    border-collapse:separate;
+}
+.ruyi-table-header{
+    width: 100%; 
+    border: 1px solid #e8eaec;
+    border-bottom: none;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 .ruyi-table-header tr th{
-    padding: 8px 0;
     height: 38px;
     box-sizing: border-box;
     background: #f8f8f9;
     white-space: nowrap;
     border-bottom: 1px solid #e8eaec;
     border-right: 1px solid #e8eaec;
-    padding:  0 18px;
+    padding:  8px 18px;
     white-space: nowrap;
+    text-overflow:ellipsis;
 }
 .ruyi-table-header tr th:last-child{
     border-right:none;
@@ -85,8 +97,9 @@ export default {
     width: 100%; 
     height:200px;  
     box-sizing: border-box;
-    overflow-y: auto; 
-    border-bottom: 1px solid #dcdee2;
+    overflow-y: auto;
+    border: 1px solid #dcdee2;
+    border-top: none;
 }
 .ruyi-table-body table:last-child{
     border-top: none;
@@ -98,6 +111,9 @@ export default {
     border-right: 1px solid #e8eaec;
     padding: 0 18px;
     white-space: nowrap;
+    background: #fff;
+    box-sizing: border-box;
+    display: table-cell;
 }
 .ruyi-table-body tr td:last-child{
     border-right:none;
