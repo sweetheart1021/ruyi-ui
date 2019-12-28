@@ -36,7 +36,8 @@ export default {
             immediate: true
         },
         currentValue(val) {
-            this.$emit("input", val)
+            this.$emit("change", val);
+            this.$emit("input", val);
         }
     },
     methods: {

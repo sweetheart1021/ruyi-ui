@@ -11,6 +11,9 @@
         :disabled="disabled">
         <i class="iconfont icon-xingzhuang" v-if="loading"></i>
         <span class="ruyi-button-span">
+            <template v-if="!loading">
+                <slot name="icon"></slot>
+            </template>
             <slot></slot>
         </span>
     </button>
@@ -117,6 +120,14 @@ export default {
 }
 .ruyi-button-success:focus{
     box-shadow: 0 0 0 2px rgba(25,190,107,.2);
+}
+
+.ruyi-button-text{
+    border: none;
+    color: @primary-color;
+}
+.ruyi-button-text:focus{
+    box-shadow: none;
 }
 
 .ruyi-button-loading{

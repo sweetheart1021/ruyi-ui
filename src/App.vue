@@ -15,6 +15,11 @@
             <ruyi-button type='warning'>warning</ruyi-button>
             <ruyi-button type='success' @click="drawer=true">success</ruyi-button>
             <ruyi-button type='dashed' @click="modal=true">dashed</ruyi-button>
+            <ruyi-button type='text' @click="modal=true">text</ruyi-button>
+            <ruyi-button type='dashed'>
+                <i class="iconfont icon-wushuju" slot="icon"></i>
+                slot icon
+            </ruyi-button>
         </div>
         <div style="margin-bottom: 20px">
             <ruyi-input v-model="inputValue" style="width: 200px"
@@ -37,9 +42,13 @@
             </ruyi-input>
         </div>
         <div style="margin-top: 20px">
-            <ruyi-checkbox v-model="checkboxLabel" label='苹果' style="margin-right: 30px"></ruyi-checkbox>
-            <ruyi-checkbox v-model="checkboxLabel" label='橛子'></ruyi-checkbox>
-            <ruyi-checkbox-group v-model="checkboxGroup">
+            <!-- :value.sync="checkBool" -->
+            <ruyi-checkbox  v-model="checkBool" style="margin-right: 30px"
+                @change="handleCheckboxChange">单个</ruyi-checkbox>
+            <br>
+            <ruyi-checkbox v-model="checkboxLabel" style="margin-right: 30px" disabled>苹果</ruyi-checkbox>
+            <ruyi-checkbox v-model="checkboxLabel" label='橘子' @change="handleCheckboxChange"></ruyi-checkbox>
+            <ruyi-checkbox-group v-model="checkboxGroup" @change="handleCheckboxChange">
                 <ruyi-checkbox label='橛子' style="margin-right: 30px"></ruyi-checkbox>
                 <ruyi-checkbox label='苹果' style="margin-right: 30px"></ruyi-checkbox>
                 <ruyi-checkbox label='香蕉' style="margin-right: 30px"></ruyi-checkbox>
@@ -146,7 +155,17 @@
             </ruyi-poptip>
         </div>
         <div style="margin-top: 20px">
-            <ruyi-table :columns='columns' :data='data' height='300px'></ruyi-table>
+            <!-- width='600px' -->
+            <ruyi-table :columns='columns' :data='data' :max-height='200' stripe
+                @row-click='handleRowClick'
+                @cell-click='handleCellClisk'>
+                <template slot="sex" slot-scope="{ row }">
+                    <span>{{ row.sex === 1 ? '男' : '女' }}</span>
+                </template>
+                <template slot="action" slot-scope="{ row }">
+                    <ruyi-button type='text' @click="handleDetail(row)">查看详情</ruyi-button>
+                </template>
+            </ruyi-table>
         </div>
         <div style="margin-top: 20px">
             <ruyi-button type='success' @click="handleShowMessage('success')">显示成功</ruyi-button>
@@ -164,6 +183,7 @@ export default {
             loading: false,
             inputValue: '2222',
             radioLabel: '苹果',
+            checkBool: true,
             checkboxLabel: ['苹果'],
             checkboxGroup: ['苹果', '香蕉'],
             switchValue: '100',
@@ -172,8 +192,9 @@ export default {
             drawer: false,
             selectValue: 2,
             columns: [
+                {type: 'selection', width: 60, align: 'center'},
                 {title: '姓名', key: 'name'},
-                {title: '年龄', key: 'age'},
+                {title: '年龄', key: 'age', align: 'right'},
                 {title: '性别', key: 'sex'},
                 {title: '身高', key: 'height'},
                 {title: '体重', key: 'weight'},
@@ -181,45 +202,21 @@ export default {
                 {title: '体重', key: 'weight'},
                 {title: '体重', key: 'weight'},
                 {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
+                {title: '操作', key: 'action', align: 'center'}
             ],
             data: [
-                {age: 20, height: 165, weight: 65, sex: 1, name: '小王'},
-                {name: '小张', age: 21, sex: 2, height: 175, weight: 75},
-                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85},
-                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95},
-                {age: 20, height: 165, weight: 65, sex: 1, name: '小王'},
-                {name: '小张', age: 21, sex: 2, height: 175, weight: 75},
-                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85},
-                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95},
-                {age: 20, height: 165, weight: 65, sex: 1, name: '小王'},
-                {name: '小张', age: 21, sex: 2, height: 175, weight: 75},
-                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85},
-                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95},
+                {age: 20, height: 165, weight: 65, sex: 1, name: '小王', id: 1},
+                {name: '小张', age: 21, sex: 2, height: 175, weight: 75, id: 2},
+                {name: '有点长', age: 22, sex: 1, height: 179, weight: 85, id: 3},
+                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95, id: 4},
+                {age: 20, height: 165, weight: 65, sex: 1, name: '小王', id: 5},
+                {name: '小张', age: 21, sex: 2, height: 175, weight: 75, id: 6},
+                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85, id: 7},
+                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95, id: 8},
+                {age: 20, height: 165, weight: 65, sex: 1, name: '小王', id: 9},
+                {name: '小张', age: 21, sex: 2, height: 175, weight: 75, id: 10},
+                {name: '小陈', age: 22, sex: 1, height: 179, weight: 85, id: 11},
+                {name: '小谢', age: 23, sex: 2, height: 90, weight: 95, id: 12},
             ]
         }
     },
@@ -242,6 +239,10 @@ export default {
         handleInputSearch() {
             console.log("输入框图标点击查询")
         },
+        // checkbox change事件
+        handleCheckboxChange(val) {
+            console.log(val);
+        },
         handleSwitchChange(val) {
             console.log(val);
         },
@@ -263,7 +264,15 @@ export default {
             } else {
                 this.$ruyimessage("默认信息")
             }
-
+        },
+        handleDetail(row) {
+            console.log(row);
+        },
+        handleRowClick(row) {
+            console.log("行点击事件，当前点击的行是：", row)
+        },
+        handleCellClisk(row, column) {
+            console.log(`单元格点击事件，当前点击当 行和列 分别是：`, row, column);
         }
     }
 }
