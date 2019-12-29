@@ -15,7 +15,7 @@
                                     {{ column.title }}
                                 </template>
                                 <template v-else>
-                                    <!-- <ruyi-checkbox :value.sync='selectAll' @change="handleSelectAll"></ruyi-checkbox> -->
+                                    <ruyi-checkbox v-model="selectAll" @change="handleSelectAll" :half='half'></ruyi-checkbox>
                                 </template>
                             </div>
                         </th>
@@ -41,7 +41,7 @@
                                 <slot :name="column.key" :row='item' :index='index'>{{ item[column.key] }}</slot>
                             </template>
                             <template v-else>
-                                <!-- <ruyi-checkbox :value.sync='item.select'></ruyi-checkbox> -->
+                                <ruyi-checkbox v-model='item.select'></ruyi-checkbox>
                             </template>
                         </div>    
                     </td>
@@ -121,7 +121,9 @@ export default {
             datas: [],
             cloWidth: 0,
             tableWidth: 0,
-            selectAll: true
+            selectAll: true,
+            // 设置checkbox半选状态
+            half: false
         }
     },
     methods: {

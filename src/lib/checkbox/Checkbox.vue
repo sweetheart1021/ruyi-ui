@@ -3,12 +3,13 @@
  * @Author: lvjing
  * @Date: 2019-12-25 19:18:50
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-29 11:07:14
+ * @LastEditTime : 2019-12-29 13:31:02
  -->
 <template>
     <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-raido-disabled' : null]">
-        <span :class="['ruyi-checkbox', currentValue || model.some(v => v === label) ? 'ruyi-checkbox-checked' : null]">
+        <span :class="['ruyi-checkbox', currentValue || model.some(v => v === label) || half ? 'ruyi-checkbox-checked' : null]">
             <i class='iconfont icon-gou' v-if="currentValue || model.some(v => v === label)"></i>
+            <i class="iconfont icon-hengxian-" v-if="half"></i>
         </span>
         <span :class="currentValue || model.some(v => v === label) ? 'ruyi-checkbox-checked-label' : null">
             <span class="ruyi-checkbox-label">
@@ -40,6 +41,11 @@ export default {
             type: [String, Number]
         },
         disabled: {
+            type: Boolean,
+            default: false
+        },
+        // 设置半选中
+        half: {
             type: Boolean,
             default: false
         }
@@ -152,5 +158,13 @@ export default {
 
 .ruyi-checkbox-input{
     display: none;
+}
+
+.icon-hengxian-{
+    font-size: 12px;
+    position: relative;
+    top: -1px;
+    color: @primary-color;
+    font-weight: bold;
 }
 </style>
