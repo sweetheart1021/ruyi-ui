@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-29 11:10:54
+ * @LastEditTime : 2019-12-29 12:34:33
  -->
 <template>
     <div>
@@ -55,9 +55,10 @@
             </ruyi-checkbox-group>
         </div>
         <div style="margin-bottom: 20px">
-            <ruyi-radio v-model="radioValue" label='1' style="margin-right: 30px">橛子</ruyi-radio>
-            <ruyi-radio v-model="radioValue" label='2' disabled>苹果</ruyi-radio>
-            <ruyi-radio-group v-model="radioValue">
+            <ruyi-radio v-model="radioBool" style="margin-right: 30px" @change="handleRadioChange">单个</ruyi-radio>
+            <br>
+            <span>多个radio请用radio-group</span>
+            <ruyi-radio-group v-model="radioValue" @change="handleRadioChange">
                 <ruyi-radio label='1' style="margin-right: 30px">橛子</ruyi-radio>
                 <ruyi-radio label='2' style="margin-right: 30px">苹果</ruyi-radio>
                 <ruyi-radio label='3'>橘子</ruyi-radio>
@@ -181,7 +182,8 @@ export default {
         return {
             loading: false,
             inputValue: '2222',
-            radioValue: '2',
+            radioBool: false,
+            radioValue: '1',
             checkBool: true,
             checkboxGroup: ['苹果', 'xiangjiao'],
             switchValue: '100',
@@ -239,6 +241,10 @@ export default {
         },
         // checkbox change事件
         handleCheckboxChange(val) {
+            console.log(val);
+        },
+        // radio change事件
+        handleRadioChange(val) {
             console.log(val);
         },
         handleSwitchChange(val) {

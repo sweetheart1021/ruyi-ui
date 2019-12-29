@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 20:52:51
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-29 11:09:33
+ * @LastEditTime : 2019-12-29 11:35:40
  * @FilePath: /ruyi-ui/src/components/checkbox/checkbox-group.vue
  -->
 <template>

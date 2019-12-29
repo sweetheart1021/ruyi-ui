@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 17:27:27
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-28 22:22:34
+ * @LastEditTime : 2019-12-29 12:33:37
  -->
 <template>
     <div>
@@ -31,17 +31,20 @@ export default {
                 this.handleChildren();
             },
             immediate: true
-        },
-        currentValue(val) {
-            this.$emit("input", val)
         }
     },
     methods: {
         handleChildren() {
             let children = this.$children;
             children.forEach(v => {
-                v.currentValue = this.currentValue;
+                v.currentValue = v.label === this.currentValue;
+                v.group = true;
             });
+        },
+        handleChange(data) {
+            this.currentValue = data;
+            this.$emit("input", data);
+            this.$emit("change", data);
         }
     },
     mounted() {

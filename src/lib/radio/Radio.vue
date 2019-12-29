@@ -3,16 +3,22 @@
  * @Author: lvjing
  * @Date: 2019-12-25 15:22:14
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-29 11:11:27
+ * @LastEditTime : 2019-12-29 12:41:33
  -->
 <template>
-    <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-radio-disabled' : null]" @click="handleChecked">
-        <span :class="['ruyi-radio', label === currentValue ? 'ruyi-radio-checked':null]">
-            <span class="ruyi-radio-inner" v-if="label === currentValue"></span>
+    <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-radio-disabled' : null]">
+        <span :class="['ruyi-radio', currentValue ? 'ruyi-radio-checked':null]">
+            <span class="ruyi-radio-inner" v-if="currentValue"></span>
         </span>
-        <span :class="label === currentValue ? 'ruyi-radio-checked-label': null ">
+        <span :class="currentValue? 'ruyi-radio-checked-label': null ">
             <slot>{{ label }}</slot>
         </span>
+        <input type="radio"
+            class="ruyi-radio-input"
+            :value="label"
+            :checked='currentValue'
+            @change="handleGroupChange"
+        >
     </label>
 </template>
 
@@ -33,7 +39,11 @@ export default {
     },
     data() {
         return {
-            currentValue: this.value
+            // 记录上次选中的值, 在 switch 有效
+            preValue: null,
+            currentValue: this.value,
+            // 选择框组
+            group: false
         }
     },
     watch: {
@@ -45,12 +55,13 @@ export default {
         }
     },
     methods: {
-        handleChecked() {
+        handleGroupChange(val) {
             if (this.disabled) return;
-            this.$emit('input', this.label);
-            this.$emit("change", this.label)
-            if (this.$parent.$options._componentTag === 'ruyi-radio-group') {
-                this.$parent.currentValue = this.label;
+            if (this.group) {
+                this.$parent.handleChange(val.target.value)
+            } else {
+                this.$emit("input", val.target.checked);
+                this.$emit('change', val.target.checked);
             }
         }
     }
@@ -118,5 +129,8 @@ export default {
         box-shadow: none;
         border-color: #dcdee2;
     }
+}
+.ruyi-radio-input{
+    display: none;
 }
 </style>
