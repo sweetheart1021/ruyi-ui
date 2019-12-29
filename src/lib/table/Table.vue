@@ -41,7 +41,7 @@
                                 <slot :name="column.key" :row='item' :index='index'>{{ item[column.key] }}</slot>
                             </template>
                             <template v-else>
-                                <ruyi-checkbox v-model='item.select'></ruyi-checkbox>
+                                <ruyi-checkbox v-model='item._isChecked' @change="(val) => handleCheckBox(val ,item)"></ruyi-checkbox>
                             </template>
                         </div>    
                     </td>
@@ -109,8 +109,8 @@ export default {
         data: {
             handler(val) {
                 this.datas = JSON.parse(JSON.stringify(val));
-                this.datas.forEach(element => {
-                    this.$set(element, 'select', true);
+                this.datas.forEach(v => {
+                    this.$set(v, '_isChecked', true);
                 });
             },
             immediate: true
@@ -135,19 +135,32 @@ export default {
         handleCellClick(row, column) {
             this.$emit("cell-click", row, column);
         },
+        // 设置半选状态
+        handleHalf() {
+            let noChecked = this.datas.some(v => !v._isChecked);
+            let isChecked = this.datas.some(v => v._isChecked);
+            if (noChecked && isChecked) {
+                this.half = true; 
+                this.selectAll = false;
+            } else {
+                if (noChecked) {
+                    this.selectAll = false;
+                    this.half = false;
+                } else {
+                    this.selectAll = true;
+                }
+            }
+        },
         // 全选事件
         handleSelectAll(val) {
             this.datas.forEach((v) => {
-                this.$set(v, 'select', val);
+                this.$set(v, '_isChecked', val);
             });
+            this.handleHalf();
         },
-        handlRowChange(val) {
-            this.datas.forEach((v, i) => {
-                if (i === val) {
-                    this.$set(v, 'select', v.select);
-                }
-            }); 
-        }
+        handleCheckBox(val, item) {
+            this.handleHalf();
+        },
     },
     mounted() {
         // 每列最小宽度为80

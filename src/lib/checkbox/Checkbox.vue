@@ -2,14 +2,14 @@
  * @Descripttion: checkbox 组件
  * @Author: lvjing
  * @Date: 2019-12-25 19:18:50
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-29 13:31:02
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-29 22:31:08
  -->
 <template>
     <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-raido-disabled' : null]">
         <span :class="['ruyi-checkbox', currentValue || model.some(v => v === label) || half ? 'ruyi-checkbox-checked' : null]">
             <i class='iconfont icon-gou' v-if="currentValue || model.some(v => v === label)"></i>
-            <i class="iconfont icon-hengxian-" v-if="half"></i>
+            <i class="iconfont icon-hengxian" v-if="half"></i>
         </span>
         <span :class="currentValue || model.some(v => v === label) ? 'ruyi-checkbox-checked-label' : null">
             <span class="ruyi-checkbox-label">
@@ -20,7 +20,7 @@
             v-if="!group"
             :value="slot"
             :checked='currentValue'
-            @change="handleCheckboxChange">
+            @change.stop="handleCheckboxChange">
         <input type="checkbox" class="ruyi-checkbox-input"
             v-else  
             v-model="model" 
@@ -119,9 +119,9 @@ export default {
     .icon-gou{
         font-size: 12px;
         position: relative;
-        color: @primary-color;
-        left: 01px;
-        top: -2px;
+        color: white;
+        left: 1px;
+        top: -1px;
         font-weight: bold;
     }
 }
@@ -129,6 +129,7 @@ export default {
     border-color: @primary-color;
     transition: border-color 0.2s  ease-in-out, box-shadow 0.2s ease-in-out;
     box-shadow: 0 0 0 2px rgba(45, 140, 240, 0.2);
+    background: @primary-color;
 }
 .ruyi-checkbox-checked-label{
     color: @primary-color;
@@ -160,11 +161,11 @@ export default {
     display: none;
 }
 
-.icon-hengxian-{
+.icon-hengxian{
     font-size: 12px;
     position: relative;
-    top: -1px;
-    color: @primary-color;
+    top: -2px;
+    color: white;
     font-weight: bold;
 }
 </style>

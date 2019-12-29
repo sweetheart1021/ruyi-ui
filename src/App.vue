@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-29 12:34:33
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-29 22:00:09
  -->
 <template>
     <div>
@@ -156,9 +156,9 @@
         </div>
         <div style="margin-top: 20px">
             <!-- width='600px' -->
-            <ruyi-table :columns='columns' :data='data' :max-height='200' stripe
-                @row-click='handleRowClick'
-                @cell-click='handleCellClisk'>
+            <!-- @cell-click='handleCellClisk' -->
+            <!-- @row-click='handleRowClick' -->
+            <ruyi-table :columns='columns' :data='data' :max-height='200' stripe>
                 <template slot="sex" slot-scope="{ row }">
                     <span>{{ row.sex === 1 ? '男' : '女' }}</span>
                 </template>
