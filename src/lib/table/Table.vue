@@ -15,7 +15,7 @@
                                     {{ column.title }}
                                 </template>
                                 <template v-else>
-                                    <ruyi-checkbox :value.sync='selectAll'></ruyi-checkbox>
+                                    <!-- <ruyi-checkbox :value.sync='selectAll' @change="handleSelectAll"></ruyi-checkbox> -->
                                 </template>
                             </div>
                         </th>
@@ -32,16 +32,16 @@
                 <tbody>
                     <tr v-for="(item, index) in datas" :key="index" 
                         :class="['ruyi-table-row' , stripe && index % 2 ? 'ruyi-table-row-stripe' : null]"
-                        @click.stop="handleRow(item)">
+                        @click="handleRow(item)">
                         <td v-for="(column, key) in columns" :key="key"
                         :align='column.align ? column.align : "left"'
-                        @click.stop='handleCellClick(item, column)'>
+                        @click='handleCellClick(item, column)'>
                         <div class="ruyi-table-cell">
                             <template v-if="column.type !== 'selection'">
                                 <slot :name="column.key" :row='item' :index='index'>{{ item[column.key] }}</slot>
                             </template>
                             <template v-else>
-                                <ruyi-checkbox :value.sync='item.select'></ruyi-checkbox>
+                                <!-- <ruyi-checkbox :value.sync='item.select'></ruyi-checkbox> -->
                             </template>
                         </div>    
                     </td>
@@ -110,11 +110,11 @@ export default {
             handler(val) {
                 this.datas = JSON.parse(JSON.stringify(val));
                 this.datas.forEach(element => {
-                    element.select = true
+                    this.$set(element, 'select', true);
                 });
             },
             immediate: true
-        }
+        },
     },
     data() {
         return {
@@ -134,14 +134,17 @@ export default {
             this.$emit("cell-click", row, column);
         },
         // 全选事件
-        handleSelectAll() {
-            this.selectAll = !this.selectAll;
-            this.$nextTick(() => {
-                this.datas(v => {
-                    v.select = this.selectAll
-                });
+        handleSelectAll(val) {
+            this.datas.forEach((v) => {
+                this.$set(v, 'select', val);
             });
-            console.log(this.datas)
+        },
+        handlRowChange(val) {
+            this.datas.forEach((v, i) => {
+                if (i === val) {
+                    this.$set(v, 'select', v.select);
+                }
+            }); 
         }
     },
     mounted() {

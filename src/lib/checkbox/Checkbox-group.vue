@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 20:52:51
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-25 21:21:32
+ * @LastEditTime : 2019-12-29 11:09:33
  * @FilePath: /ruyi-ui/src/components/checkbox/checkbox-group.vue
  -->
 <template>
@@ -45,9 +45,13 @@ export default {
             setTimeout(() => {
                 let children = this.$children;
                 this.$children.forEach(v => {
-                    v.currentValue = this.currentValue;
+                    v.group = true;
+                    v.model = this.value;
                 });
             }, 0)
+        },
+        handleAllValue(data) {
+            this.$emit("input", data);
         }
     }
 }

@@ -3,11 +3,11 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 15:48:11
+ * @LastEditTime : 2019-12-29 11:10:54
  -->
 <template>
     <div>
-        <div style="margin-bottom: 20px">
+        <!-- <div style="margin-bottom: 20px">
             <ruyi-button>default</ruyi-button>
             <ruyi-button type='primary' @click="handleBtn" :loading="loading">Primary</ruyi-button>
             <ruyi-button type='info' disabled @click="handleBtn">info</ruyi-button>
@@ -20,8 +20,8 @@
                 <i class="iconfont icon-wushuju" slot="icon"></i>
                 slot icon
             </ruyi-button>
-        </div>
-        <div style="margin-bottom: 20px">
+        </div> -->
+        <!-- <div style="margin-bottom: 20px">
             <ruyi-input v-model="inputValue" style="width: 200px"
                 @keyup.enter.native='handleInputKeyUpEnter'
                 @change="handleInputChange"
@@ -40,37 +40,36 @@
             <ruyi-input v-model="inputValue" style="margin-top: 15px; width: 200px">
                 <template slot="append">.com</template>
             </ruyi-input>
-        </div>
+        </div> -->
         <div style="margin-top: 20px">
             <!-- :value.sync="checkBool" -->
             <ruyi-checkbox  v-model="checkBool" style="margin-right: 30px"
                 @change="handleCheckboxChange">单个</ruyi-checkbox>
             <br>
-            <ruyi-checkbox v-model="checkboxLabel" style="margin-right: 30px" disabled>苹果</ruyi-checkbox>
-            <ruyi-checkbox v-model="checkboxLabel" label='橘子' @change="handleCheckboxChange"></ruyi-checkbox>
+            <span>多个checkbox请用checkbox-group</span>
             <ruyi-checkbox-group v-model="checkboxGroup" @change="handleCheckboxChange">
                 <ruyi-checkbox label='橛子' style="margin-right: 30px"></ruyi-checkbox>
-                <ruyi-checkbox label='苹果' style="margin-right: 30px"></ruyi-checkbox>
-                <ruyi-checkbox label='香蕉' style="margin-right: 30px"></ruyi-checkbox>
-                <ruyi-checkbox label='草莓'></ruyi-checkbox>
+                <ruyi-checkbox label='苹果' style="margin-right: 30px">这里是苹果</ruyi-checkbox>
+                <ruyi-checkbox label='xiangjiao' style="margin-right: 30px">这里是香蕉</ruyi-checkbox>
+                <ruyi-checkbox label='草莓'>这里是草莓</ruyi-checkbox>
             </ruyi-checkbox-group>
         </div>
         <div style="margin-bottom: 20px">
-            <ruyi-radio v-model="radioLabel" label='苹果' style="margin-right: 30px"></ruyi-radio>
-            <ruyi-radio v-model="radioLabel" label='橛子'></ruyi-radio>
-            <ruyi-radio-group v-model="radioLabel">
-                <ruyi-radio label='橛子' style="margin-right: 30px"></ruyi-radio>
-                <ruyi-radio label='苹果' style="margin-right: 30px"></ruyi-radio>
-                <ruyi-radio label='橘子'></ruyi-radio>
+            <ruyi-radio v-model="radioValue" label='1' style="margin-right: 30px">橛子</ruyi-radio>
+            <ruyi-radio v-model="radioValue" label='2' disabled>苹果</ruyi-radio>
+            <ruyi-radio-group v-model="radioValue">
+                <ruyi-radio label='1' style="margin-right: 30px">橛子</ruyi-radio>
+                <ruyi-radio label='2' style="margin-right: 30px">苹果</ruyi-radio>
+                <ruyi-radio label='3'>橘子</ruyi-radio>
             </ruyi-radio-group>
         </div>
-        <div style="margin-top: 20px">
+        <!-- <div style="margin-top: 20px">
             <ruyi-switch v-model="switchValue2" @before-change='handleSwitchBefore'></ruyi-switch>
             <ruyi-switch v-model="switchValue" active-value='100' inactive-value='99' @change="handleSwitchChange">
                 <span slot='active'>开</span>
                 <span slot='inactive'>关</span>
             </ruyi-switch>
-        </div>
+        </div> -->
         <ruyi-modal :visible.sync="modal"
             @ok='handleModalOk'
             title="这里是modal的title"
@@ -163,7 +162,7 @@
                     <span>{{ row.sex === 1 ? '男' : '女' }}</span>
                 </template>
                 <template slot="action" slot-scope="{ row }">
-                    <ruyi-button type='text' @click="handleDetail(row)">查看详情</ruyi-button>
+                    <ruyi-button type='text' @click.native.stop="handleDetail(row)">查看详情</ruyi-button>
                 </template>
             </ruyi-table>
         </div>
@@ -182,10 +181,9 @@ export default {
         return {
             loading: false,
             inputValue: '2222',
-            radioLabel: '苹果',
+            radioValue: '2',
             checkBool: true,
-            checkboxLabel: ['苹果'],
-            checkboxGroup: ['苹果', '香蕉'],
+            checkboxGroup: ['苹果', 'xiangjiao'],
             switchValue: '100',
             switchValue2: false,
             modal: false,

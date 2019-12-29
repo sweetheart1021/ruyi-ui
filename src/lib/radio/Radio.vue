@@ -3,10 +3,10 @@
  * @Author: lvjing
  * @Date: 2019-12-25 15:22:14
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-25 18:52:57
+ * @LastEditTime : 2019-12-29 11:11:27
  -->
 <template>
-    <label class="ruyi-raido-wapper" @click="handleChecked">
+    <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-radio-disabled' : null]" @click="handleChecked">
         <span :class="['ruyi-radio', label === currentValue ? 'ruyi-radio-checked':null]">
             <span class="ruyi-radio-inner" v-if="label === currentValue"></span>
         </span>
@@ -25,6 +25,10 @@ export default {
         },
         label: {
             type: [String, Number, Boolean]
+        },
+        disabled: {
+            type: Boolean,
+            default: false
         }
     },
     data() {
@@ -42,7 +46,9 @@ export default {
     },
     methods: {
         handleChecked() {
+            if (this.disabled) return;
             this.$emit('input', this.label);
+            this.$emit("change", this.label)
             if (this.$parent.$options._componentTag === 'ruyi-radio-group') {
                 this.$parent.currentValue = this.label;
             }
@@ -97,4 +103,20 @@ export default {
     transition: color 0.2s  ease-in-out;
 }
 
+.ruyi-radio-disabled{
+    cursor: pointer;
+    .ruyi-radio{
+        background: #f3f3f3;
+    }
+    .ruyi-radio-checked-label{
+        color: #ccc;
+    }
+    .ruyi-radio-inner{
+        background: #ccc;
+    }
+    .ruyi-radio-checked{
+        box-shadow: none;
+        border-color: #dcdee2;
+    }
+}
 </style>

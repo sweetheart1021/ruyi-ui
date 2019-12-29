@@ -3,18 +3,28 @@
  * @Author: lvjing
  * @Date: 2019-12-25 19:18:50
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-25 21:22:16
+ * @LastEditTime : 2019-12-29 11:07:14
  -->
 <template>
-    <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-raido-disabled' : null]" @click.stop="handleChecked">
-        <span :class="['ruyi-checkbox', currentValue.some(v => v === labelValue && labelValue) ? 'ruyi-checkbox-checked':null]">
-            <i class='iconfont icon-gou' v-if="currentValue.some(v => v === labelValue && labelValue)"></i>
+    <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-raido-disabled' : null]">
+        <span :class="['ruyi-checkbox', currentValue || model.some(v => v === label) ? 'ruyi-checkbox-checked' : null]">
+            <i class='iconfont icon-gou' v-if="currentValue || model.some(v => v === label)"></i>
         </span>
-        <span :class="currentValue.some(v => v === labelValue && labelValue) ? 'ruyi-checkbox-checked-label': null ">
-            <span class="ruyi-checkbox-label" v-if="slot">
-                <slot>{{ labelValue }}</slot>
+        <span :class="currentValue || model.some(v => v === label) ? 'ruyi-checkbox-checked-label' : null">
+            <span class="ruyi-checkbox-label">
+                <slot>{{ label }}</slot>
             </span>
         </span>
+        <input type="checkbox" class="ruyi-checkbox-input" 
+            v-if="!group"
+            :value="slot"
+            :checked='currentValue'
+            @change="handleCheckboxChange">
+        <input type="checkbox" class="ruyi-checkbox-input"
+            v-else  
+            v-model="model" 
+            :value="label"
+            @change="handleGroupChange"> 
     </label>
 </template>
 
@@ -24,7 +34,7 @@ export default {
     props: {
         value: {
             type: [Array, Boolean],
-            default: () => []
+            default: false
         },
         label: {
             type: [String, Number]
@@ -36,58 +46,43 @@ export default {
     },
     computed: {
         slot() {
-            return this.label ? this.label: this.$slots.default;
-        },
-        labelValue() {
             if (typeof this.value === 'boolean') {
-                return this.value
-            } else {
-                let label = '';
-                if (this.$slots.default) {
-                    return label = this.$slots.default[0].text;
-                } else {
-                    return label = this.label
-                }
+                return '';
             }
-        }
+            return this.label ? this.label: this.$slots.default[0].text;
+        },
     },
     data() {
         return {
-            currentValue: this.value
+            currentValue: null,
+            // 输入框组
+            group: false,
+            model: [],
         }
     },
     watch: {
         value: {
             handler(val, oldval) {
                 if (typeof (val) === 'boolean') {
-                    this.currentValue = [val]
+                    this.currentValue = val
                 } else {
-                    this.currentValue = val;
-                }
-                if (oldval) {
-                    this.$emit("change", val);
+                    this.model = val;
                 }
             },
             immediate: true
         }
     },
     methods: {
-        handleChecked() {
+        // 原生change事件
+        handleCheckboxChange(val) {
             if (this.disabled) return;
-            if (typeof this.value === 'boolean') {
-                this.$emit("update:value", !this.value);
-                this.$emit("input", !this.value);
-            } else {
-                if (this.currentValue.some(v => v === this.labelValue)) {
-                    this.currentValue = this.currentValue.filter(v => v !== this.labelValue)
-                } else {
-                    this.currentValue.push(this.labelValue)
-                }
-                this.$emit('input', this.currentValue);
-                if (this.$parent.$options._componentTag === 'ruyi-checkbox-group') {
-                    this.$parent.currentValue = this.currentValue;
-                }
-            }
+            this.$emit("input", val.target.checked);
+            this.$emit("change", val.target.checked);
+            
+        },
+        // group的change事件
+        handleGroupChange(val) {
+            this.$parent.handleAllValue(this.model);
         }
     }
 }
@@ -153,5 +148,9 @@ export default {
         border-color: #dcdee2;
         box-shadow: none;
     }
+}
+
+.ruyi-checkbox-input{
+    display: none;
 }
 </style>
