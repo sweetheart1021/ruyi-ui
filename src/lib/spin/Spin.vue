@@ -2,16 +2,18 @@
  * @Descripttion: Spin 加載中
  * @Author: lvjing
  * @Date: 2019-12-30 17:53:43
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-30 18:36:52
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-30 20:03:04
  -->
 <template>
     <div class="ruyi-spin-wapper">
         <div class="ruyi-spin-content">
             <slot name="label">
-                <i class="iconfont icon-jishi-copy-copy"></i>
+                <i class="iconfont icon-Loading"></i>
                 <br>
-                <span>加载中...</span>
+                <span>
+                    加载中<span v-for="item in dian" :key="item">.</span>
+                </span>
             </slot>
         </div>
         <slot></slot>
@@ -21,7 +23,28 @@
 
 <script>
 export default {
-
+    data() {
+        return {
+            dian: 1,
+            time: null
+        }
+    },
+    methods: {
+        handleDian() {
+            this.time = setInterval(() => {
+                this.dian+=1;
+                if (this.dian === 4) {
+                    this.dian = 0
+                }
+            }, 800)
+        }
+    },
+    mounted() {
+        this.handleDian();
+    },
+    destroyed() {
+        clearInterval(this.time)
+    }
 }
 </script>
 
@@ -40,7 +63,7 @@ export default {
     color: white;
     font-size: 14px;
 }
-.icon-jishi-copy-copy{
+.icon-Loading{
     color: white;
     display: inline-block;
     animation: loadings 20s linear infinite;

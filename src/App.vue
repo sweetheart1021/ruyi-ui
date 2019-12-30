@@ -2,11 +2,14 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-30 18:21:10
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-30 20:06:25
  -->
 <template>
     <div>
+        <div style="margin-top: 20px">
+            <ruyi-time-line></ruyi-time-line>
+        </div>
         <div style="margin-bottom: 20px">
             <ruyi-button>default</ruyi-button>
             <ruyi-button type='primary' @click="handleBtn" :loading="loading">Primary</ruyi-button>

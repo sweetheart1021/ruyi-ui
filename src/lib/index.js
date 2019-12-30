@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-30 17:54:21
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-30 20:05:16
  */
 import Button from './button';
 import Input from './input';
@@ -19,6 +19,7 @@ import Message from './message';
 import Table from './table';
 import BackTop from './backTop';
 import Spin from './spin';
+import TimeLine from './TimeLine';
 
 
 const component = {
@@ -37,7 +38,8 @@ const component = {
     RuyiPoptip: Poptip,
     RuyiTable: Table,
     RuyiBackTop: BackTop,
-    RuyiSpin: Spin
+    RuyiSpin: Spin,
+    RuyiTimeLine: TimeLine
 }
 
 const install = function(Vue, opts={}) {
