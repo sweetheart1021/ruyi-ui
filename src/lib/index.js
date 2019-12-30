@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 15:29:42
+ * @LastEditTime : 2019-12-30 16:23:18
  */
 import Button from './button';
 import Input from './input';
@@ -17,6 +17,7 @@ import Tooltip from './tooltip';
 import Poptip from './poptip';
 import Message from './message';
 import Table from './table';
+import BackTop from './backTop';
 
 
 const component = {
@@ -33,7 +34,8 @@ const component = {
     RuyiOption: Select.Option,
     RuyiTooltip: Tooltip,
     RuyiPoptip: Poptip,
-    RuyiTable: Table
+    RuyiTable: Table,
+    RuyiBackTop: BackTop
 }
 
 const install = function(Vue, opts={}) {

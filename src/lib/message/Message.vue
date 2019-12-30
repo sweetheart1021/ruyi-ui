@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 20:04:17
+ * @LastEditTime : 2019-12-30 17:17:38
  -->
 <template>
     <div class="ruyi-message-content">
@@ -62,7 +62,7 @@ export default {
     background: white;
     position: relative;
     animation: animationShow 0.4s forwards;
-    top: 24px;
+    top: 20px;
     margin-bottom: 10px;
     span{
         display: flex;

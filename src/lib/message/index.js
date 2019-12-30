@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-27 13:32:57
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 17:21:00
+ * @LastEditTime : 2019-12-30 17:18:10
  */
 import Vue from 'vue';
 
@@ -13,7 +13,7 @@ const MessageConstructor = Vue.extend(Message);
 
 let div = document.createElement("div");
 div.setAttribute("class", 'ruyi-message-wapper');
-div.setAttribute("style", 'position: fixed;width: 100%;top: 36px;text-align: center;')
+div.setAttribute("style", 'position: fixed;width: 100%;top: 20px;text-align: center;')
 document.body.appendChild(div);
 
 

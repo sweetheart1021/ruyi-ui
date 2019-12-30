@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 09:56:33
+ * @LastEditTime : 2019-12-30 10:03:22
  -->
 <template>
     <div class="ruyi-select" ref="ruyi-select">
@@ -247,6 +247,7 @@ export default {
     max-height: 200px;
     overflow: auto;
     text-align: left;
+    z-index: 2019;
 }
 
 .select-no-option{

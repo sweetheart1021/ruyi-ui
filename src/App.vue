@@ -2,12 +2,12 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lving
- * @LastEditTime : 2019-12-29 22:00:09
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2019-12-30 17:31:38
  -->
 <template>
     <div>
-        <!-- <div style="margin-bottom: 20px">
+        <div style="margin-bottom: 20px">
             <ruyi-button>default</ruyi-button>
             <ruyi-button type='primary' @click="handleBtn" :loading="loading">Primary</ruyi-button>
             <ruyi-button type='info' disabled @click="handleBtn">info</ruyi-button>
@@ -20,8 +20,8 @@
                 <i class="iconfont icon-wushuju" slot="icon"></i>
                 slot icon
             </ruyi-button>
-        </div> -->
-        <!-- <div style="margin-bottom: 20px">
+        </div>
+        <div style="margin-bottom: 20px">
             <ruyi-input v-model="inputValue" style="width: 200px"
                 @keyup.enter.native='handleInputKeyUpEnter'
                 @change="handleInputChange"
@@ -40,7 +40,7 @@
             <ruyi-input v-model="inputValue" style="margin-top: 15px; width: 200px">
                 <template slot="append">.com</template>
             </ruyi-input>
-        </div> -->
+        </div>
         <div style="margin-top: 20px">
             <!-- :value.sync="checkBool" -->
             <ruyi-checkbox  v-model="checkBool" style="margin-right: 30px"
@@ -158,20 +158,27 @@
             <!-- width='600px' -->
             <!-- @cell-click='handleCellClisk' -->
             <!-- @row-click='handleRowClick' -->
-            <ruyi-table :columns='columns' :data='data' :max-height='200' stripe>
+            <!-- <ruyi-table :columns='columns' :data='data' :max-height='200' stripe
+                @select='handleTableSelect'
+                @select-all="handleTableSelectAll"
+                width='820px'>
                 <template slot="sex" slot-scope="{ row }">
                     <span>{{ row.sex === 1 ? '男' : '女' }}</span>
                 </template>
                 <template slot="action" slot-scope="{ row }">
                     <ruyi-button type='text' @click.native.stop="handleDetail(row)">查看详情</ruyi-button>
                 </template>
-            </ruyi-table>
+            </ruyi-table> -->
         </div>
         <div style="margin-top: 20px">
             <ruyi-button type='success' @click="handleShowMessage('success')">显示成功</ruyi-button>
             <ruyi-button type='warning' @click="handleShowMessage('warning')">显示警告</ruyi-button>
             <ruyi-button type='danger' @click="handleShowMessage('error')">显示失败</ruyi-button>
             <ruyi-button type='primary' @click="handleShowMessage">显示默认</ruyi-button>
+        </div>
+
+        <div style="margin-top: 20px">
+            <ruyi-back-top :right='40' @click="handleBackTopClick"></ruyi-back-top>
         </div>
     </div>
 </template>
@@ -192,17 +199,20 @@ export default {
             drawer: false,
             selectValue: 2,
             columns: [
-                {type: 'selection', width: 60, align: 'center'},
+                {type: 'selection', width: 60, align: 'center', fixed: 'right'},
                 {title: '姓名', key: 'name'},
                 {title: '年龄', key: 'age', align: 'right'},
-                {title: '性别', key: 'sex'},
-                {title: '身高', key: 'height'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '体重', key: 'weight'},
-                {title: '操作', key: 'action', align: 'center'}
+                // {title: '性别', key: 'sex'},
+                // {title: '身高', key: 'height'},
+                // {title: '体重', key: 'weight'},
+                // {title: '体重', key: 'weight'},
+                // {title: '体重', key: 'weight'},
+                // {title: '体重', key: 'weight'},
+                // {title: '体重', key: 'weight'},
+                // {title: '体重', key: 'weight'},
+                // {title: '体重', key: 'weight'},
+                // {title: '体重', key: 'weight'},
+                {title: '操作', key: 'action', align: 'center', width: 120, }
             ],
             data: [
                 {age: 20, height: 165, weight: 65, sex: 1, name: '小王', id: 1},
@@ -277,6 +287,18 @@ export default {
         },
         handleCellClisk(row, column) {
             console.log(`单元格点击事件，当前点击当 行和列 分别是：`, row, column);
+        },
+        // 当用户手动勾选数据行的 Checkbox 时触发的事件
+        handleTableSelect(selection, row) {
+            console.log(selection, row);
+        },
+        // 	当用户手动勾选全选 Checkbox 时触发的事件
+        handleTableSelectAll(selection) {
+            console.log(selection)
+        },
+        // backUp 点击事件
+        handleBackTopClick() {
+            console.log('backUp 点击事件')
         }
     }
 }
