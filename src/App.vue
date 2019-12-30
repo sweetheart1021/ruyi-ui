@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-30 17:31:38
+ * @LastEditTime : 2019-12-30 18:21:10
  -->
 <template>
     <div>
@@ -179,6 +179,15 @@
 
         <div style="margin-top: 20px">
             <ruyi-back-top :right='40' @click="handleBackTopClick"></ruyi-back-top>
+        </div>
+
+        <div style="margin-top: 20px">
+            <ruyi-spin>
+                <p>凤凰台上凤凰游，凤去台空江自流。</p>
+                <p>吴宫花草埋幽径，晋代衣冠成古丘。</p>
+                <p>三山半落青天外，二水中分白鹭洲。</p>
+                <p>总为浮云能蔽日，长安不见使人愁。</p>
+            </ruyi-spin>
         </div>
     </div>
 </template>
