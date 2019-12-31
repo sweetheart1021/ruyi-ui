@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lving
- * @LastEditTime : 2019-12-30 20:06:25
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2019-12-31 14:30:30
  -->
 <template>
     <div>
@@ -185,12 +185,53 @@
         </div>
 
         <div style="margin-top: 20px">
-            <ruyi-spin>
+            <ruyi-spin v-model="spin" style="width: 600px">
                 <p>凤凰台上凤凰游，凤去台空江自流。</p>
                 <p>吴宫花草埋幽径，晋代衣冠成古丘。</p>
                 <p>三山半落青天外，二水中分白鹭洲。</p>
                 <p>总为浮云能蔽日，长安不见使人愁。</p>
             </ruyi-spin>
+            <ruyi-button type='danger' @click="spin=!spin">切换loading</ruyi-button>
+            <ruyi-spin v-model="spin" style="width: 600px">
+                <div slot="label">这里可以自定义label</div>
+                <p>凤凰台上凤凰游，凤去台空江自流。</p>
+                <p>吴宫花草埋幽径，晋代衣冠成古丘。</p>
+                <p>三山半落青天外，二水中分白鹭洲。</p>
+                <p>总为浮云能蔽日，长安不见使人愁。</p>
+            </ruyi-spin>
+        </div>
+        <div style="margin-top: 20px">
+            <ruyi-steps style="width: 1400px" v-model="steps" >
+                <ruyi-step title="已完成" content="这里是该步骤的描述信息">
+                    <div slot="title">这里可以slot title内容</div>
+                    <i class="iconfont icon-chenggong" slot="success" style="color: #2d8cf0"></i>
+                </ruyi-step>
+                <ruyi-step title='错误状态' content="这里是该步骤的描述信息" status='error'>
+                    <i class="iconfont icon-alert" slot="error"></i>
+                    <div slot="content">这里可以slot content内容</div>
+                </ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
+            </ruyi-steps>
+            <ruyi-button type='success' @click="steps = steps + 1" style="margin: 20px;">下一步</ruyi-button>
+            <ruyi-steps style="width: 1200px" v-model="steps" direction='vertical'>
+                <ruyi-step title="已完成" content="这里是该步骤的描述信息" status='error'>
+                    <i class="iconfont icon-alert" slot="error"></i>
+                </ruyi-step>
+                <ruyi-step title='错误中' content="这里是该步骤的描述信息">
+                    <div slot="title">这里可以slot title内容</div>
+                </ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息">
+                    <div slot="content">这里可以slot content内容</div>
+                </ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息">
+                    <i class="iconfont icon-chenggong" slot="success" style="color: #2d8cf0"></i>
+                </ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
+                <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
+            </ruyi-steps>
         </div>
     </div>
 </template>
@@ -239,7 +280,9 @@ export default {
                 {name: '小张', age: 21, sex: 2, height: 175, weight: 75, id: 10},
                 {name: '小陈', age: 22, sex: 1, height: 179, weight: 85, id: 11},
                 {name: '小谢', age: 23, sex: 2, height: 90, weight: 95, id: 12},
-            ]
+            ],
+            spin: true,
+            steps: 2
         }
     },
     methods: {

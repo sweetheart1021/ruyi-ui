@@ -2,12 +2,12 @@
  * @Descripttion: Spin 加載中
  * @Author: lvjing
  * @Date: 2019-12-30 17:53:43
- * @LastEditors  : lving
- * @LastEditTime : 2019-12-30 20:03:04
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2019-12-31 09:23:51
  -->
 <template>
     <div class="ruyi-spin-wapper">
-        <div class="ruyi-spin-content">
+        <div class="ruyi-spin-content" v-show="value">
             <slot name="label">
                 <i class="iconfont icon-Loading"></i>
                 <br>
@@ -17,16 +17,34 @@
             </slot>
         </div>
         <slot></slot>
-        <div class="ruyi-spin-back"></div>
+        <div :class="['ruyi-spin-back', !value ? 'ruyi-spin-hide' : null]"></div>
     </div>
 </template>
 
 <script>
 export default {
+    props: {
+        value: {
+            type: Boolean,
+            default: false
+        }
+    },
     data() {
         return {
             dian: 1,
             time: null
+        }
+    },
+    watch: {
+        value: {
+            handler(val) {
+                if (!val) {
+                   clearInterval(this.time)
+                } else {
+                    this.handleDian();
+                }
+            },
+            immediate: true
         }
     },
     methods: {
@@ -39,9 +57,6 @@ export default {
             }, 800)
         }
     },
-    mounted() {
-        this.handleDian();
-    },
     destroyed() {
         clearInterval(this.time)
     }
@@ -50,7 +65,6 @@ export default {
 
 <style lang="less" scoped>
 .ruyi-spin-wapper{
-    display: inline-block;
     position: relative;
 }
 .ruyi-spin-content{
@@ -62,6 +76,7 @@ export default {
     text-align: center;
     color: white;
     font-size: 14px;
+    user-select: none;
 }
 .icon-Loading{
     color: white;
@@ -84,6 +99,19 @@ export default {
     }
     to {
       transform: rotate(3600deg);
+    }
+}
+
+.ruyi-spin-hide {
+    animation: animationHide 0.8s forwards;
+}
+
+@keyframes animationHide {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0
     }
 }
 </style>
