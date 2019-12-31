@@ -1,12 +1,22 @@
 <!--
- * @Descripttion:
+ * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-31 14:30:30
+ * @LastEditTime : 2019-12-31 17:55:18
  -->
 <template>
     <div>
+        <div style="margin-top: 20px">
+            <ruyi-progress style="width: 600px" percent='30'>
+                <span>上传中...</span>
+            </ruyi-progress>
+            <ruyi-progress style="width: 600px" status='success' percent='100' hideInfo></ruyi-progress>
+            <ruyi-progress style="width: 600px" percent='80' hideInfo></ruyi-progress>
+            <ruyi-progress style="width: 600px" status='error' percent='100' hideInfo></ruyi-progress>
+            <ruyi-progress style="width: 600px" status='error' percent='40' height='15'></ruyi-progress>
+            <ruyi-progress style="width: 600px" percent='60' :stroke-color="['#108ee9', '#87d068']"></ruyi-progress>
+        </div>
         <div style="margin-top: 20px">
             <ruyi-time-line></ruyi-time-line>
         </div>
@@ -208,7 +218,7 @@
                 </ruyi-step>
                 <ruyi-step title='错误状态' content="这里是该步骤的描述信息" status='error'>
                     <i class="iconfont icon-alert" slot="error"></i>
-                    <div slot="content">这里可以slot content内容</div>
+
                 </ruyi-step>
                 <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
                 <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
@@ -218,7 +228,7 @@
             <ruyi-button type='success' @click="steps = steps + 1" style="margin: 20px;">下一步</ruyi-button>
             <ruyi-steps style="width: 1200px" v-model="steps" direction='vertical'>
                 <ruyi-step title="已完成" content="这里是该步骤的描述信息" status='error'>
-                    <i class="iconfont icon-alert" slot="error"></i>
+                    <!-- <i class="iconfont icon-alert" slot="error"></i> -->
                 </ruyi-step>
                 <ruyi-step title='错误中' content="这里是该步骤的描述信息">
                     <div slot="title">这里可以slot title内容</div>
@@ -233,6 +243,7 @@
                 <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
             </ruyi-steps>
         </div>
+
     </div>
 </template>
 
