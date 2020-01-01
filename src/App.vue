@@ -2,8 +2,8 @@
  * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-31 17:55:18
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-31 21:49:15
  -->
 <template>
     <div>
@@ -16,6 +16,13 @@
             <ruyi-progress style="width: 600px" status='error' percent='100' hideInfo></ruyi-progress>
             <ruyi-progress style="width: 600px" status='error' percent='40' height='15'></ruyi-progress>
             <ruyi-progress style="width: 600px" percent='60' :stroke-color="['#108ee9', '#87d068']"></ruyi-progress>
+            <ruyi-progress style="width: 600px" percent='90' :stroke-color="['#108ee9', '#87d068']" text-inside
+                height='15'></ruyi-progress>
+            <ruyi-progress style="width: 100px" percent='90' :stroke-color="['#108ee9', '#87d068']" text-inside
+                height='15'></ruyi-progress>
+        </div>
+        <div style="margin-top: 20px">
+            <ruyi-tag></ruyi-tag>
         </div>
         <div style="margin-top: 20px">
             <ruyi-time-line></ruyi-time-line>

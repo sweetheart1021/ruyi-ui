@@ -2,8 +2,8 @@
  * @Descripttion: message
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-30 17:17:38
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-31 21:44:16
  -->
 <template>
     <div class="ruyi-message-content">
@@ -13,7 +13,10 @@
                 <i class="iconfont icon-chenggong" v-if="type === 'success'"></i>
                 <i class="iconfont icon-iconjs" v-if="type === 'warning'"></i>
                 <i class="iconfont icon-shibai" v-if="type === 'error'"></i>
-                {{ message }}
+                <span :class="[type === 'error' ? 'icon-shibai' : null,
+                    type === 'warning' ? 'icon-iconjs' : null,
+                    type === 'success' ? 'icon-chenggong' : null
+                    ]">{{ message }}</span>
             </span>
         </div>
     </div>

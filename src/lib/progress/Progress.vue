@@ -2,8 +2,8 @@
  * @Descripttion: Progress 进度条
  * @Author: lvjing
  * @Date: 2019-12-31 15:58:24
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-31 18:00:28
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-31 21:36:40
  -->
 <template>
     <div class="ruyi-progress-wapper">
@@ -14,10 +14,12 @@
             ]"
                 :style="{width: isSuccess + '%','background-image':
                     strokeColorLength ? `linear-gradient(to right, ${strokeColor[0]} 0%, ${strokeColor[1]} 100%` : null,
+                    'line-height': parseInt(height) + 'px',
                 }">
+                <span class="ruyi-progress-label" v-if="textInside">{{ percent + "%" }}</span>
             </div>
         </div>
-        <div class="ruyi-progress-slot">
+        <div class="ruyi-progress-slot" v-if="!textInside">
             <slot>
                 <span class="ruyi-progress-percent" v-if="!hideInfo">{{ isSuccess + '%' }}</span>
                 <i class="iconfont icon-benpao" v-if='hideInfo && isSuccess < 100'></i>
@@ -64,6 +66,11 @@ export default {
             },
             default: 'horizontal'
         },
+        // 百分比数字是否显示到里面
+        textInside: {
+            type: Boolean,
+            default: false
+        }
     },
     computed: {
         isSuccess() {
@@ -83,6 +90,7 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 2px;
 }
 .ruyi-progress-slot{
     white-space:nowrap;
@@ -112,6 +120,8 @@ export default {
     height: inherit;
     border-radius: 100px;
     transition: all 0.4s ease;
+    text-align: right;
+    padding-right: 7px;
 }
 .ruyi-progress-bg-success{
     background: @success-color;
@@ -122,5 +132,9 @@ export default {
 .ruyi-progress-percent{
     color: #808695;
     font-size: 12px;
+}
+.ruyi-progress-label{
+    font-size: 12px;
+    color: white;
 }
 </style>

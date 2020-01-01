@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-31 15:59:20
+ * @LastEditors  : lving
+ * @LastEditTime : 2019-12-31 21:48:28
  */
 import Button from './button';
 import Input from './input';
@@ -22,6 +22,7 @@ import Spin from './spin';
 import TimeLine from './TimeLine';
 import Steps from './steps';
 import Progress from './progress';
+import Tag from './tag';
 
 
 const component = {
@@ -44,7 +45,8 @@ const component = {
     RuyiTimeLine: TimeLine,
     RuyiSteps: Steps,
     RuyiStep: Steps.Step,
-    RuyiProgress: Progress
+    RuyiProgress: Progress,
+    RuyiTag: Tag
 }
 
 const install = function(Vue, opts={}) {
