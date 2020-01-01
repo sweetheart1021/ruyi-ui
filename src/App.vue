@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lving
- * @LastEditTime : 2019-12-31 21:49:15
+ * @LastEditTime : 2020-01-01 21:29:20
  -->
 <template>
     <div>
@@ -22,7 +22,8 @@
                 height='15'></ruyi-progress>
         </div>
         <div style="margin-top: 20px">
-            <ruyi-tag></ruyi-tag>
+            <ruyi-tag>标签名称</ruyi-tag>
+            <ruyi-tag closable @close-click='handleTagCloseClick'>显示关闭</ruyi-tag>
         </div>
         <div style="margin-top: 20px">
             <ruyi-time-line></ruyi-time-line>
@@ -191,6 +192,7 @@
             </ruyi-table> -->
         </div>
         <div style="margin-top: 20px">
+            <ruyi-button type='primary' @click="handleShowMessage('primary')">显示primary</ruyi-button>
             <ruyi-button type='success' @click="handleShowMessage('success')">显示成功</ruyi-button>
             <ruyi-button type='warning' @click="handleShowMessage('warning')">显示警告</ruyi-button>
             <ruyi-button type='danger' @click="handleShowMessage('error')">显示失败</ruyi-button>
@@ -372,6 +374,10 @@ export default {
         // backUp 点击事件
         handleBackTopClick() {
             console.log('backUp 点击事件')
+        },
+        // tag 关闭按钮事件
+        handleTagCloseClick() {
+            console.log('tag 关闭按钮事件')
         }
     }
 }

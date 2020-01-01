@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-27 13:32:57
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-30 17:18:10
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-01 21:22:18
  */
 import Vue from 'vue';
 
@@ -33,7 +33,7 @@ const message = (options) => {
     return MessageInstance
 }
 
-['success', 'warning', 'error'].forEach(v => {
+['success', 'warning', 'error', 'primary'].forEach(v => {
     message[v] = options => {
         if (typeof options === 'string') {
             options = {

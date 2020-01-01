@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
  * @LastEditors  : lving
- * @LastEditTime : 2019-12-31 21:44:16
+ * @LastEditTime : 2020-01-01 21:23:33
  -->
 <template>
     <div class="ruyi-message-content">
@@ -13,9 +13,10 @@
                 <i class="iconfont icon-chenggong" v-if="type === 'success'"></i>
                 <i class="iconfont icon-iconjs" v-if="type === 'warning'"></i>
                 <i class="iconfont icon-shibai" v-if="type === 'error'"></i>
-                <span :class="[type === 'error' ? 'icon-shibai' : null,
-                    type === 'warning' ? 'icon-iconjs' : null,
-                    type === 'success' ? 'icon-chenggong' : null
+                <span :class="[type === 'error' ? 'ruyi-message-error' : null,
+                    type === 'warning' ? 'ruyi-message-warning' : null,
+                    type === 'success' ? 'ruyi-message-success' : null,
+                    type === 'primary' ? 'ruyi-message-primary' : null,
                     ]">{{ message }}</span>
             </span>
         </div>
@@ -96,16 +97,20 @@ export default {
 .iconfont{
     margin-right: 4px;
 }
-.icon-alert{
+.icon-alert,
+.ruyi-message-primary{
     color: @primary-color;
 }
-.icon-chenggong{
+.icon-chenggong,
+.ruyi-message-success{
     color: @success-color;
 }
-.icon-iconjs{
+.icon-iconjs,
+.ruyi-message-warning{
     color: @warning-color;
 }
-.icon-shibai{
+.icon-shibai,
+.ruyi-message-error{
     color: @danger-color;
 }
 
