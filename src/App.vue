@@ -2,8 +2,8 @@
  * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-01 21:29:20
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-02 10:08:51
  -->
 <template>
     <div>
@@ -24,6 +24,15 @@
         <div style="margin-top: 20px">
             <ruyi-tag>标签名称</ruyi-tag>
             <ruyi-tag closable @close-click='handleTagCloseClick'>显示关闭</ruyi-tag>
+             <ruyi-tag dot closable>显示点</ruyi-tag>
+            <ruyi-tag dot closable type='error'>显示点</ruyi-tag>
+            <ruyi-tag dot closable type='success'>显示点</ruyi-tag>
+            <ruyi-tag dot closable type='warning'>显示点</ruyi-tag>
+
+            <ruyi-tag dot closable color>显示color</ruyi-tag>
+            <ruyi-tag dot closable type='warning' color>显示color</ruyi-tag>
+            <ruyi-tag dot closable type='success' color>显示color</ruyi-tag>
+            <ruyi-tag dot closable type='error' color>显示color</ruyi-tag>
         </div>
         <div style="margin-top: 20px">
             <ruyi-time-line></ruyi-time-line>
@@ -378,7 +387,7 @@ export default {
         // tag 关闭按钮事件
         handleTagCloseClick() {
             console.log('tag 关闭按钮事件')
-        }
+        },
     }
 }
 </script>
