@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 14:30:47
+ * @LastEditTime : 2020-01-02 17:05:55
  */
 import Button from './button';
 import Input from './input';
@@ -24,6 +24,7 @@ import Progress from './progress';
 import Tag from './tag';
 import Badge from './badge';
 import Dropdown from './dropdown';
+import Cascader from './cascader'
 
 
 const component = {
@@ -50,7 +51,8 @@ const component = {
     RuyiBadge: Badge,
     RuyiDropdown: Dropdown,
     RuyiDropdownMenu: Dropdown.DropdownMenu,
-    RuyiDropdownItem: Dropdown.DropdownItem
+    RuyiDropdownItem: Dropdown.DropdownItem,
+    RuyiCascader: Cascader
 }
 
 const install = function(Vue, opts={}) {

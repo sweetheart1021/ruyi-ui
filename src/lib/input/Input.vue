@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 11:23:09
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 16:02:48
+ * @LastEditTime : 2020-01-02 17:15:32
  -->
 <template>
     <div :class="['ruyi-input-wapper', prepend ? 'ruyi-input-wapper-prepend' : null, append ? 'ruyi-input-wapper-append' : null ]">
@@ -270,18 +270,5 @@ export default {
     border-left: 0px;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
-}
-
-input::-webkit-input-placeholder{
-  color:#c5c8ce;
-}
-input::-moz-placeholder{   /* Mozilla Firefox 19+ */
-  color:#c5c8ce;
-}
-input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
-  color:#c5c8ce;
-}
-input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
-  color:#c5c8ce;
 }
 </style>

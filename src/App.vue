@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 16:42:30
+ * @LastEditTime : 2020-01-02 17:10:02
  -->
 <template>
     <div>
@@ -119,6 +119,9 @@
                 <i class="iconfont icon-wushuju" slot="icon"></i>
                 slot icon
             </ruyi-button>
+        </div>
+        <div style="margin-bottom: 20px">
+            <ruyi-cascader v-model="cascader" :options='options'></ruyi-cascader>
         </div>
         <div style="margin-bottom: 20px">
             <ruyi-input v-model="inputValue" style="width: 200px"
@@ -380,7 +383,58 @@ export default {
                 {name: '小谢', age: 23, sex: 2, height: 90, weight: 95, id: 12},
             ],
             spin: true,
-            steps: 2
+            steps: 2,
+            cascader: [],
+            options: [
+                {
+                    value: 'beijing',
+                    label: '北京',
+                    children: [
+                        {
+                            value: 'gugong',
+                            label: '故宫'
+                        },
+                        {
+                            value: 'tiantan',
+                            label: '天坛'
+                        },
+                        {
+                            value: 'wangfujing',
+                            label: '王府井'
+                        }
+                    ]
+                },
+                {
+                    value: 'jiangsu',
+                    label: '江苏',
+                    children: [
+                        {
+                            value: 'nanjing',
+                            label: '南京',
+                            children: [
+                                {
+                                    value: 'fuzimiao',
+                                    label: '夫子庙',
+                                }
+                            ]
+                        },
+                        {
+                            value: 'suzhou',
+                            label: '苏州',
+                            children: [
+                                {
+                                    value: 'zhuozhengyuan',
+                                    label: '拙政园',
+                                },
+                                {
+                                    value: 'shizilin',
+                                    label: '狮子林',
+                                }
+                            ]
+                        }
+                    ],
+                }
+            ]
         }
     },
     methods: {
