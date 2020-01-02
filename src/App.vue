@@ -2,8 +2,8 @@
  * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 17:10:02
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-02 23:29:21
  -->
 <template>
     <div>
@@ -121,7 +121,13 @@
             </ruyi-button>
         </div>
         <div style="margin-bottom: 20px">
-            <ruyi-cascader v-model="cascader" :options='options'></ruyi-cascader>
+            <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange" 
+                style="width: 200px" :props='props'></ruyi-cascader>
+            <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange" 
+                style="width: 200px" :props='props' clearable></ruyi-cascader>
+            <!-- <ruyi-cascader v-model="cascader" :options='options' disabled style="width: 200px"></ruyi-cascader> -->
+            <!-- <ruyi-cascader v-model="cascader" :options='options' disabled :background='false' style="width: 200px"></ruyi-cascader> -->
+            <!-- <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange" trigger='hover' style="width: 200px"></ruyi-cascader> -->
         </div>
         <div style="margin-bottom: 20px">
             <ruyi-input v-model="inputValue" style="width: 200px"
@@ -384,57 +390,64 @@ export default {
             ],
             spin: true,
             steps: 2,
-            cascader: [],
+            cascader: ["jiangsu", "nanjing", "fuzimiao"],
             options: [
                 {
-                    value: 'beijing',
-                    label: '北京',
-                    children: [
+                    values: 'beijing',
+                    labels: '北京',
+                    disableds: true,
+                    childrens: [
                         {
-                            value: 'gugong',
-                            label: '故宫'
+                            values: 'gugong',
+                            labels: '故宫'
                         },
                         {
-                            value: 'tiantan',
-                            label: '天坛'
+                            values: 'tiantan',
+                            labels: '天坛'
                         },
                         {
-                            value: 'wangfujing',
-                            label: '王府井'
+                            values: 'wangfujing',
+                            labels: '王府井'
                         }
                     ]
                 },
                 {
-                    value: 'jiangsu',
-                    label: '江苏',
-                    children: [
+                    values: 'jiangsu',
+                    labels: '江苏',
+                    childrens: [
                         {
-                            value: 'nanjing',
-                            label: '南京',
-                            children: [
+                            values: 'nanjing',
+                            labels: '南京',
+                            childrens: [
                                 {
-                                    value: 'fuzimiao',
-                                    label: '夫子庙',
+                                    values: 'fuzimiao',
+                                    labels: '夫子庙',
                                 }
                             ]
                         },
                         {
-                            value: 'suzhou',
-                            label: '苏州',
-                            children: [
+                            values: 'suzhou',
+                            labels: '苏州',
+                            childrens: [
                                 {
-                                    value: 'zhuozhengyuan',
-                                    label: '拙政园',
+                                    values: 'zhuozhengyuan',
+                                    labels: '拙政园',
                                 },
                                 {
-                                    value: 'shizilin',
-                                    label: '狮子林',
+                                    values: 'shizilin',
+                                    labels: '狮子林',
                                 }
                             ]
                         }
                     ],
                 }
-            ]
+            ],
+            props: {
+                value: 'values',
+                label: 'labels',
+                children: 'childrens',
+                disabled: 'disableds'
+            }
         }
     },
     methods: {
@@ -515,6 +528,10 @@ export default {
         handleDropDown() {
             console.log('dropdownItem点击事件')
         },
+        // cascader change事件
+        handleCascaderChange(val) {
+            console.log("cascader change事件:", val)
+        }
     }
 }
 </script>
