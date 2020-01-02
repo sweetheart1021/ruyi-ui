@@ -4,20 +4,12 @@
  * @Author: lvjing
  * @Date: 2019-12-31 21:47:20
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 10:09:58
+ * @LastEditTime : 2020-01-02 11:08:35
  -->
 <template>
-    <div :class="['ruyi-tag',
-        color ? 'ruyi-tag-primary' : null,
-        color && type === 'error' ? 'ruyi-tag-error' : null,
-        color && type === 'success' ? 'ruyi-tag-success' : null,
-        color && type === 'warning' ? 'ruyi-tag-warning' : null]">
+    <div :class="['ruyi-tag', color ? tagClassName : null]">
         <span class="ruyi-tag-label">
-            <div :class="['ruyi-tag-dot',
-                type === 'error' ? 'ruyi-tag-dot-error' : null,
-                type === 'success' ? 'ruyi-tag-dot-success' : null,
-                type === 'warning' ? 'ruyi-tag-dot-warning' : null,
-                ]" v-if="dot"></div>
+            <div :class="['ruyi-tag-dot', dotClassName]" v-if="dot"></div>
             <slot></slot>
             <i class="iconfont icon-cuowu" v-if="closable" @click="handleClose"></i>
         </span>
@@ -47,6 +39,14 @@ export default {
             default: false
         }
     },
+    computed: {
+        tagClassName() {
+            return `ruyi-tag-${this.type}`
+        },
+        dotClassName() {
+            return `ruyi-tag-dot-${this.type}`
+        }
+    },
     methods: {
         handleClose() {
             this.$emit("close-click");
@@ -61,7 +61,7 @@ export default {
     padding: 0 12px;
     border: 1px solid #e8eaec;
     display: inline-block;
-    border-radius: 3px;
+    border-radius: 4px;
     background: #f7f7f7;
     vertical-align: middle;
     opacity: 1;
@@ -119,6 +119,7 @@ export default {
     }
     .ruyi-tag-dot{
         background: white;
+        opacity: 0.66;
     }
 }
 .ruyi-tag-success{
@@ -129,6 +130,7 @@ export default {
     }
     .ruyi-tag-dot{
         background: white;
+        opacity: 0.66;
     }
 }
 .ruyi-tag-warning{
@@ -139,6 +141,7 @@ export default {
     }
     .ruyi-tag-dot{
         background: white;
+        opacity: 0.66;
     }
 }
 .ruyi-tag-error{
@@ -149,6 +152,7 @@ export default {
     }
     .ruyi-tag-dot{
         background: white;
+        opacity: 0.66;
     }
 }
 </style>

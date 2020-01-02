@@ -2,8 +2,8 @@
  * @Descripttion: message
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-01 21:23:33
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-02 11:07:52
  -->
 <template>
     <div class="ruyi-message-content">
@@ -13,11 +13,7 @@
                 <i class="iconfont icon-chenggong" v-if="type === 'success'"></i>
                 <i class="iconfont icon-iconjs" v-if="type === 'warning'"></i>
                 <i class="iconfont icon-shibai" v-if="type === 'error'"></i>
-                <span :class="[type === 'error' ? 'ruyi-message-error' : null,
-                    type === 'warning' ? 'ruyi-message-warning' : null,
-                    type === 'success' ? 'ruyi-message-success' : null,
-                    type === 'primary' ? 'ruyi-message-primary' : null,
-                    ]">{{ message }}</span>
+                <span :class="messageClassName">{{ message }}</span>
             </span>
         </div>
     </div>
@@ -32,6 +28,11 @@ export default {
             hideType: false,
             type: '',
             duration: 2000
+        }
+    },
+    computed: {
+        messageClassName() {
+            return `ruyi-message-${this.type}`
         }
     },
     methods: {

@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 10:08:51
+ * @LastEditTime : 2020-01-02 16:42:30
  -->
 <template>
     <div>
@@ -35,7 +35,76 @@
             <ruyi-tag dot closable type='error' color>显示color</ruyi-tag>
         </div>
         <div style="margin-top: 20px">
-            <ruyi-time-line></ruyi-time-line>
+            <ruyi-badge><div class="demo-badge"></div></ruyi-badge>
+            <ruyi-badge :count="100" style="margin-right: 20px"><div class="demo-badge"></div></ruyi-badge>
+            <ruyi-badge :count="100" overflow-count="99" style="margin-right: 20px"><div class="demo-badge"></div></ruyi-badge>
+            <ruyi-badge><div class="demo-badge"></div></ruyi-badge>
+            <ruyi-badge text='text'><div class="demo-badge"></div></ruyi-badge>
+            <ruyi-badge :count="5" type='primary' style="margin-right: 20px"><div class="demo-badge"></div></ruyi-badge>
+            <ruyi-badge :count="5" type='success' style="margin-right: 20px"><div class="demo-badge"></div></ruyi-badge>
+            <ruyi-badge :count="5" type='warning' style="margin-right: 20px"><div class="demo-badge"></div></ruyi-badge>
+        </div>
+        <div style="margin-top: 20px">
+            <ruyi-dropdown >
+                <ruyi-button type="primary">
+                    下拉菜单
+                </ruyi-button>
+                <ruyi-dropdown-menu slot="list">
+                    <ruyi-dropdown-item @click="handleDropDown()">驴打滚</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">炸酱面</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" disabled>豆汁儿</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">冰糖葫芦</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">北京烤鸭</ruyi-dropdown-item>
+                </ruyi-dropdown-menu>
+            </ruyi-dropdown>
+            <ruyi-dropdown placement='bottom-end'>
+                <ruyi-button type="danger">
+                    添加显示方位
+                </ruyi-button>
+                <ruyi-dropdown-menu slot="list">
+                    <ruyi-dropdown-item @click="handleDropDown()">驴打滚</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" disabled>炸酱面</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">豆汁儿</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">冰糖葫芦</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">北京烤鸭</ruyi-dropdown-item>
+                </ruyi-dropdown-menu>
+            </ruyi-dropdown>
+            <ruyi-dropdown placement='bottom-end' disabled>
+                <ruyi-button type="warning">
+                    禁用
+                </ruyi-button>
+                <ruyi-dropdown-menu slot="list">
+                    <ruyi-dropdown-item @click="handleDropDown()">驴打滚</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" disabled>炸酱面</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">豆汁儿</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">冰糖葫芦</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">北京烤鸭</ruyi-dropdown-item>
+                </ruyi-dropdown-menu>
+            </ruyi-dropdown>
+            <ruyi-dropdown trigger='click'>
+                <ruyi-button type="success">
+                    click 方式
+                </ruyi-button>
+                <ruyi-dropdown-menu slot="list">
+                    <ruyi-dropdown-item @click="handleDropDown()" divided>驴打滚</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" divided>炸酱面</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" selected>豆汁儿</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" disabled>冰糖葫芦</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">北京烤鸭</ruyi-dropdown-item>
+                </ruyi-dropdown-menu>
+            </ruyi-dropdown>
+            <ruyi-dropdown>
+                <ruyi-button>
+                    divided和disabled
+                </ruyi-button>
+                <ruyi-dropdown-menu slot="list">
+                    <ruyi-dropdown-item @click="handleDropDown()" divided>驴打滚</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" divided>炸酱面</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" selected>豆汁儿</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()" disabled>冰糖葫芦</ruyi-dropdown-item>
+                    <ruyi-dropdown-item @click="handleDropDown()">北京烤鸭</ruyi-dropdown-item>
+                </ruyi-dropdown-menu>
+            </ruyi-dropdown>
         </div>
         <div style="margin-bottom: 20px">
             <ruyi-button>default</ruyi-button>
@@ -388,6 +457,10 @@ export default {
         handleTagCloseClick() {
             console.log('tag 关闭按钮事件')
         },
+        // dropdownItem点击事件
+        handleDropDown() {
+            console.log('dropdownItem点击事件')
+        },
     }
 }
 </script>
@@ -397,5 +470,12 @@ body{
     font-size: 14px;
     font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
     color: #515a6e;
+}
+.demo-badge{
+    width: 42px;
+    height: 42px;
+    background: #eee;
+    border-radius: 6px;
+    display: inline-block;
 }
 </style>

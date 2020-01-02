@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
- * @LastEditors  : lving
- * @LastEditTime : 2019-12-31 21:48:28
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-02 14:30:47
  */
 import Button from './button';
 import Input from './input';
@@ -19,10 +19,11 @@ import Message from './message';
 import Table from './table';
 import BackTop from './backTop';
 import Spin from './spin';
-import TimeLine from './TimeLine';
 import Steps from './steps';
 import Progress from './progress';
 import Tag from './tag';
+import Badge from './badge';
+import Dropdown from './dropdown';
 
 
 const component = {
@@ -42,11 +43,14 @@ const component = {
     RuyiTable: Table,
     RuyiBackTop: BackTop,
     RuyiSpin: Spin,
-    RuyiTimeLine: TimeLine,
     RuyiSteps: Steps,
     RuyiStep: Steps.Step,
     RuyiProgress: Progress,
-    RuyiTag: Tag
+    RuyiTag: Tag,
+    RuyiBadge: Badge,
+    RuyiDropdown: Dropdown,
+    RuyiDropdownMenu: Dropdown.DropdownMenu,
+    RuyiDropdownItem: Dropdown.DropdownItem
 }
 
 const install = function(Vue, opts={}) {
