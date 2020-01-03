@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 10:41:02
+ * @LastEditTime : 2020-01-03 12:50:46
  -->
 <template>
     <div>
@@ -140,6 +140,35 @@
                 <ruyi-breadcrumb-item to='/components'>Components</ruyi-breadcrumb-item>
                 <ruyi-breadcrumb-item>Breadcrumb</ruyi-breadcrumb-item>
             </ruyi-breadcrumb>
+        </div>
+        <div style="margin-bottom: 20px">
+            <ruyi-alert style="margin-bottom: 5px">这里是alert</ruyi-alert>
+            <ruyi-alert style="margin-bottom: 5px" show-icon>
+                An info prompt
+                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
+            </ruyi-alert>
+            <ruyi-alert type='success' style="margin-bottom: 5px" show-icon>
+                A success prompt
+                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
+            </ruyi-alert>
+            <ruyi-alert type='error' style="margin-bottom: 5px" show-icon>
+                An error prompt
+                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
+            </ruyi-alert>
+            <ruyi-alert type='warning' style="margin-bottom: 5px" show-icon>
+                A warning prompt
+                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
+            </ruyi-alert>
+            <ruyi-alert show-icon style="margin-bottom: 5px">
+                自定义icon
+                <i class="iconfont icon-benpao" slot="icon" style="color: #2d8cf0"></i>
+                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
+            </ruyi-alert>
+            <ruyi-alert show-icon @close='handleAlertClose'>
+                自定义关闭
+                <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
+                <i class="iconfont icon-benpao" slot="close" style="color: #2d8cf0"></i>
+            </ruyi-alert>
         </div>
         <div style="margin-bottom: 20px">
             <ruyi-input v-model="inputValue" style="width: 200px"
@@ -543,6 +572,10 @@ export default {
         // cascader change事件
         handleCascaderChange(val) {
             console.log("cascader change事件:", val)
+        },
+        // alert 关闭时候事件
+        handleAlertClose() {
+            console.log('alert 关闭时候事件')
         }
     }
 }

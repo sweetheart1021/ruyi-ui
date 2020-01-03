@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 10:22:32
+ * @LastEditTime : 2020-01-03 10:46:24
  */
 import Button from './button';
 import Input from './input';
@@ -26,6 +26,7 @@ import Badge from './badge';
 import Dropdown from './dropdown';
 import Cascader from './cascader';
 import Breadcrumb from './breadcrumb';
+import Alert from './alert'
 
 
 const component = {
@@ -55,7 +56,8 @@ const component = {
     RuyiDropdownItem: Dropdown.DropdownItem,
     RuyiCascader: Cascader,
     RuyiBreadcrumb: Breadcrumb,
-    RuyiBreadcrumbItem: Breadcrumb.BreadcrumbItem
+    RuyiBreadcrumbItem: Breadcrumb.BreadcrumbItem,
+    RuyiAlert: Alert
 }
 
 const install = function(Vue, opts={}) {
