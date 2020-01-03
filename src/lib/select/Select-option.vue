@@ -3,20 +3,23 @@
  * @Author: lvjing
  * @Date: 2019-12-26 16:15:05
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 09:37:26
+ * @LastEditTime : 2020-01-03 18:02:06
  -->
 <template>
     <li :class="['ruyi-select-item', value === currentValue ? 'ruyi-select-item-checked' : null,
         diabled ? 'ruyi-select-item-disabled' : null]"
         @click.stop="handleClick">
-        <slot>{{ label }}</slot>
+        <slot :label='label'>{{ label }}</slot>
         <i class="iconfont icon-gou" v-if="value === currentValue && (!diabled && !showDiabled)" :style="diabled ? {color: '#c5c8ce'} : null"></i>
         <i class="iconfont icon-ban" v-if="diabled && showDiabled"></i>
     </li>
 </template>
 
 <script>
+import utils from './utils';
 export default {
+    name: 'select-option',
+    mixins: [utils],
     props: {
         label: {
             type: [String, Number]
@@ -39,12 +42,31 @@ export default {
             currentValue: ''
         }
     },
+    watch: {
+        currentValue: {
+            handler(val) {
+                if (val === this.value) {
+                    // this.$slots.default ? this.$slots.default[0].text : this.label
+                    console.log(this.$slots.default ? this.$slots.default[0].text : this.label);
+                    utils.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
+                } else if (val === '' || val === undefined) {
+                    utils.$emit("child-select-label", '');
+                }
+            },
+            immediate: true
+        }
+    },
     methods: {
         handleClick() {
             if (this.diabled) return;
-            this.$parent.$parent.currentValue = this.value;
+            utils.$emit("child-select-value", this.value)
             document.body.click();
         }
+    },
+    mounted() {
+        utils.$on("parent-set-value", (val) => {
+            this.currentValue = val;
+        });
     }
 }
 </script>
@@ -99,7 +121,7 @@ export default {
 }
 ::-webkit-scrollbar-thumb {
     border-radius: 20px;
-    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
     background: rgba(0,0,0,0.2);
 }
 ::-webkit-scrollbar-track {

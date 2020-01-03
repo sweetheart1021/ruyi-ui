@@ -3,12 +3,12 @@
  * @Author: lvjing
  * @Date: 2020-01-02 17:05:05
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 10:18:50
+ * @LastEditTime : 2020-01-03 14:25:52
  -->
 <template>
     <div class="ruyi-cascader">
         <popper trigger='click' :options="{'placement': 'bottom-start'}" :disabled='disabled'
-            @hide='handleHide' @show='handlePopperTogger' leave-active-class='hidden'
+            @hide='handleHide' @show='handlePopperTogger' leave-active-class='hidden' tagName='div'
             :force-show='forceShow'>
             <div class="ruyi-cascader-wapper">
                 <div class="ruyi-cascader-list" v-for="(list, i) in ulList" :key="i">

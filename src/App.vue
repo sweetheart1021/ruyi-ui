@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 12:50:46
+ * @LastEditTime : 2020-01-03 17:17:02
  -->
 <template>
     <div>
@@ -155,16 +155,16 @@
                 An error prompt
                 <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
             </ruyi-alert>
-            <ruyi-alert type='warning' style="margin-bottom: 5px" show-icon>
+            <ruyi-alert type='warning' style="margin-bottom: 5px" show-icon close>
                 A warning prompt
                 <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
             </ruyi-alert>
-            <ruyi-alert show-icon style="margin-bottom: 5px">
+            <ruyi-alert show-icon style="margin-bottom: 5px" close>
                 自定义icon
                 <i class="iconfont icon-benpao" slot="icon" style="color: #2d8cf0"></i>
                 <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
             </ruyi-alert>
-            <ruyi-alert show-icon @close='handleAlertClose'>
+            <ruyi-alert show-icon @close='handleAlertClose' close>
                 自定义关闭
                 <template slot="desc">Content of prompt. Content of prompt. Content of prompt. Content of prompt. </template>
                 <i class="iconfont icon-benpao" slot="close" style="color: #2d8cf0"></i>
@@ -251,7 +251,7 @@
                 <ruyi-option :value='3' label='橘子'></ruyi-option>
                 <ruyi-option :value='4' label='西瓜'></ruyi-option>
             </ruyi-select>
-            <ruyi-select style="width: 220px" v-model="selectValue">
+            <!-- <ruyi-select style="width: 220px" v-model="selectValue">
                 <div slot="no-data">好像没有数据</div>
                 <ruyi-option v-for="item in 0" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
             </ruyi-select>
@@ -263,9 +263,9 @@
             </ruyi-select>
             <ruyi-select style="width: 200px" v-model="selectValue" filterable>
                 <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
-            </ruyi-select>
+            </ruyi-select> -->
             <ruyi-select style="width: 200px" v-model="selectValue" clearable>
-                <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
+                <ruyi-option v-for="item in 10" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
             </ruyi-select>
         </div>
         <div style="margin-top: 20px">
@@ -398,7 +398,7 @@ export default {
             switchValue2: false,
             modal: false,
             drawer: false,
-            selectValue: 2,
+            selectValue: 3,
             columns: [
                 {type: 'selection', width: 60, align: 'center', fixed: 'right'},
                 {title: '姓名', key: 'name'},

@@ -3,44 +3,29 @@
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-30 10:03:22
+ * @LastEditTime : 2020-01-03 18:02:17
  -->
 <template>
-    <div class="ruyi-select" ref="ruyi-select">
-        <!-- @documentClick='handleDocumentClick' -->
-        <popper trigger="click" @show='handlePopperTogger' @hide='handlePopperTogger'
-            tagName='div' visible-arrow :disabled='disabled'>
-            <div class="ruyi-select-options-wapper" :style="optionWapperWidth">
-                <template v-if="slots">
+    <div class="ruyi-select">
+        <popper trigger="click" tagName='div' visible-arrow :disabled='disabled'
+            @show="reverse=true" @hide='handlePopperHide'>
+            <div class="ruyi-select-options-wapper">
+                <div class="ruyi-select-options-content">
                     <ul>
                         <slot></slot>
                     </ul>
-                </template>
-                <template v-else>
-                    <div class="select-no-option">
-                        <slot name="no-data">
-                            <i class="iconfont icon-wushuju"></i>
-                            <span>暂无数据</span>
-                        </slot>
-                    </div>
-                </template>
+                </div>
             </div>
 
-            <div :class="['ruyi-select-wapper', reverse && !disabled ? 'ruyi-select-wapper-focus' : null,
-                disabled ? 'ruyi-select-disabled' : null]" slot="reference"
-                @input="handleFilterInput"
-                @mouseenter="handleMouseenter"
-                @mouseleave="handleMouseleave">
-                {{ currentLabel }}
-                <span class="ruyi-select-placeholder"
-                    v-if="currentLabel === undefined || currentLabel === ''">
-                    {{ placeholder }}
-                </span>
+            <div class="ruyi-select-content" slot="reference" ref="ruyi-select-content"
+                @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon">
+                <input type="text" class="ruyi-input" :placeholder="placeholder" readonly :value="currentLabel">
                 <i :class="['iconfont icon-icon32210', reverse && !disabled ? 'is-reverse' : null]"
-                    ref="icon-icon32210"></i>
-                <i class="iconfont icon-qingkong"
-                    v-if="clearable && currentLabel !== undefined && currentLabel !== ''"
-                    @click.stop="hgandleClearable"></i>
+                    v-if="!changeIcon || !clearable || currentLabel === undefined || currentLabel === ''"
+                    @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon"></i>
+                <i class="iconfont icon-icon-test"
+                    v-if="clearable && currentLabel !== undefined && currentLabel !== '' && changeIcon"
+                    @click.stop="handleClear" @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon"></i>
             </div>
         </popper>
     </div>
@@ -48,8 +33,10 @@
 
 <script>
 import VuePopper from 'vue-popperjs';
+import utils from './utils';
 export default {
     name: 'select-option',
+    mixins: [utils],
     components: {
         'popper': VuePopper
     },
@@ -80,107 +67,60 @@ export default {
         value: {
             handler(val) {
                 this.currentValue = val;
-                this.handleChilrenValue();
+                utils.$emit("parent-set-value", this.currentValue);
             },
             immediate: true
         },
         currentValue(val) {
             this.$emit('input', val);
-            this.$emit("change", val);
-            this.handleSetLabel(val);
-        },
-    },
-    computed: {
-        slots(){
-            return this.$slots.default
-        },
-        label() {
-            let children = this.$children[0].$children;
-            let labels = children.filter(v => v.value === this.value);
-            if (labels.length) {
-                return labels[0].label ? labels[0].label : labels[0].$slots.default[0].text
-            }
-            return ''
         }
     },
     data() {
         return {
-            reverse: false,
             currentValue: this.value,
             currentLabel: '',
-            optionWapperWidth: ''
+            reverse: false,
+            // 清空图标和下拉图标切换
+            changeIcon: false
         }
     },
     methods: {
-        handleChilrenValue() {
-            setTimeout(() => {
-                let children = this.$children[0].$children;
-                children.forEach(v => {
-                    v.currentValue = this.currentValue;
-                });
-            }, 0)
+        handlePopperHide() {
+            this.reverse = false;
         },
-        handleSetLabel(val) {
-            let children = this.$children[0].$children;
-            let labels = children.filter(v => v.value === val);
-            if (labels.length) {
-                this.currentLabel =  labels[0].label ? labels[0].label : labels[0].$slots.default[0].text
-            } else {
-                this.currentLabel = ''
-            }
+        handleClear() {
+            this.$emit('input', "");
         },
-        handlePopperTogger() {
-            this.reverse = !this.reverse;
-        },
-        // handleDocumentClick() {
-        //     console.log('设置关闭')
-        // }
-        handleFilterInput(event) {
-            let children = this.$children[0].$children;
-            children.forEach(v => {
-                let label = v.label ? v.label : v.$slots.default[0].text;
-                console.log(label);
-            });
-        },
-        // 鼠标划入隐藏箭头
-        handleMouseenter() {
-            if (this.currentLabel && this.clearable) {
-                this.$refs['icon-icon32210'].setAttribute('style', 'display:none')
-            }
-        },
-        // 鼠标滑出显示箭头
-        handleMouseleave() {
-            if (this.currentLabel && this.clearable) {
-                this.$refs['icon-icon32210'].setAttribute('style', 'display:block')
-            }
-        },
-        // 清空事件
-        hgandleClearable() {
-            this.$nextTick(() => {
-                this.handleSetLabel('');
-                this.$emit('input', '');
-            });
+        handleChangeIcon() {
+            this.changeIcon = !this.changeIcon;
         }
     },
     mounted() {
-        this.optionWapperWidth = this.$refs['ruyi-select'].getAttribute("style");
-        this.handleSetLabel(this.value);
+        utils.$on("child-select-value", (val) => {
+            this.currentValue = val;
+        });
+        utils.$on("child-select-label", (val) => {
+            this.currentLabel = val;
+        });
+        utils.$emit("parent-set-value", this.value);
+
     }
 }
 </script>
 
 <style lang="less" scoped>
 @import '../../styles/index.less';
+
 .ruyi-select{
-    display: inline-table;
+    display: inline-block;
 }
-.ruyi-select-wapper{
-    display: inline-table;
-    position: relative;
+
+.ruyi-input{
     border: 1px solid #dcdee2;
     padding: 4px 7px;
     width: 100%;
     height: 32px;
+    line-height: 32px;
     border-radius: 4px;
     outline: none;
     box-sizing: border-box;
@@ -193,47 +133,23 @@ export default {
     position: relative;
     font-family: inherit;
     transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
-    .icon-qingkong{
-        display: none;
+}
+.ruyi-select-content:hover{
+    .ruyi-input{
+        border-color: @primary-color;
     }
 }
-.ruyi-select-wapper:hover{
-    border-color: @primary-color;
-    .icon-qingkong{
-        display: block;
-    }
-}
-.ruyi-select-wapper-focus{
+.ruyi-input:focus{
     box-shadow: 0 0 0 2px rgba(45,140,240,.2);
     border-color: @primary-color;
 }
-.ruyi-select-disabled{
-    background: #f3f3f3;
-    color: #ccc;
-    opacity: 1;
-}
-.ruyi-select-disabled:hover{
-    cursor: not-allowed;
-    border-color: #dcdee2;
-}
-.ruyi-select-placeholder{
-    color: #c5c8ce;
-}
-.icon-icon32210,
-.icon-qingkong{
-    position: absolute;
-    right: 8px;
-    top: 0px;
-    line-height: 28px;
-    color: #c0c4cc;
-    transition: transform .3s;
-    font-size: 12px;
-}
-.icon-qingkong{
-    color: #515a6e;
-}
-.is-reverse{
-    transform: rotate(180deg)
+
+
+.ruyi-select-content{
+    display: inline-block;
+    width: inherit;
+    position: relative;
+    width: 100%;
 }
 
 .ruyi-select-options-wapper{
@@ -244,10 +160,14 @@ export default {
     box-sizing: border-box;
     border-radius: 4px;
     box-shadow: 0 1px 6px rgba(0,0,0,.2);
-    max-height: 200px;
+    max-height: 180px;
     overflow: auto;
     text-align: left;
     z-index: 2019;
+    .ruyi-select-options-content{
+        animation: ivuSlideUpIn .3s;
+        width: 200px;
+    }
 }
 
 .select-no-option{
@@ -261,6 +181,21 @@ export default {
     }
 }
 
+.icon-icon32210,
+.icon-icon-test{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    transition: transform .3s;
+    font-size: 12px;
+    cursor: pointer;
+    z-index: inherit;
+}
+
+.is-reverse{
+    transform: rotate(180deg);
+}
+
 
 ::-webkit-scrollbar {
     width: 8px;
@@ -268,10 +203,23 @@ export default {
 }
 ::-webkit-scrollbar-thumb {
     border-radius: 20px;
-    -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
     background: rgba(0,0,0,0.2);
 }
 ::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.1);
+}
+
+@keyframes ivuSlideUpIn {
+    0% {
+        opacity: 0;
+        transform-origin: 0% 0%;
+        transform: scaleY(.8);
+    }
+    100% {
+        opacity: 1;
+        transform-origin: 0% 0%;
+        transform: scaleY(1);
+    }
 }
 </style>

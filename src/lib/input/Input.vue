@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 11:23:09
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 17:15:32
+ * @LastEditTime : 2020-01-03 16:53:47
  -->
 <template>
     <div :class="['ruyi-input-wapper', prepend ? 'ruyi-input-wapper-prepend' : null, append ? 'ruyi-input-wapper-append' : null ]">
@@ -40,7 +40,7 @@
             <slot name="append"></slot>
         </div>
         <template v-if="clearable && value">
-            <i class="iconfont icon-qingkong" @click="handleClearAble"></i>
+            <i class="iconfont icon-icon-test" @click="handleClearAble"></i>
         </template>
         <template v-if="search">
             <i class="iconfont icon--search" @click="handleSearch"></i>
@@ -199,7 +199,7 @@ export default {
     color: #ccc;
 }
 .ruyi-input-wapper:hover{
-    .icon-qingkong{
+    .icon-icon-test{
         display: block;
     }
 }
@@ -208,7 +208,7 @@ export default {
     color: #515a6e !important;
 }
 .icon-xianshimima,
-.icon-qingkong,
+.icon-icon-test,
 .icon--search,
 .icon-xianshimima1{
     font-size: 12px;
@@ -219,7 +219,7 @@ export default {
     cursor: pointer;
     color: #515a6e;
 }
-.icon-qingkong{
+.icon-icon-test{
     display: none;
 }
 

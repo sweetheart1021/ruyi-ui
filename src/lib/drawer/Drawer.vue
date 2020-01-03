@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 11:17:31
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 12:28:36
+ * @LastEditTime : 2020-01-03 13:39:09
  -->
 <template>
     <transition name="slide-fade">
@@ -77,8 +77,11 @@ export default {
                 if (val) {
                     document.body.setAttribute("style", 'overflow:hidden');
                 } else {
-                    document.body.setAttribute("style", '');
+
                     this.btnLoading = false;
+                    setTimeout(() => {
+                        document.body.setAttribute("style", '');
+                    }, 500)
                 }
             },
             immediate: true
@@ -122,6 +125,7 @@ export default {
         right: 0;
         height: 100%;
         overflow: hidden;
+        animation: ivuSlideRightIn .6s forwards;
         .ruyi-drawer-header{
             border-bottom: 1px solid #e8eaec;
             padding: 14px 16px;
@@ -164,7 +168,19 @@ export default {
   transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-enter, .slide-fade-leave-to{
-  transform: translateX(10px);
-  opacity: 0;
+    transform: translateX(10px);
+    opacity: 0;
+}
+@keyframes ivuSlideRightIn {
+    0% {
+        // opacity: 0;
+        transform-origin: 100% 0%;
+        transform: scaleX(.8);
+    }
+    100% {
+        opacity: 1;
+        transform-origin: 100% 0%;
+        transform: scaleX(1);
+    }
 }
 </style>

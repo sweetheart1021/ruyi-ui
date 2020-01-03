@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2020-01-03 10:45:44
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 12:51:34
+ * @LastEditTime : 2020-01-03 17:06:17
  -->
 <template>
     <div :class="['ruyi-alert', className]" v-if="visible">
@@ -22,7 +22,7 @@
                     <slot name="desc"></slot>
                 </span>
             </div>
-            <div class="ruyi-alert-close" @click="handleClose">
+            <div class="ruyi-alert-close" @click="handleClose" v-if="close">
                 <slot name="close">
                     <i class="iconfont icon-cuowu"></i>
                 </slot>
@@ -110,7 +110,6 @@ export default {
 .ruyi-alert-label{
     display: block;
     font-size: 14px;
-    color: #17233d;
     margin-bottom: 4px;
 }
 .ruyi-alert-desc{
