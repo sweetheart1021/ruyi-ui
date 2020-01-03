@@ -2,8 +2,8 @@
  * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-02 23:29:21
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-03 10:41:02
  -->
 <template>
     <div>
@@ -121,13 +121,25 @@
             </ruyi-button>
         </div>
         <div style="margin-bottom: 20px">
-            <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange" 
+            <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange"
                 style="width: 200px" :props='props'></ruyi-cascader>
-            <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange" 
+            <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange"
                 style="width: 200px" :props='props' clearable></ruyi-cascader>
             <!-- <ruyi-cascader v-model="cascader" :options='options' disabled style="width: 200px"></ruyi-cascader> -->
             <!-- <ruyi-cascader v-model="cascader" :options='options' disabled :background='false' style="width: 200px"></ruyi-cascader> -->
             <!-- <ruyi-cascader v-model="cascader" :options='options' @change="handleCascaderChange" trigger='hover' style="width: 200px"></ruyi-cascader> -->
+        </div>
+        <div style="margin-bottom: 20px">
+            <ruyi-breadcrumb>
+                <ruyi-breadcrumb-item to='/home'>Home</ruyi-breadcrumb-item>
+                <ruyi-breadcrumb-item to='/components'>Components</ruyi-breadcrumb-item>
+                <ruyi-breadcrumb-item>Breadcrumb</ruyi-breadcrumb-item>
+            </ruyi-breadcrumb>
+            <ruyi-breadcrumb separator="<b class='demo-breadcrumb-separator'>=></b>">
+                <ruyi-breadcrumb-item to='/home'>Home</ruyi-breadcrumb-item>
+                <ruyi-breadcrumb-item to='/components'>Components</ruyi-breadcrumb-item>
+                <ruyi-breadcrumb-item>Breadcrumb</ruyi-breadcrumb-item>
+            </ruyi-breadcrumb>
         </div>
         <div style="margin-bottom: 20px">
             <ruyi-input v-model="inputValue" style="width: 200px"

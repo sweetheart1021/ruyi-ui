@@ -2,13 +2,14 @@
  * @Descripttion: Cascader 连级选择
  * @Author: lvjing
  * @Date: 2020-01-02 17:05:05
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-02 23:34:35
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-03 10:18:50
  -->
 <template>
     <div class="ruyi-cascader">
         <popper trigger='click' :options="{'placement': 'bottom-start'}" :disabled='disabled'
-            @hide='handleHide' @show='handlePopperTogger'>
+            @hide='handleHide' @show='handlePopperTogger' leave-active-class='hidden'
+            :force-show='forceShow'>
             <div class="ruyi-cascader-wapper">
                 <div class="ruyi-cascader-list" v-for="(list, i) in ulList" :key="i">
                     <ul class="ruyi-cascader-ul">
@@ -29,15 +30,13 @@
             </div>
 
             <div class="ruyi-cascader-input" slot="reference">
-                <input type="text" :class="['ruyi-input', 
+                <input type="text" :class="['ruyi-input',
                     disabled ? 'ruyi-cascader-disabled' : null,
                     !background ? 'no-background' : null
-                    ]" 
+                    ]"
                     readonly :placeholder="placeholder"
                     v-model="inputLable">
                 <i :class="['iconfont icon-icon32210', reverse && !disabled ? 'is-reverse' : null]"></i>
-                <i class="iconfont icon-qingkong"
-                    v-if="showClearable"></i>
             </div>
         </popper>
     </div>
@@ -102,6 +101,9 @@ export default {
         },
         showClearable() {
             return this.clearable && this.finallyValue.length
+        },
+        hideJiantou() {
+            return !this.clearableIcon
         }
     },
     watch: {
@@ -123,7 +125,10 @@ export default {
             finallyLable: [],
             finallyValue: [],
             // 旋转箭头
-            reverse: false
+            reverse: false,
+            // 显示清空按钮
+            clearableIcon: false,
+            forceShow: false
         }
     },
     methods: {
@@ -193,9 +198,19 @@ export default {
                         children = children.filter(c =>  c[this.props.value] === v)[0][this.props.children]
                     }
                 }
-                
+
             });
             return arr
+        },
+        handleShowCleaable() {
+            this.clearableIcon = !this.clearableIcon;
+        },
+        handleClearAble(e) {
+            console.log(e);
+            // e.stopPropagation();
+            this.forceShow = false;
+            Object.assign(this.$data, this.$options.data());
+            this.$emit('input', [])
         }
     }
 }
@@ -206,6 +221,7 @@ export default {
 .ruyi-cascader{
     display: inline-block;
 }
+
 .ruyi-cascader-input{
     display: inline-block;
     position: relative;
@@ -220,7 +236,7 @@ export default {
     border-radius: 4px;
     outline: none;
     box-sizing: border-box;
-    cursor: text;
+    cursor: pointer;
     color: #515a6e;
     background: white;
     overflow: hidden;
@@ -237,6 +253,7 @@ export default {
     box-shadow: 0 0 0 2px rgba(45,140,240,.2);
     border-color: @primary-color;
 }
+
 .ruyi-cascader-disabled{
     background: #f3f3f3;
     color: #ccc;
@@ -349,6 +366,8 @@ export default {
 }
 .icon-qingkong{
     color: #515a6e;
+    cursor: pointer;
+    display: none;
 }
 .is-reverse{
     transform: rotate(180deg)
