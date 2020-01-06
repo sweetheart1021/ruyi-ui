@@ -3,23 +3,32 @@
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 18:02:17
+ * @LastEditTime : 2020-01-06 18:37:21
  -->
 <template>
     <div class="ruyi-select">
-        <popper trigger="click" tagName='div' visible-arrow :disabled='disabled'
+        <popper trigger="clickToOpen" tagName='div' visible-arrow :disabled='disabled'
             @show="reverse=true" @hide='handlePopperHide'>
             <div class="ruyi-select-options-wapper">
                 <div class="ruyi-select-options-content">
-                    <ul>
+                    <ul v-if="!noData">
                         <slot></slot>
                     </ul>
+                    <div class="select-no-option" v-if="noData">
+                        <slot name="no-data">
+                            <i class="iconfont icon-wushuju1"></i>
+                            <span>{{ notFoundText }}</span>
+                        </slot>
+                    </div>
                 </div>
             </div>
 
             <div class="ruyi-select-content" slot="reference" ref="ruyi-select-content"
                 @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon">
-                <input type="text" class="ruyi-input" :placeholder="placeholder" readonly :value="currentLabel">
+                <input type="text" class="ruyi-input"
+                    :placeholder="placeholder" :readonly='!filterable'
+                    v-model="currentLabel">
+
                 <i :class="['iconfont icon-icon32210', reverse && !disabled ? 'is-reverse' : null]"
                     v-if="!changeIcon || !clearable || currentLabel === undefined || currentLabel === ''"
                     @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon"></i>
@@ -33,10 +42,14 @@
 
 <script>
 import VuePopper from 'vue-popperjs';
-import utils from './utils';
+import { findComponentsDownward } from '../../utli'
 export default {
-    name: 'select-option',
-    mixins: [utils],
+    name: 'ruyi-select',
+    provide() {
+        return {
+            'select': this
+        }
+    },
     components: {
         'popper': VuePopper
     },
@@ -61,49 +74,71 @@ export default {
         clearable: {
             type: Boolean,
             default: false
+        },
+        notFoundText: {
+            type: String,
+            default: '暂无匹配数据'
         }
     },
     watch: {
         value: {
             handler(val) {
                 this.currentValue = val;
-                utils.$emit("parent-set-value", this.currentValue);
+                this.$emit("parent-set-value", this.currentValue);
             },
             immediate: true
         },
         currentValue(val) {
             this.$emit('input', val);
+        },
+        currentLabel(val, oldVal) {
+            let options = findComponentsDownward(this, 'select-option');
+            options.forEach(v => {
+                let label = v.label ? v.label : v.$slots.default[0].text;
+                if (label.indexOf(val) !== -1) {
+                    v.hidden = false;
+                } else {
+                    v.hidden = true;
+                }
+            });
+            console.log(options);
         }
     },
     data() {
         return {
             currentValue: this.value,
             currentLabel: '',
+            backUpLabel: '',
             reverse: false,
             // 清空图标和下拉图标切换
-            changeIcon: false
+            changeIcon: false,
+            // 暂无数据
+            noData: false
         }
     },
     methods: {
         handlePopperHide() {
             this.reverse = false;
+            if (this.currentLabel === '' && this.currentValue !== '') {
+                this.currentLabel = this.backUpLabel;
+            }
         },
         handleClear() {
             this.$emit('input', "");
         },
         handleChangeIcon() {
             this.changeIcon = !this.changeIcon;
-        }
+        },
     },
     mounted() {
-        utils.$on("child-select-value", (val) => {
+        this.$on("child-select-value", (val) => {
             this.currentValue = val;
         });
-        utils.$on("child-select-label", (val) => {
+        this.$on("child-select-label", (val) => {
             this.currentLabel = val;
+            this.backUpLabel = val;
         });
-        utils.$emit("parent-set-value", this.value);
-
+        this.$emit("parent-set-value", this.value);
     }
 }
 </script>
@@ -165,7 +200,7 @@ export default {
     text-align: left;
     z-index: 2019;
     .ruyi-select-options-content{
-        animation: ivuSlideUpIn .3s;
+        animation: slideUpIn .3s;
         width: 200px;
     }
 }
@@ -178,6 +213,8 @@ export default {
     user-select: none;
     i{
         margin-right: 5px;
+        display: block;
+        font-size: 22px;
     }
 }
 
@@ -210,8 +247,8 @@ export default {
     background: rgba(0,0,0,0.1);
 }
 
-@keyframes ivuSlideUpIn {
-    0% {
+@keyframes slideUpIn {
+   0% {
         opacity: 0;
         transform-origin: 0% 0%;
         transform: scaleY(.8);
@@ -220,6 +257,18 @@ export default {
         opacity: 1;
         transform-origin: 0% 0%;
         transform: scaleY(1);
+    }
+}
+@keyframes slideUpOut {
+    0% {
+        opacity: 1;
+        transform-origin: 100% 100%;
+        transform: scaleY(1);
+    }
+    100% {
+        opacity: 0;
+        transform-origin: 100% 100%;
+        transform: scaleY(.8);
     }
 }
 </style>

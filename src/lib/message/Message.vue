@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 11:07:52
+ * @LastEditTime : 2020-01-06 17:54:35
  -->
 <template>
     <div class="ruyi-message-content">
@@ -69,6 +69,7 @@ export default {
     animation: animationShow 0.4s forwards;
     top: 20px;
     margin-bottom: 10px;
+    transition: all 0.3s;
     span{
         display: flex;
         align-items: center;
@@ -85,14 +86,15 @@ export default {
 }
 .ruyi-message-hide{
     animation: animationHide 2s forwards;
+    transition: opacity .3s,top .4s;
 }
 @keyframes animationHide {
     from{
         opacity: 1;
     }
     to{
-        top: 0;
-        opacity: 0
+        top: -24px;
+        opacity: 0.7
     }
 }
 .iconfont{

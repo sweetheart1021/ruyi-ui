@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 17:17:02
+ * @LastEditTime : 2020-01-06 14:13:52
  -->
 <template>
     <div>
@@ -245,11 +245,12 @@
         </ruyi-drawer>
         <div style="margin-top: 20px">
             <ruyi-select style="width: 200px" v-model="selectValue"
-                @change="handleSelectChange" clearable>
+                @change="handleSelectChange" clearable filterable>
                 <ruyi-option :value='1'>苹果</ruyi-option>
                 <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
                 <ruyi-option :value='3' label='橘子'></ruyi-option>
                 <ruyi-option :value='4' label='西瓜'></ruyi-option>
+                <ruyi-option :value='5' label='橘子2'></ruyi-option>
             </ruyi-select>
             <!-- <ruyi-select style="width: 220px" v-model="selectValue">
                 <div slot="no-data">好像没有数据</div>
@@ -264,9 +265,9 @@
             <ruyi-select style="width: 200px" v-model="selectValue" filterable>
                 <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
             </ruyi-select> -->
-            <ruyi-select style="width: 200px" v-model="selectValue" clearable>
+            <!-- <ruyi-select style="width: 200px" v-model="selectValue2" clearable>
                 <ruyi-option v-for="item in 10" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
-            </ruyi-select>
+            </ruyi-select> -->
         </div>
         <div style="margin-top: 20px">
             <ruyi-tooltip content='这里是content内容'>
@@ -399,6 +400,7 @@ export default {
             modal: false,
             drawer: false,
             selectValue: 3,
+            selectValue2: 4,
             columns: [
                 {type: 'selection', width: 60, align: 'center', fixed: 'right'},
                 {title: '姓名', key: 'name'},

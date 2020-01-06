@@ -3,11 +3,12 @@
  * @Author: lvjing
  * @Date: 2019-12-26 16:15:05
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 18:02:06
+ * @LastEditTime : 2020-01-06 14:09:29
  -->
 <template>
     <li :class="['ruyi-select-item', value === currentValue ? 'ruyi-select-item-checked' : null,
         diabled ? 'ruyi-select-item-disabled' : null]"
+        :style="hidden ? 'display: none' : null"
         @click.stop="handleClick">
         <slot :label='label'>{{ label }}</slot>
         <i class="iconfont icon-gou" v-if="value === currentValue && (!diabled && !showDiabled)" :style="diabled ? {color: '#c5c8ce'} : null"></i>
@@ -16,10 +17,9 @@
 </template>
 
 <script>
-import utils from './utils';
 export default {
     name: 'select-option',
-    mixins: [utils],
+    inject: ['select'],
     props: {
         label: {
             type: [String, Number]
@@ -39,18 +39,17 @@ export default {
     },
     data() {
         return {
-            currentValue: ''
+            currentValue: '',
+            hidden: false, // 是否隐藏
         }
     },
     watch: {
         currentValue: {
             handler(val) {
                 if (val === this.value) {
-                    // this.$slots.default ? this.$slots.default[0].text : this.label
-                    console.log(this.$slots.default ? this.$slots.default[0].text : this.label);
-                    utils.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
+                    this.select.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
                 } else if (val === '' || val === undefined) {
-                    utils.$emit("child-select-label", '');
+                    this.select.$emit("child-select-label", '');
                 }
             },
             immediate: true
@@ -59,12 +58,13 @@ export default {
     methods: {
         handleClick() {
             if (this.diabled) return;
-            utils.$emit("child-select-value", this.value)
+            this.select.$emit("child-select-value", this.value);
+            this.select.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
             document.body.click();
         }
     },
     mounted() {
-        utils.$on("parent-set-value", (val) => {
+        this.select.$on("parent-set-value", (val) => {
             this.currentValue = val;
         });
     }
