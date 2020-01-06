@@ -2,16 +2,16 @@
  * @Descripttion: select -- option
  * @Author: lvjing
  * @Date: 2019-12-26 16:15:05
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-06 14:09:29
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-06 23:11:59
  -->
 <template>
-    <li :class="['ruyi-select-item', value === currentValue ? 'ruyi-select-item-checked' : null,
+    <li :class="['ruyi-select-item', isSelect ? 'ruyi-select-item-checked' : null,
         diabled ? 'ruyi-select-item-disabled' : null]"
         :style="hidden ? 'display: none' : null"
         @click.stop="handleClick">
         <slot :label='label'>{{ label }}</slot>
-        <i class="iconfont icon-gou" v-if="value === currentValue && (!diabled && !showDiabled)" :style="diabled ? {color: '#c5c8ce'} : null"></i>
+        <i class="iconfont icon-gou" v-if=" isSelect && (!diabled && !showDiabled)" :style="diabled ? {color: '#c5c8ce'} : null"></i>
         <i class="iconfont icon-ban" v-if="diabled && showDiabled"></i>
     </li>
 </template>
@@ -37,19 +37,37 @@ export default {
             default: false
         }
     },
+    computed: {
+        isSelect() {
+            if (!this.multiple) {
+                return this.value === this.currentValue;
+            } else {
+                return this.currentValue.some(v => v === this.value)
+            }
+        }
+    },
     data() {
         return {
             currentValue: '',
-            hidden: false, // 是否隐藏
+            hidden: false, // 是否隐藏,
+            multiple: false
         }
     },
     watch: {
         currentValue: {
             handler(val) {
-                if (val === this.value) {
-                    this.select.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
-                } else if (val === '' || val === undefined) {
-                    this.select.$emit("child-select-label", '');
+                if (!this.multiple) {
+                    if (val === this.value) {
+                        this.select.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
+                    } else if (val === '' || val === undefined) {
+                        this.select.$emit("child-select-label", '');
+                    }
+                } else {
+                    this.select.$emit("child-select-label", {
+                        value: this.value,
+                        type: this.currentValue.some(v => v === this.value),
+                        label: this.$slots.default ? this.$slots.default[0].text : this.label
+                    });
                 }
             },
             immediate: true
@@ -58,15 +76,31 @@ export default {
     methods: {
         handleClick() {
             if (this.diabled) return;
-            this.select.$emit("child-select-value", this.value);
-            this.select.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
-            document.body.click();
+            if (this.multiple) {
+               let selectValue = [];
+               let filterVaule = this.currentValue.filter(v => v !== this.value);
+                if (filterVaule.length === this.currentValue.length - 1) {
+                   selectValue = filterVaule;
+                } else {
+                   selectValue = filterVaule.concat([this.value])
+                }
+                this.select.$emit("child-select-value", selectValue);
+            } else {
+                this.select.$emit("child-select-value", this.value);
+                this.select.$emit("child-select-label", this.$slots.default ? this.$slots.default[0].text : this.label);
+            }
+            if (!this.multiple) {
+                document.body.click();
+            }
         }
     },
     mounted() {
         this.select.$on("parent-set-value", (val) => {
             this.currentValue = val;
         });
+        this.select.$on("parent-set-multiple", multipleType => {
+            this.multiple = multipleType;
+        })
     }
 }
 </script>
@@ -89,7 +123,6 @@ export default {
 }
 .ruyi-select-item-checked{
     color: @primary-color;
-    background: #f3f3f3;
     transition: background .2s ease-in-out;
 }
 

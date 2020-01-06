@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-06 18:37:21
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-06 23:21:28
  -->
 <template>
     <div class="ruyi-select">
@@ -11,30 +11,52 @@
             @show="reverse=true" @hide='handlePopperHide'>
             <div class="ruyi-select-options-wapper">
                 <div class="ruyi-select-options-content">
-                    <ul v-if="!noData">
+                    <ul v-show="!noData" v-if="!remote">
                         <slot></slot>
                     </ul>
-                    <div class="select-no-option" v-if="noData">
+                    <ul v-show="!noData" v-if="remote" :class="loading ? 'select-no-option' : null">
+                        <template v-if="loading">
+                            <i class="iconfont icon-xingzhuang"></i>
+                            <br>
+                            <span>数据正在加载...</span>
+                        </template>
+                        <slot v-else></slot>
+                    </ul>
+                    <div class="select-no-option" v-show="noData">
                         <slot name="no-data">
                             <i class="iconfont icon-wushuju1"></i>
+                            <br>
                             <span>{{ notFoundText }}</span>
                         </slot>
                     </div>
                 </div>
             </div>
 
-            <div class="ruyi-select-content" slot="reference" ref="ruyi-select-content"
+            <div slot="reference" ref="ruyi-select-content"
+                :class="['ruyi-select-content', reverse ? 'ruyi-select-content-fouce' : null]" 
                 @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon">
-                <input type="text" class="ruyi-input"
+
+                <!-- <div v-if="multiple" class="ruyi-multiple-wapper"> -->
+                    <template v-for="(item, index) in backUpMultiple">
+                        <span :key="index" class='ruyi-multiple-tag'>
+                            {{ item.label }}
+                            <i class="iconfont icon-guanbi" @click.stop="handleDel(item)"></i>
+                        </span>
+                    </template>
+                <!-- </div> -->
+
+                <input type="text" class="ruyi-select-input"
                     :placeholder="placeholder" :readonly='!filterable'
                     v-model="currentLabel">
 
                 <i :class="['iconfont icon-icon32210', reverse && !disabled ? 'is-reverse' : null]"
                     v-if="!changeIcon || !clearable || currentLabel === undefined || currentLabel === ''"
                     @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon"></i>
+
                 <i class="iconfont icon-icon-test"
                     v-if="clearable && currentLabel !== undefined && currentLabel !== '' && changeIcon"
                     @click.stop="handleClear" @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon"></i>
+
             </div>
         </popper>
     </div>
@@ -55,7 +77,7 @@ export default {
     },
     props: {
         value: {
-            type: [String, Number]
+            type: [String, Number, Array]
         },
         placeholder: {
             type: String,
@@ -70,6 +92,20 @@ export default {
             type: Boolean,
             default: false
         },
+        // 开启远程搜索
+        remote: {
+            type: Boolean,
+            default: false
+        },
+        // 远程搜索方法
+        remoteMethod: {
+            type: Function
+        },
+        // 远程搜索显示loading
+        loading: {
+            type: Boolean,
+            default: false
+        },
         // 显示清空图标
         clearable: {
             type: Boolean,
@@ -78,6 +114,11 @@ export default {
         notFoundText: {
             type: String,
             default: '暂无匹配数据'
+        },
+        // 多选
+        multiple: {
+            type: Boolean,
+            default: false
         }
     },
     watch: {
@@ -92,16 +133,29 @@ export default {
             this.$emit('input', val);
         },
         currentLabel(val, oldVal) {
-            let options = findComponentsDownward(this, 'select-option');
-            options.forEach(v => {
-                let label = v.label ? v.label : v.$slots.default[0].text;
-                if (label.indexOf(val) !== -1) {
-                    v.hidden = false;
-                } else {
-                    v.hidden = true;
+            if (this.remote && this.filterable) {
+                this.remoteMethod(val)
+            } else {
+                if (this.filterable) {
+                    let options = findComponentsDownward(this, 'select-option');
+                    options.forEach(v => {
+                        let label = v.label ? v.label : v.$slots.default[0].text;
+                        if (label.toLowerCase().indexOf(val.toLowerCase()) !== -1) {
+                            v.hidden = false;
+                        } else {
+                            v.hidden = true;
+                        }
+                    });
+                    let labelResult = options.filter(v => {
+                        return (v.$slots.default ? v.$slots.default[0].text : v.label).indexOf(val) !== -1;
+                    });
+                    if (labelResult.length) {
+                        this.noData = false;
+                    } else {
+                        this.noData = true;
+                    }
                 }
-            });
-            console.log(options);
+            }
         }
     },
     data() {
@@ -109,11 +163,12 @@ export default {
             currentValue: this.value,
             currentLabel: '',
             backUpLabel: '',
+            backUpMultiple: [],
             reverse: false,
             // 清空图标和下拉图标切换
             changeIcon: false,
             // 暂无数据
-            noData: false
+            noData: false,
         }
     },
     methods: {
@@ -129,16 +184,27 @@ export default {
         handleChangeIcon() {
             this.changeIcon = !this.changeIcon;
         },
+        handleDel(item) {
+            this.currentValue = this.currentValue.filter(v => v !== item.value);
+            this.$emit('input', this.currentValue);
+        }
     },
     mounted() {
         this.$on("child-select-value", (val) => {
             this.currentValue = val;
         });
         this.$on("child-select-label", (val) => {
-            this.currentLabel = val;
-            this.backUpLabel = val;
+            if (!this.multiple) {
+                this.currentLabel = val;
+                this.backUpLabel = val;
+            } else {
+                this.backUpMultiple = this.backUpMultiple.filter(v => v.value !== val.value);
+                this.backUpMultiple = this.backUpMultiple.concat([val]).filter(v => v.type);
+            }
+            
         });
         this.$emit("parent-set-value", this.value);
+        this.$emit("parent-set-multiple", this.multiple)
     }
 }
 </script>
@@ -150,14 +216,13 @@ export default {
     display: inline-block;
 }
 
-.ruyi-input{
-    border: 1px solid #dcdee2;
+.ruyi-select-input{
     padding: 4px 7px;
     width: 100%;
     height: 32px;
     line-height: 32px;
-    border-radius: 4px;
     outline: none;
+    border: none;
     box-sizing: border-box;
     cursor: pointer;
     color: #515a6e;
@@ -167,25 +232,29 @@ export default {
     white-space: nowrap;
     position: relative;
     font-family: inherit;
-    transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
 }
-.ruyi-select-content:hover{
-    .ruyi-input{
-        border-color: @primary-color;
-    }
-}
-.ruyi-input:focus{
-    box-shadow: 0 0 0 2px rgba(45,140,240,.2);
-    border-color: @primary-color;
-}
-
 
 .ruyi-select-content{
     display: inline-block;
     width: inherit;
     position: relative;
     width: 100%;
+    border-radius: 4px;
+    border: 1px solid #dcdee2;
+    transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
+    overflow: hidden;
 }
+.ruyi-select-content:hover{
+    border-color: @primary-color;
+}
+.ruyi-select-content-fouce{
+    box-shadow: 0 0 0 2px rgba(45,140,240,.2);
+    border-color: @primary-color;
+}
+
+
+
+
 
 .ruyi-select-options-wapper{
     overflow: auto;
@@ -211,9 +280,9 @@ export default {
     padding: 26px;
     cursor: not-allowed;
     user-select: none;
+    box-sizing: border-box;
     i{
-        margin-right: 5px;
-        display: block;
+        display: inline-block;
         font-size: 22px;
     }
 }
@@ -269,6 +338,37 @@ export default {
         opacity: 0;
         transform-origin: 100% 100%;
         transform: scaleY(.8);
+    }
+}
+.icon-xingzhuang{
+    animation: loadings 10s linear infinite;
+}
+@keyframes loadings{
+    from {
+       transform: rotate(0)
+    }
+    to {
+      transform: rotate(3600deg);
+    }
+}
+.ruyi-multiple-tag{
+    display: inline-block;
+    padding: 0px 4px;
+    line-height: 20px;
+    text-align: center;
+    white-space: nowrap;
+    border: 1px solid #dfdfdf;
+    border-radius: 4px;
+    outline: 0;
+    color: #3f536e;
+    border-color: #dfdfdf;
+    background-color: #f7f7f7;
+    font-size: 12px;
+    margin: 2px;
+    box-sizing: border-box;
+    i{
+        font-size: 13px;
+        cursor: pointer;
     }
 }
 </style>
