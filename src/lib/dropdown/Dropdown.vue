@@ -3,11 +3,10 @@
  * @Author: lvjing
  * @Date: 2020-01-02 11:12:33
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 17:01:22
+ * @LastEditTime : 2020-01-07 15:18:15
  -->
 <template>
-    <popper :trigger='trigger' :options="{'placement': placement}" :disabled='disabled'
-        :force-show='showOrHide'>
+    <popper :trigger='trigger' :options="{'placement': placement}" :disabled='disabled' ref="popper">
         <div class="ruyi-dropdown-list" root-class='fade'>
             <slot name="list"></slot>
         </div>
@@ -20,6 +19,11 @@
 <script>
 import VuePopper from 'vue-popperjs';
 export default {
+    provide() {
+        return {
+            'ruyi-drop-down': this
+        }
+    },
     components: {
         popper: VuePopper
     },
@@ -49,10 +53,10 @@ export default {
             default: false
         }
     },
-    data() {
-        return {
-            showOrHide: false
-        }
+    mounted() {
+        this.$on("closePopper", val => {
+            this.$refs['popper'].doClose();
+        });
     }
 }
 </script>

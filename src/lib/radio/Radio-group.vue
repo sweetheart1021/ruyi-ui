@@ -3,10 +3,10 @@
  * @Author: lvjing
  * @Date: 2019-12-25 17:27:27
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-29 12:33:37
+ * @LastEditTime : 2020-01-07 15:20:28
  -->
 <template>
-    <div>
+    <div class="ruyi-radio-group">
         <slot></slot>
     </div>
 </template>

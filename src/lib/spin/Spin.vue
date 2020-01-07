@@ -3,13 +3,13 @@
  * @Author: lvjing
  * @Date: 2019-12-30 17:53:43
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-31 09:23:51
+ * @LastEditTime : 2020-01-07 15:47:30
  -->
 <template>
     <div class="ruyi-spin-wapper">
         <div class="ruyi-spin-content" v-show="value">
             <slot name="label">
-                <i class="iconfont icon-Loading"></i>
+                <i class="iconfont icon-loading4"></i>
                 <br>
                 <span>
                     加载中<span v-for="item in dian" :key="item">.</span>
@@ -17,7 +17,7 @@
             </slot>
         </div>
         <slot></slot>
-        <div :class="['ruyi-spin-back', !value ? 'ruyi-spin-hide' : null]"></div>
+        <div :class="['ruyi-spin-back', !value ? 'ruyi-spin-hide' : null]" v-if="distoryedDom"></div>
     </div>
 </template>
 
@@ -32,16 +32,21 @@ export default {
     data() {
         return {
             dian: 1,
-            time: null
+            time: null,
+            distoryedDom: false
         }
     },
     watch: {
         value: {
             handler(val) {
                 if (!val) {
-                   clearInterval(this.time)
+                   clearInterval(this.time);
+                   setTimeout(() => {
+                        this.distoryedDom = false;
+                    }, 300)
                 } else {
                     this.handleDian();
+                    this.distoryedDom = true;
                 }
             },
             immediate: true
@@ -64,6 +69,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+@import '../../styles/index.less';
 .ruyi-spin-wapper{
     position: relative;
 }
@@ -74,12 +80,12 @@ export default {
     z-index: 9999;
     transform: translate(-50%, -50%);
     text-align: center;
-    color: white;
+    color: @primary-color;
     font-size: 14px;
     user-select: none;
 }
-.icon-Loading{
-    color: white;
+.icon-loading4{
+    color: @primary-color;
     display: inline-block;
     animation: loadings 20s linear infinite;
     margin-bottom: 5px;
@@ -103,7 +109,7 @@ export default {
 }
 
 .ruyi-spin-hide {
-    animation: animationHide 0.8s forwards;
+    animation: animationHide 0.3s forwards;
 }
 
 @keyframes animationHide {

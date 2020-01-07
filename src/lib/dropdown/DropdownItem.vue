@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2020-01-02 14:29:13
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 17:01:06
+ * @LastEditTime : 2020-01-07 15:16:48
  -->
 <template>
     <div :class="['ruyi-dropdown-item',
@@ -17,6 +17,7 @@
 
 <script>
 export default {
+    inject: ['ruyi-drop-down'],
     props: {
         // 是否禁用
         disabled: {
@@ -37,7 +38,7 @@ export default {
     methods: {
         handleClick() {
             if (this.disabled) return;
-            this.$parent.$parent.showPopper = false;
+            this['ruyi-drop-down'].$emit('closePopper')
             this.$emit("click");
         }
     }

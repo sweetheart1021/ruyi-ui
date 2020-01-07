@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2020-01-02 14:28:39
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-02 17:37:48
+ * @LastEditTime : 2020-01-07 15:13:14
  -->
 <template>
     <div class="ruyi-dropdown-menu">
@@ -13,7 +13,7 @@
 
 <script>
 export default {
-
+    inject: ['ruyi-drop-down']
 }
 </script>
 

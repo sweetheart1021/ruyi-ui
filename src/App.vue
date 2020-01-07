@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 13:42:18
+ * @LastEditTime : 2020-01-07 15:41:23
  -->
 <template>
     <div>
@@ -295,22 +295,6 @@
                 <ruyi-option :value='4' label='西瓜'></ruyi-option>
                 <ruyi-option :value='5' label='橘子2'></ruyi-option>
             </ruyi-select>
-            <!-- <ruyi-select style="width: 220px" v-model="selectValue">
-                <div slot="no-data">好像没有数据</div>
-                <ruyi-option v-for="item in 0" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
-            </ruyi-select>
-            <ruyi-select style="width: 200px" v-model="selectValue">
-                <ruyi-option v-for="item in 0" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
-            </ruyi-select>
-            <ruyi-select style="width: 200px" v-model="selectValue" disabled>
-                <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
-            </ruyi-select>
-            <ruyi-select style="width: 200px" v-model="selectValue" filterable>
-                <ruyi-option v-for="item in 5" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
-            </ruyi-select> -->
-            <!-- <ruyi-select style="width: 200px" v-model="selectValue2" clearable>
-                <ruyi-option v-for="item in 10" :key="item"  :value='item'>{{ item }} 这里是lable</ruyi-option>
-            </ruyi-select> -->
         </div>
         <div style="margin-top: 20px">
             <ruyi-tooltip content='这里是content内容'>
