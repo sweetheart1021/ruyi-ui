@@ -2,8 +2,8 @@
  * @Descripttion: select -- option
  * @Author: lvjing
  * @Date: 2019-12-26 16:15:05
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-06 23:11:59
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-07 11:01:43
  -->
 <template>
     <li :class="['ruyi-select-item', isSelect ? 'ruyi-select-item-checked' : null,

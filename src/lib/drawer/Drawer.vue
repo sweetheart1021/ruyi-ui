@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 11:17:31
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 13:39:09
+ * @LastEditTime : 2020-01-07 13:41:27
  -->
 <template>
     <transition name="slide-fade">
@@ -125,7 +125,7 @@ export default {
         right: 0;
         height: 100%;
         overflow: hidden;
-        animation: ivuSlideRightIn .6s forwards;
+        animation: ivuSlideRightIn .4s forwards;
         .ruyi-drawer-header{
             border-bottom: 1px solid #e8eaec;
             padding: 14px 16px;
@@ -173,7 +173,7 @@ export default {
 }
 @keyframes ivuSlideRightIn {
     0% {
-        // opacity: 0;
+        opacity: 0;
         transform-origin: 100% 0%;
         transform: scaleX(.8);
     }

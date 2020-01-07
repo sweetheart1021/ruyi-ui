@@ -2,13 +2,13 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-06 23:21:28
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-07 15:06:15
  -->
 <template>
     <div class="ruyi-select">
         <popper trigger="clickToOpen" tagName='div' visible-arrow :disabled='disabled'
-            @show="reverse=true" @hide='handlePopperHide'>
+            @show="reverse=true" @hide='handlePopperHide' ref="popper">
             <div class="ruyi-select-options-wapper">
                 <div class="ruyi-select-options-content">
                     <ul v-show="!noData" v-if="!remote">
@@ -32,31 +32,37 @@
                 </div>
             </div>
 
-            <div slot="reference" ref="ruyi-select-content"
-                :class="['ruyi-select-content', reverse ? 'ruyi-select-content-fouce' : null]" 
-                @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon">
+            <div slot="reference"
+                :class="['ruyi-select-content', reverse ? 'ruyi-select-content-fouce' : null]"
+                @mouseenter="handleChangeIcon" @mouseleave="handleChangeIcon">
 
-                <!-- <div v-if="multiple" class="ruyi-multiple-wapper"> -->
+                <div v-if="multiple && showInput" class="ruyi-select-multiple-wapper">
                     <template v-for="(item, index) in backUpMultiple">
                         <span :key="index" class='ruyi-multiple-tag'>
                             {{ item.label }}
                             <i class="iconfont icon-guanbi" @click.stop="handleDel(item)"></i>
                         </span>
                     </template>
-                <!-- </div> -->
+                    <input type="text" class="ruyi-select-input" :style="inputWidth"
+                        :placeholder="placeholder" :readonly='!filterable'
+                        v-model="currentLabel"
+                        v-if="multiple && filterable"
+                        @keyup="handleInputKeyUp">
+                </div>
 
-                <input type="text" class="ruyi-select-input"
+
+
+                <input :type="showInput ? 'hidden': 'text'" class="ruyi-select-input"
                     :placeholder="placeholder" :readonly='!filterable'
-                    v-model="currentLabel">
+                    v-model="currentLabel"
+                    v-else>
 
                 <i :class="['iconfont icon-icon32210', reverse && !disabled ? 'is-reverse' : null]"
-                    v-if="!changeIcon || !clearable || currentLabel === undefined || currentLabel === ''"
-                    @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon"></i>
+                    v-if="!showTextIcon"></i>
 
                 <i class="iconfont icon-icon-test"
-                    v-if="clearable && currentLabel !== undefined && currentLabel !== '' && changeIcon"
-                    @click.stop="handleClear" @mouseenter="handleChangeIcon" @mouseout="handleChangeIcon"></i>
-
+                    v-if='showTextIcon'
+                    @click.stop="handleClear"></i>
             </div>
         </popper>
     </div>
@@ -126,6 +132,7 @@ export default {
             handler(val) {
                 this.currentValue = val;
                 this.$emit("parent-set-value", this.currentValue);
+                this.$emit("change", val);
             },
             immediate: true
         },
@@ -158,8 +165,22 @@ export default {
             }
         }
     },
+    computed: {
+        // 多选状态下显示input
+        showInput() {
+            return this.backUpMultiple.length ? true : false
+        },
+        // 显示清空icon还是箭头icon
+        showTextIcon() {
+            return this.changeIcon && this.clearable && (this.currentLabel !== "" || (this.backUpMultiple.length ? true: false))
+        },
+    },
     data() {
         return {
+            // 多选可搜索情况下设置输入框的宽度
+            inputWidth: {
+                width: '70px'
+            },
             currentValue: this.value,
             currentLabel: '',
             backUpLabel: '',
@@ -177,9 +198,17 @@ export default {
             if (this.currentLabel === '' && this.currentValue !== '') {
                 this.currentLabel = this.backUpLabel;
             }
+            if (this.multiple && this.filterable) {
+                this.currentLabel = ''
+            }
         },
         handleClear() {
-            this.$emit('input', "");
+            if (this.multiple) {
+                this.$emit('input', []);
+            } else {
+                this.$emit('input', "");
+            }
+
         },
         handleChangeIcon() {
             this.changeIcon = !this.changeIcon;
@@ -187,6 +216,19 @@ export default {
         handleDel(item) {
             this.currentValue = this.currentValue.filter(v => v !== item.value);
             this.$emit('input', this.currentValue);
+        },
+        handleInputKeyUp(e) {
+            let keyupNum = e.target.value.length;
+            if (this.backUpMultiple.length) {
+                this.inputWidth = {
+                    width: keyupNum ? keyupNum * 12 + 60 + 'px' : "70px"
+                }
+            } else {
+                this.inputWidth = {
+                    width: '100%'
+                }
+            }
+            this.$refs['popper'].updatePopper();
         }
     },
     mounted() {
@@ -200,8 +242,11 @@ export default {
             } else {
                 this.backUpMultiple = this.backUpMultiple.filter(v => v.value !== val.value);
                 this.backUpMultiple = this.backUpMultiple.concat([val]).filter(v => v.type);
+                if (this.multiple && this.filterable) {
+                    this.currentLabel = '';
+                    this.$refs['popper'].updatePopper();
+                }
             }
-            
         });
         this.$emit("parent-set-value", this.value);
         this.$emit("parent-set-multiple", this.multiple)
@@ -217,10 +262,8 @@ export default {
 }
 
 .ruyi-select-input{
-    padding: 4px 7px;
+    padding: 0px 7px;
     width: 100%;
-    height: 32px;
-    line-height: 32px;
     outline: none;
     border: none;
     box-sizing: border-box;
@@ -232,28 +275,41 @@ export default {
     white-space: nowrap;
     position: relative;
     font-family: inherit;
+    line-height: 30px;
 }
 
 .ruyi-select-content{
-    display: inline-block;
-    width: inherit;
-    position: relative;
+    cursor: pointer;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
+    box-sizing: border-box;
     border-radius: 4px;
     border: 1px solid #dcdee2;
     transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
     overflow: hidden;
+    padding-right: 8px;
+    min-height: 32px;
 }
 .ruyi-select-content:hover{
     border-color: @primary-color;
+
 }
 .ruyi-select-content-fouce{
     box-shadow: 0 0 0 2px rgba(45,140,240,.2);
     border-color: @primary-color;
 }
 
-
-
+.ruyi-select-multiple-wapper{
+    padding: 2px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+.ruyi-select-multiple-wapper:focus{
+    outline:none;
+}
 
 
 .ruyi-select-options-wapper{
@@ -289,9 +345,6 @@ export default {
 
 .icon-icon32210,
 .icon-icon-test{
-    position: absolute;
-    right: 8px;
-    top: 8px;
     transition: transform .3s;
     font-size: 12px;
     cursor: pointer;

@@ -2,8 +2,8 @@
  * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-06 22:07:19
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-07 13:42:18
  -->
 <template>
     <div>
@@ -245,6 +245,22 @@
         </ruyi-drawer>
         <div style="margin-top: 20px">
             <ruyi-select style="width: 200px" v-model="selectValue"
+                @change="handleSelectChange">
+                <ruyi-option :value='1'>苹果2</ruyi-option>
+                <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
+                <ruyi-option :value='3' label='橘子'></ruyi-option>
+                <ruyi-option :value='4' label='西瓜'></ruyi-option>
+                <ruyi-option :value='5' label='橘子2'></ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 200px" v-model="selectValue"
+                @change="handleSelectChange" clearable>
+                <ruyi-option :value='1'>苹果2</ruyi-option>
+                <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
+                <ruyi-option :value='3' label='橘子'></ruyi-option>
+                <ruyi-option :value='4' label='西瓜'></ruyi-option>
+                <ruyi-option :value='5' label='橘子2'></ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 200px" v-model="selectValue"
                 @change="handleSelectChange" clearable filterable>
                 <ruyi-option :value='1'>苹果2</ruyi-option>
                 <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
@@ -254,6 +270,14 @@
             </ruyi-select>
             <ruyi-select style="width: 200px" v-model="multipleValue"
                 @change="handleSelectChange" clearable multiple>
+                <ruyi-option :value='1'>苹果</ruyi-option>
+                <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
+                <ruyi-option :value='3' label='橘子'></ruyi-option>
+                <ruyi-option :value='4' label='西瓜'></ruyi-option>
+                <ruyi-option :value='5' label='橘子2'></ruyi-option>
+            </ruyi-select>
+            <ruyi-select style="width: 200px" v-model="multipleValueFilterable"
+                @change="handleSelectChange" clearable multiple filterable>
                 <ruyi-option :value='1'>苹果2</ruyi-option>
                 <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
                 <ruyi-option :value='3' label='橘子'></ruyi-option>
@@ -261,7 +285,7 @@
                 <ruyi-option :value='5' label='橘子2'></ruyi-option>
             </ruyi-select>
             <ruyi-select style="width: 200px" v-model="selectValue2"
-                @change="handleSelectChange" clearable filterable 
+                @change="handleSelectChange" clearable filterable
                 remote
                 :remote-method="remoteMethod"
                 :loading="loading">
@@ -420,7 +444,8 @@ export default {
             drawer: false,
             selectValue: 3,
             selectValue2: 1,
-            multipleValue: [1, 3, 4],
+            multipleValue: [1, 3, 4, 5],
+            multipleValueFilterable: [1],
             columns: [
                 {type: 'selection', width: 60, align: 'center', fixed: 'right'},
                 {title: '姓名', key: 'name'},
