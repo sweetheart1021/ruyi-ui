@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 19:18:50
  * @LastEditors  : lving
- * @LastEditTime : 2019-12-29 22:31:08
+ * @LastEditTime : 2020-01-07 22:29:25
  -->
 <template>
     <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-raido-disabled' : null]">
