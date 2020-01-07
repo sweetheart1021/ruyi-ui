@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 18:15:57
+ * @LastEditTime : 2020-01-07 18:27:10
  -->
 <template>
     <div>
@@ -420,6 +420,9 @@
             <ruyi-button type='danger' @click="handleNoticeTitle('error')">显示失败title</ruyi-button>
             <ruyi-button type='primary' @click="handleNoticeTitle">显示默认title</ruyi-button>
             <ruyi-button type='danger' @click="handleNoticeTime('error')">10s后关闭</ruyi-button>
+        </div>
+        <div style="margin-top: 20px">
+            <ruyi-tree></ruyi-tree>
         </div>
     </div>
 </template>

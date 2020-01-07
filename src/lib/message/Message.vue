@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 16:37:16
+ * @LastEditTime : 2020-01-07 18:21:58
  -->
 <template>
     <div class="ruyi-message-content">
@@ -44,7 +44,6 @@ export default {
         handleClose() {
             this.hideType = true;
             setTimeout(() => {
-                // this.visible = false;
                 this.$destroy(true);
                 this.$el.parentNode.removeChild(this.$el);
             }, 1000);

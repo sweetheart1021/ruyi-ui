@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 16:30:57
+ * @LastEditTime : 2020-01-07 18:26:04
  */
 import Button from './button';
 import Input from './input';
@@ -28,6 +28,7 @@ import Cascader from './cascader';
 import Breadcrumb from './breadcrumb';
 import Alert from './alert';
 import Notice from './notice';
+import Tree from './tree'
 
 
 const component = {
@@ -58,7 +59,8 @@ const component = {
     RuyiCascader: Cascader,
     RuyiBreadcrumb: Breadcrumb,
     RuyiBreadcrumbItem: Breadcrumb.BreadcrumbItem,
-    RuyiAlert: Alert
+    RuyiAlert: Alert,
+    RuyiTree: Tree
 }
 
 const install = function(Vue, opts={}) {
