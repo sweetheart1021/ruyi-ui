@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 09:39:12
  * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-26 14:10:19
+ * @LastEditTime : 2020-01-07 16:11:57
  -->
 <template>
     <transition name="fade">
@@ -134,6 +134,9 @@ export default {
                 top: 10px;
                 color: #999;
                 user-select: none;
+            }
+            .ruyi-modal-close:hover{
+                color: #444;
             }
             .ruyi-modal-header-title{
                 font-weight: bold;

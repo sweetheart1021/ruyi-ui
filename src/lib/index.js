@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 10:46:24
+ * @LastEditTime : 2020-01-07 16:30:57
  */
 import Button from './button';
 import Input from './input';
@@ -26,7 +26,8 @@ import Badge from './badge';
 import Dropdown from './dropdown';
 import Cascader from './cascader';
 import Breadcrumb from './breadcrumb';
-import Alert from './alert'
+import Alert from './alert';
+import Notice from './notice';
 
 
 const component = {
@@ -65,6 +66,7 @@ const install = function(Vue, opts={}) {
         Vue.component(key, component[key]);
     });
     Vue.prototype.$ruyimessage = Message;
+    Vue.prototype.$ruyinotice = Notice;
 }
 
 if (typeof window !== undefined && window.Vue) {

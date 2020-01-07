@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 11:17:31
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 13:41:27
+ * @LastEditTime : 2020-01-07 16:12:17
  -->
 <template>
     <transition name="slide-fade">
@@ -138,6 +138,9 @@ export default {
                 top: 10px;
                 color: #999;
                 user-select: none;
+            }
+            .ruyi-drawer-close:hover{
+                color: #444;
             }
             .ruyi-drawer-header-title{
                 font-weight: bold;

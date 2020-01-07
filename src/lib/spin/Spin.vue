@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-30 17:53:43
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 15:47:30
+ * @LastEditTime : 2020-01-07 15:54:36
  -->
 <template>
     <div class="ruyi-spin-wapper">
@@ -17,7 +17,8 @@
             </slot>
         </div>
         <slot></slot>
-        <div :class="['ruyi-spin-back', !value ? 'ruyi-spin-hide' : null]" v-if="distoryedDom"></div>
+        <div :class="['ruyi-spin-back', !value ? 'ruyi-spin-hide' : null]" v-if="distoryedDom"
+            :style="{background: background}"></div>
     </div>
 </template>
 
@@ -27,6 +28,11 @@ export default {
         value: {
             type: Boolean,
             default: false
+        },
+        // 背景颜色
+        background: {
+            type: String,
+            default: 'rgba(0, 0, 0, 0.8)'
         }
     },
     data() {
@@ -96,7 +102,6 @@ export default {
     top: 0;
     height: 100%;
     width: 100%;
-    background: rgba(0, 0, 0, 0.8);
 }
 
 @keyframes loadings{

@@ -3,13 +3,13 @@
  * @Author: lvjing
  * @Date: 2019-12-27 13:33:01
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-06 17:54:35
+ * @LastEditTime : 2020-01-07 16:37:16
  -->
 <template>
     <div class="ruyi-message-content">
         <div :class="['ruyi-message', hideType ? 'ruyi-message-hide' : null]" v-if="visible">
             <span>
-                <i class="iconfont icon-alert" v-if="!type"></i>
+                <i class="iconfont icon-alert"  v-if="type === 'primary'"></i>
                 <i class="iconfont icon-chenggong" v-if="type === 'success'"></i>
                 <i class="iconfont icon-iconjs" v-if="type === 'warning'"></i>
                 <i class="iconfont icon-shibai" v-if="type === 'error'"></i>

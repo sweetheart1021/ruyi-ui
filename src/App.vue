@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 15:41:23
+ * @LastEditTime : 2020-01-07 18:15:57
  -->
 <template>
     <div>
@@ -367,8 +367,8 @@
                 <p>总为浮云能蔽日，长安不见使人愁。</p>
             </ruyi-spin>
             <ruyi-button type='danger' @click="spin=!spin">切换loading</ruyi-button>
-            <ruyi-spin v-model="spin" style="width: 600px">
-                <div slot="label">这里可以自定义label</div>
+            <ruyi-spin v-model="spin" style="width: 600px" background='rgba(253,245,230, .8)'>
+                <div slot="label">这里可以自定义label 也可以自定义背景色</div>
                 <p>凤凰台上凤凰游，凤去台空江自流。</p>
                 <p>吴宫花草埋幽径，晋代衣冠成古丘。</p>
                 <p>三山半落青天外，二水中分白鹭洲。</p>
@@ -408,7 +408,19 @@
                 <ruyi-step title="待进行" content="这里是该步骤的描述信息"></ruyi-step>
             </ruyi-steps>
         </div>
-
+        <div style="margin-top: 20px">
+            <ruyi-button type='primary' @click="handleNotice('primary')">显示primary</ruyi-button>
+            <ruyi-button type='success' @click="handleNotice('success')">显示成功</ruyi-button>
+            <ruyi-button type='warning' @click="handleNotice('warning')">显示警告</ruyi-button>
+            <ruyi-button type='danger' @click="handleNotice('error')">显示失败</ruyi-button>
+            <ruyi-button type='primary' @click="handleNotice">显示默认</ruyi-button>
+            <ruyi-button type='primary' @click="handleNoticeTitle('primary')">显示primary title</ruyi-button>
+            <ruyi-button type='success' @click="handleNoticeTitle('success')">显示成功title</ruyi-button>
+            <ruyi-button type='warning' @click="handleNoticeTitle('warning')">显示警告title</ruyi-button>
+            <ruyi-button type='danger' @click="handleNoticeTitle('error')">显示失败title</ruyi-button>
+            <ruyi-button type='primary' @click="handleNoticeTitle">显示默认title</ruyi-button>
+            <ruyi-button type='danger' @click="handleNoticeTime('error')">10s后关闭</ruyi-button>
+        </div>
     </div>
 </template>
 
@@ -611,6 +623,37 @@ export default {
         // select 远程搜索
         remoteMethod(val) {
             console.log(val)
+        },
+        // 显示notice
+        handleNotice(type) {
+            if (type) {
+                this.$ruyinotice[type]({
+                    title: `这里是${type}类型的title`,
+                    message: `这里是${type}类型的很长很长的message,据说要很长很长的`
+                });
+            } else {
+                this.$ruyinotice({
+                    title: `这里是默认类型的title`,
+                    message: `这里是默认类型的很长很长的message,据说要很长很长的`
+                })
+            }
+        },
+        // 显示notice 只显示title
+        handleNoticeTitle(type) {
+            if (type) {
+                this.$ruyinotice[type]({
+                    title: `这里是${type}类型的title`
+                });
+            } else {
+               this.$ruyinotice("默认消息title")
+            }
+        },
+        handleNoticeTime(type) {
+            this.$ruyinotice[type]({
+                title: `这里是${type}类型的title`,
+                message: `这里是${type}类型的很长很长的message,据说要很长很长的`,
+                duration: 10000
+            });
         }
     }
 }
