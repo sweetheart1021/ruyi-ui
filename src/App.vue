@@ -2,11 +2,14 @@
  * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-07 21:42:33
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-08 18:02:05
  -->
 <template>
     <div>
+        <div style="margin-top: 20px">
+            <ruyi-tree :data='data' :props='defaultProps' show-checkbox></ruyi-tree>
+        </div>
         <div style="margin-top: 20px">
             <ruyi-progress style="width: 600px" percent='30'>
                 <span>上传中...</span>
@@ -421,9 +424,7 @@
             <ruyi-button type='primary' @click="handleNoticeTitle">显示默认title</ruyi-button>
             <ruyi-button type='danger' @click="handleNoticeTime('error')">10s后关闭</ruyi-button>
         </div>
-        <div style="margin-top: 20px">
-            <ruyi-tree :data='data' :props='defaultProps'></ruyi-tree>
-        </div>
+
     </div>
 </template>
 
@@ -547,7 +548,7 @@ export default {
                                 {
                                     id: 9,
                                     label: '三级 1-1-1'
-                                }, 
+                                },
                                 {
                                     id: 10,
                                     label: '三级 1-1-2'
@@ -555,7 +556,7 @@ export default {
                             ]
                         }
                     ]
-                }, 
+                },
                 {
                     id: 2,
                     label: '一级 2',
@@ -563,13 +564,13 @@ export default {
                         {
                             id: 5,
                             label: '二级 2-1'
-                        }, 
+                        },
                         {
                             id: 6,
                             label: '二级 2-2'
                         }
                     ]
-                }, 
+                },
                 {
                     id: 3,
                     label: '一级 3',
@@ -577,7 +578,7 @@ export default {
                         {
                             id: 7,
                             label: '二级 3-1'
-                        }, 
+                        },
                         {
                             id: 8,
                             label: '二级 3-2'

@@ -3,14 +3,14 @@
  * @Author: lvjing
  * @Date: 2019-12-25 15:22:14
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 15:21:10
+ * @LastEditTime : 2020-01-08 16:34:08
  -->
 <template>
     <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-radio-disabled' : null]">
         <span :class="['ruyi-radio', currentValue ? 'ruyi-radio-checked':null]">
             <span class="ruyi-radio-inner" v-if="currentValue"></span>
         </span>
-        <span :class="currentValue? 'ruyi-radio-checked-label': null ">
+        <span :class="['ruyi-raido-label',currentValue? 'ruyi-radio-checked-label': null]">
             <slot>{{ label }}</slot>
         </span>
         <input type="radio"
@@ -77,6 +77,11 @@ export default {
     -moz-user-select:none;
     -o-user-select:none;
     -ms-user-select:none;
+}
+.ruyi-raido-wapper:hover{
+    .ruyi-raido-label{
+        color: @primary-color;
+    }
 }
 .ruyi-radio{
     width: 14px;

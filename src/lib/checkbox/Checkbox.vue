@@ -2,31 +2,33 @@
  * @Descripttion: checkbox 组件
  * @Author: lvjing
  * @Date: 2019-12-25 19:18:50
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-07 22:29:25
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-08 16:33:13
  -->
 <template>
-    <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-raido-disabled' : null]">
-        <span :class="['ruyi-checkbox', currentValue || model.some(v => v === label) || half ? 'ruyi-checkbox-checked' : null]">
-            <i class='iconfont icon-gou' v-if="currentValue || model.some(v => v === label)"></i>
-            <i class="iconfont icon-hengxian" v-if="half"></i>
-        </span>
-        <span :class="currentValue || model.some(v => v === label) ? 'ruyi-checkbox-checked-label' : null">
-            <span class="ruyi-checkbox-label">
-                <slot>{{ label }}</slot>
+    <div class="ruyi-checkbox-main">
+        <label :class="['ruyi-raido-wapper', disabled ? 'ruyi-raido-disabled' : null]">
+            <span :class="['ruyi-checkbox', currentValue || model.some(v => v === label) || half ? 'ruyi-checkbox-checked' : null]">
+                <i class='iconfont icon-gou' v-if="currentValue || model.some(v => v === label)"></i>
+                <i class="iconfont icon-hengxian" v-if="half"></i>
             </span>
-        </span>
-        <input type="checkbox" class="ruyi-checkbox-input" 
-            v-if="!group"
-            :value="slot"
-            :checked='currentValue'
-            @change.stop="handleCheckboxChange">
-        <input type="checkbox" class="ruyi-checkbox-input"
-            v-else  
-            v-model="model" 
-            :value="label"
-            @change="handleGroupChange"> 
-    </label>
+            <span :class="currentValue || model.some(v => v === label) ? 'ruyi-checkbox-checked-label' : null">
+                <span class="ruyi-checkbox-label">
+                    <slot>{{ label }}</slot>
+                </span>
+            </span>
+            <input type="checkbox" class="ruyi-checkbox-input"
+                v-if="!group"
+                :value="slot"
+                :checked='currentValue'
+                @change.stop="handleCheckboxChange">
+            <input type="checkbox" class="ruyi-checkbox-input"
+                v-else
+                v-model="model"
+                :value="label"
+                @change="handleGroupChange">
+        </label>
+    </div>
 </template>
 
 <script>
@@ -84,7 +86,7 @@ export default {
             if (this.disabled) return;
             this.$emit("input", val.target.checked);
             this.$emit("change", val.target.checked);
-            
+
         },
         // group的change事件
         handleGroupChange(val) {
@@ -96,6 +98,9 @@ export default {
 
 <style lang="less" scoped>
 @import '../../styles/index.less';
+.ruyi-checkbox-main{
+    display: inline-block;
+}
 .ruyi-raido-wapper{
     cursor: pointer;
     font-size: 14px;
@@ -103,6 +108,14 @@ export default {
     -moz-user-select:none;
     -o-user-select:none;
     -ms-user-select:none;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+.ruyi-raido-wapper:hover{
+    .ruyi-checkbox-label{
+        color: @primary-color;
+    }
 }
 .ruyi-checkbox{
     width: 14px;
@@ -118,10 +131,10 @@ export default {
     box-sizing: border-box;
     .icon-gou{
         font-size: 12px;
-        position: relative;
+        position: absolute;
         color: white;
         left: 1px;
-        top: -1px;
+        top: 0px;
         font-weight: bold;
     }
 }

@@ -2,12 +2,12 @@
  * @Descripttion: Tree 树形控件
  * @Author: lvjing
  * @Date: 2020-01-07 18:25:08
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-07 22:21:01
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-08 18:02:35
  -->
 <template>
-    <div>
-        <tree-node :data='stateTree' :props='props'></tree-node>
+    <div class="ruyi-tree">
+        <tree-node :data='stateTree' :props='props' :show-checkbox='showCheckbox'></tree-node>
     </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
     provide() {
         return {
             'ruyi-tree' : this
-        }  
+        }
     },
     components: {
         treeNode
@@ -36,6 +36,11 @@ export default {
                     disabled: 'disabled'
                 }
             }
+        },
+        // 设置可选择
+        showCheckbox: {
+            type: Boolean,
+            default: false
         }
     },
     watch: {
@@ -52,11 +57,13 @@ export default {
         }
     },
     methods: {
-        handleSetChecked(val) {
+        handleSetChecked(val, index=1) {
             val.forEach(v => {
-                this.$set(v, 'checked', true);
+                this.$set(v, 'checked', false);
+                this.$set(v, 'extend', false);
+                this.$set(v, 'index', index);
                 if (v.children) {
-                    this.handleSetChecked(v[this.props.children])
+                    this.handleSetChecked(v[this.props.children], index + 1);
                 }
             });
             return val
@@ -67,4 +74,7 @@ export default {
 
 <style lang="less" scoped>
 @import '../../styles/index.less';
+.ruyi-tree{
+    position: relative;
+}
 </style>
