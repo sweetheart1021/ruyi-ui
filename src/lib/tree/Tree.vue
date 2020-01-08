@@ -2,8 +2,8 @@
  * @Descripttion: Tree 树形控件
  * @Author: lvjing
  * @Date: 2020-01-07 18:25:08
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-08 18:02:35
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-08 21:17:43
  -->
 <template>
     <div class="ruyi-tree">
@@ -58,14 +58,14 @@ export default {
     },
     methods: {
         handleSetChecked(val, index=1) {
-            val.forEach(v => {
-                this.$set(v, 'checked', false);
-                this.$set(v, 'extend', false);
-                this.$set(v, 'index', index);
-                if (v.children) {
-                    this.handleSetChecked(v[this.props.children], index + 1);
+            for (let i = 0; i < val.length; i++) {
+                this.$set(val[i], 'checked', false);
+                this.$set(val[i], 'extend', false);
+                this.$set(val[i], 'index', i);
+                if (val[i].children) {
+                    this.handleSetChecked(val[i][this.props.children], index + 1);
                 }
-            });
+            }
             return val
         }
     }

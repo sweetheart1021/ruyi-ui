@@ -3,8 +3,8 @@
  * @version:
  * @Author: lvjing
  * @Date: 2020-01-07 20:47:35
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-08 18:24:05
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-08 21:17:54
  -->
 <template>
     <div class="ruyi-tree-content">
@@ -72,15 +72,17 @@ export default {
         // 设置全选或者取消权限事件
         handleSetChecked(data, val) {
             if (data[this.props.children]) {
-                data[this.props.children].forEach(v => {
-                    this.$set(v, 'checked', val);
-                    this.handleSetChecked(v, val);
-                });
+                for (let i = 0; i < data[this.props.children].length; i++) {
+                    this.$set(data[this.props.children][i], 'checked', val);
+                    this.handleSetChecked(data[this.props.children][i], val);
+                }
             }
             return data
         },
-        // 根据当前数据查找所有父级
-        handleFindParsent(data) {
+        // 根据当前数据查找所有父级并设置父级为半选状态
+        handleFindParsent(data, id) {
+            let arr = [];
+
 
         },
         handleCheckChange(val, item, index) {
@@ -107,7 +109,8 @@ export default {
     padding: 3px 0;
 }
 .ruyi-tree-item:focus{
-    outline-color: transparent;
+    border: none;
+    outline: none;
 }
 .icon-xiangyoujiantou{
     font-size: 12px;
