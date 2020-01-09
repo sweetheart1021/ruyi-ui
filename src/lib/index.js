@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:12:34
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 18:26:04
+ * @LastEditTime : 2020-01-09 16:53:31
  */
 import Button from './button';
 import Input from './input';
@@ -28,7 +28,8 @@ import Cascader from './cascader';
 import Breadcrumb from './breadcrumb';
 import Alert from './alert';
 import Notice from './notice';
-import Tree from './tree'
+import Tree from './tree';
+import From from './form';
 
 
 const component = {
@@ -60,7 +61,9 @@ const component = {
     RuyiBreadcrumb: Breadcrumb,
     RuyiBreadcrumbItem: Breadcrumb.BreadcrumbItem,
     RuyiAlert: Alert,
-    RuyiTree: Tree
+    RuyiTree: Tree,
+    RuyiFrom: From,
+    RuyiFromItem: From.FormItem
 }
 
 const install = function(Vue, opts={}) {

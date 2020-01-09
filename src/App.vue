@@ -3,12 +3,25 @@
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-08 18:02:05
+ * @LastEditTime : 2020-01-09 17:22:59
  -->
 <template>
     <div>
         <div style="margin-top: 20px">
-            <ruyi-tree :data='data' :props='defaultProps' show-checkbox></ruyi-tree>
+            <!-- <ruyi-tree :data='data' :props='defaultProps' show-checkbox node-key='id'></ruyi-tree> -->
+            <ruyi-from inline>
+                <ruyi-from-item prop='name' label="活动名称" width='80'>
+                    <ruyi-input v-model="forms.name"></ruyi-input>
+                </ruyi-from-item>
+                <ruyi-from-item prop='name' label="活动区域" width='80'>
+                    <ruyi-select v-model="forms.region" style="width: 100%">
+                        <ruyi-option :value='1' label='成都天府大道'></ruyi-option>
+                        <ruyi-option :value='2' label='背景中南海' diabled show-diabled></ruyi-option>
+                        <ruyi-option :value='3' label='重庆朝天门'></ruyi-option>
+                        <ruyi-option :value='4' label='东莞红灯一条街'></ruyi-option>
+                    </ruyi-select>
+                </ruyi-from-item>
+            </ruyi-from>
         </div>
         <div style="margin-top: 20px">
             <ruyi-progress style="width: 600px" percent='30'>
@@ -247,7 +260,7 @@
             <p>对话框内容</p>
         </ruyi-drawer>
         <div style="margin-top: 20px">
-            <ruyi-select style="width: 200px" v-model="selectValue"
+            <ruyi-select  v-model="selectValue"
                 @change="handleSelectChange">
                 <ruyi-option :value='1'>苹果2</ruyi-option>
                 <ruyi-option :value='2' label='香蕉' diabled show-diabled></ruyi-option>
@@ -589,6 +602,10 @@ export default {
             defaultProps: {
                 children: 'children',
                 label: 'label'
+            },
+            forms: {
+                name: '这里是输入框',
+                region: 1
             }
         }
     },

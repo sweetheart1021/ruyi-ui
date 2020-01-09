@@ -3,8 +3,8 @@
  * @version:
  * @Author: lvjing
  * @Date: 2020-01-07 20:47:35
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-08 21:17:54
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-09 15:32:51
  -->
 <template>
     <div class="ruyi-tree-content">
@@ -16,7 +16,7 @@
                         @click="item.extend = !item.extend"></i>
                     <ruyi-checkbox
                         :style="{'margin-left': item[props.children] ? null : '20px'}"
-                        v-model="item.checked" :half='false'
+                        v-model="item.checked" :half='item.half'
                         @change="(val) => handleCheckChange(val, item, index)"
                     >
                         <span>{{item[props.label]}}</span>
@@ -61,6 +61,11 @@ export default {
         showCheckbox: {
             type: Boolean,
             default: false
+        },
+        // 唯一标志符
+        nodeKey: {
+            type: String,
+            default: 'id'
         }
     },
     data() {
@@ -69,25 +74,28 @@ export default {
         }
     },
     methods: {
-        // 设置全选或者取消权限事件
+        // 设置全选或者取消全选事件
         handleSetChecked(data, val) {
+            data.half = false;
             if (data[this.props.children]) {
-                for (let i = 0; i < data[this.props.children].length; i++) {
+                for (let i = data[this.props.children].length - 1; i >= 0; i--) {
                     this.$set(data[this.props.children][i], 'checked', val);
                     this.handleSetChecked(data[this.props.children][i], val);
                 }
             }
-            return data
         },
         // 根据当前数据查找所有父级并设置父级为半选状态
-        handleFindParsent(data, id) {
-            let arr = [];
-
-
+        handleFindParsent(item) {
+            this['ruyi-tree'].$emit("set-half", item)
         },
         handleCheckChange(val, item, index) {
             // console.log(val, item, index, item[this.props.children]);
-            this.handleSetChecked(item, val);
+            if (item[this.props.children]) {
+                this.handleSetChecked(item, val);
+                this.handleFindParsent(item);
+            } else {
+                this.handleFindParsent(item)
+            }
         },
         // 点击
         handleLabelClick(item) {

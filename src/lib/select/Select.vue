@@ -3,14 +3,14 @@
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-07 15:06:15
+ * @LastEditTime : 2020-01-09 17:26:22
  -->
 <template>
-    <div class="ruyi-select">
+    <div class="ruyi-select" ref="ruyi-select" style="width: 180px">
         <popper trigger="clickToOpen" tagName='div' visible-arrow :disabled='disabled'
             @show="reverse=true" @hide='handlePopperHide' ref="popper">
             <div class="ruyi-select-options-wapper">
-                <div class="ruyi-select-options-content">
+                <div class="ruyi-select-options-content" :style="offsetWidth">
                     <ul v-show="!noData" v-if="!remote">
                         <slot></slot>
                     </ul>
@@ -190,6 +190,10 @@ export default {
             changeIcon: false,
             // 暂无数据
             noData: false,
+            // 设置popper的宽度
+            offsetWidth: {
+                width: '180px'
+            }
         }
     },
     methods: {
@@ -249,7 +253,10 @@ export default {
             }
         });
         this.$emit("parent-set-value", this.value);
-        this.$emit("parent-set-multiple", this.multiple)
+        this.$emit("parent-set-multiple", this.multiple);
+        this.offsetWidth = {
+            width: this.$refs['ruyi-select'].offsetWidth + 'px'
+        }
     }
 }
 </script>
@@ -326,7 +333,6 @@ export default {
     z-index: 2019;
     .ruyi-select-options-content{
         animation: slideUpIn .3s;
-        width: 200px;
     }
 }
 

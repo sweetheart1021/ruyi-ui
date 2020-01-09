@@ -3,7 +3,7 @@
  * @Author: lvjing
  * @Date: 2019-12-25 19:18:50
  * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-08 16:33:13
+ * @LastEditTime : 2020-01-09 15:23:19
  -->
 <template>
     <div class="ruyi-checkbox-main">
@@ -177,7 +177,7 @@ export default {
 .icon-hengxian{
     font-size: 12px;
     position: relative;
-    top: -2px;
+    top: -1px;
     color: white;
     font-weight: bold;
 }
