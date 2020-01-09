@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-09 17:26:22
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-09 20:38:58
  -->
 <template>
     <div class="ruyi-select" ref="ruyi-select" style="width: 180px">
@@ -255,7 +255,7 @@ export default {
         this.$emit("parent-set-value", this.value);
         this.$emit("parent-set-multiple", this.multiple);
         this.offsetWidth = {
-            width: this.$refs['ruyi-select'].offsetWidth + 'px'
+            width: this.$refs['ruyi-select'].clientWidth + 'px'
         }
     }
 }
@@ -283,6 +283,7 @@ export default {
     position: relative;
     font-family: inherit;
     line-height: 30px;
+    font-size: 14px;
 }
 
 .ruyi-select-content{

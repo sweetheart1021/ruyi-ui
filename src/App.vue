@@ -2,24 +2,47 @@
  * @Descripttion: ivu-progress-active
  * @Author: lvjing
  * @Date: 2019-12-26 13:53:19
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-09 17:22:59
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-09 21:37:41
  -->
 <template>
     <div>
-        <div style="margin-top: 20px">
+        <div style="margin-top: 20px; width:600px">
             <!-- <ruyi-tree :data='data' :props='defaultProps' show-checkbox node-key='id'></ruyi-tree> -->
-            <ruyi-from inline>
+            <ruyi-from inline :rules="rules" label-width="100px">
                 <ruyi-from-item prop='name' label="活动名称" width='80'>
                     <ruyi-input v-model="forms.name"></ruyi-input>
                 </ruyi-from-item>
-                <ruyi-from-item prop='name' label="活动区域" width='80'>
+                <ruyi-from-item prop='region' label="活动区域" width='80'>
                     <ruyi-select v-model="forms.region" style="width: 100%">
                         <ruyi-option :value='1' label='成都天府大道'></ruyi-option>
                         <ruyi-option :value='2' label='背景中南海' diabled show-diabled></ruyi-option>
                         <ruyi-option :value='3' label='重庆朝天门'></ruyi-option>
                         <ruyi-option :value='4' label='东莞红灯一条街'></ruyi-option>
                     </ruyi-select>
+                </ruyi-from-item>
+                <ruyi-from-item prop='checkbox' label="活动性质" width='80'>
+                    <ruyi-checkbox-group v-model="forms.checkbox" @change="handleCheckboxChange">
+                        <ruyi-checkbox label='橛子' style="margin-right: 30px"></ruyi-checkbox>
+                        <ruyi-checkbox label='苹果' style="margin-right: 30px">这里是苹果</ruyi-checkbox>
+                        <ruyi-checkbox label='xiangjiao' style="margin-right: 30px">这里是香蕉</ruyi-checkbox>
+                        <ruyi-checkbox label='草莓'>这里是草莓</ruyi-checkbox>
+                    </ruyi-checkbox-group>
+                </ruyi-from-item>
+                <ruyi-from-item prop='radio' label="特殊资源" width='80'>
+                    <ruyi-radio-group v-model="forms.radio" @change="handleRadioChange">
+                        <ruyi-radio label='1' style="margin-right: 30px">橛子</ruyi-radio>
+                        <ruyi-radio label='2' style="margin-right: 30px">苹果</ruyi-radio>
+                        <ruyi-radio label='3'>橘子</ruyi-radio>
+                    </ruyi-radio-group>
+                </ruyi-from-item>
+                <ruyi-from-item prop='cascader' label="地区" width='80'>
+                    <ruyi-cascader v-model="forms.cascader" :options='options' style="width: 100%"
+                        @change="handleCascaderChange" :props='props' clearable></ruyi-cascader>
+                </ruyi-from-item>
+                <ruyi-from-item width='80' :label-colon="false">
+                    <ruyi-button type='primary' style="margin-right: 30px">确定</ruyi-button>
+                    <ruyi-button>取消</ruyi-button>
                 </ruyi-from-item>
             </ruyi-from>
         </div>
@@ -605,7 +628,28 @@ export default {
             },
             forms: {
                 name: '这里是输入框',
-                region: 1
+                region: 1,
+                checkbox: [],
+                radio: '',
+                cascader: []
+            },
+            rules: {
+                name: [
+                    { required: true, message: '请输入活动名称', trigger: 'blur' },
+                    { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+                ],
+                region: [
+                    { required: true, message: '请选择活动区域', trigger: 'change' }
+                ],
+                checkbox: [
+                    { required: true, message: '请选择活动性质', trigger: 'change' }
+                ],
+                radio: [
+                    { required: true, message: '请选择特殊资源', trigger: 'change' }
+                ],
+                cascader: [
+                    { required: true, message: '请选择地区', trigger: 'change' }
+                ]
             }
         }
     },

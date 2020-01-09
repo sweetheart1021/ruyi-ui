@@ -2,8 +2,8 @@
  * @Descripttion: 按钮
  * @Author: lvjing
  * @Date: 2019-12-25 09:20:02
- * @LastEditors  : lvjing
- * @LastEditTime : 2019-12-27 14:03:30
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-09 21:27:57
  -->
 <template>
     <button :class="['ruyi-button' ,'ruyi-button-' + type, loading ? 'ruyi-button-loading' : null]"
@@ -54,7 +54,7 @@ export default {
     border-radius: 4px;
     background: none;
     height: 32px;
-    padding: 0 12px;
+    padding: 0 16px;
     box-sizing: border-box;
     line-height: 1;
     border:1px solid #dcdee2;

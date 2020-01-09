@@ -2,14 +2,13 @@
  * @Descripttion: Cascader 连级选择
  * @Author: lvjing
  * @Date: 2020-01-02 17:05:05
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 14:25:52
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-09 21:05:29
  -->
 <template>
     <div class="ruyi-cascader">
-        <popper trigger='click' :options="{'placement': 'bottom-start'}" :disabled='disabled'
-            @hide='handleHide' @show='handlePopperTogger' leave-active-class='hidden' tagName='div'
-            :force-show='forceShow'>
+        <popper trigger='clickToToggle' :options="{'placement': 'bottom-start'}" :disabled='disabled'
+            @hide='handleHide' @show='handlePopperTogger'  tagName='div'>
             <div class="ruyi-cascader-wapper">
                 <div class="ruyi-cascader-list" v-for="(list, i) in ulList" :key="i">
                     <ul class="ruyi-cascader-ul">
@@ -206,9 +205,8 @@ export default {
             this.clearableIcon = !this.clearableIcon;
         },
         handleClearAble(e) {
-            console.log(e);
             // e.stopPropagation();
-            this.forceShow = false;
+            // this.forceShow = false;
             Object.assign(this.$data, this.$options.data());
             this.$emit('input', [])
         }
@@ -235,6 +233,7 @@ export default {
     line-height: 32px;
     border-radius: 4px;
     outline: none;
+    font-size: 14px;
     box-sizing: border-box;
     cursor: pointer;
     color: #515a6e;

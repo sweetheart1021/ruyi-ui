@@ -2,8 +2,8 @@
  * @Descripttion: 输入框
  * @Author: lvjing
  * @Date: 2019-12-25 11:23:09
- * @LastEditors  : lvjing
- * @LastEditTime : 2020-01-03 16:53:47
+ * @LastEditors  : lving
+ * @LastEditTime : 2020-01-09 20:38:30
  -->
 <template>
     <div :class="['ruyi-input-wapper', prepend ? 'ruyi-input-wapper-prepend' : null, append ? 'ruyi-input-wapper-append' : null ]">
@@ -185,6 +185,7 @@ export default {
     white-space: nowrap;
     position: relative;
     font-family: inherit;
+    font-size: 14px;
     transition: border .2s ease-in-out, background .2s ease-in-out, box-shadow .2s ease-in-out;
 }
 .ruyi-input:focus{
