@@ -2,8 +2,8 @@
  * @Descripttion: Cascader 连级选择
  * @Author: lvjing
  * @Date: 2020-01-02 17:05:05
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-09 21:05:29
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-10 10:08:24
  -->
 <template>
     <div class="ruyi-cascader">
@@ -31,7 +31,8 @@
             <div class="ruyi-cascader-input" slot="reference">
                 <input type="text" :class="['ruyi-input',
                     disabled ? 'ruyi-cascader-disabled' : null,
-                    !background ? 'no-background' : null
+                    !background ? 'no-background' : null,
+                    error ? 'ruyi-form-error' : null
                     ]"
                     readonly :placeholder="placeholder"
                     v-model="inputLable">
@@ -127,7 +128,8 @@ export default {
             reverse: false,
             // 显示清空按钮
             clearableIcon: false,
-            forceShow: false
+            forceShow: false,
+            error: true
         }
     },
     methods: {
@@ -181,6 +183,9 @@ export default {
         },
         // 设置默认值
         handleSetValue(val, data) {
+            if (!val.length) {
+                return [this.options]
+            }
             let arr = [];
             let children = [];
             val.forEach((v, i) => {
@@ -292,6 +297,7 @@ export default {
         font-size: 14px;
     }
     .ruyi-cascader-item{
+        line-height: 24px;
         padding: 5px 12px;
         padding-right: 5px;
         color: #515a6e;
@@ -370,5 +376,17 @@ export default {
 }
 .is-reverse{
     transform: rotate(180deg)
+}
+
+
+.ruyi-form-error{
+    border-color: @danger-color;
+}
+.ruyi-form-error:hover{
+    border-color: @danger-color;
+}
+.ruyi-form-error:focus{
+    border-color: @danger-color;
+     box-shadow: 0 0 0 2px rgba(237,64,20,.2);
 }
 </style>

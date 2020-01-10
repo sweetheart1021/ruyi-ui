@@ -2,8 +2,8 @@
  * @Descripttion: 输入框
  * @Author: lvjing
  * @Date: 2019-12-25 11:23:09
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-09 20:38:30
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-10 09:30:03
  -->
 <template>
     <div :class="['ruyi-input-wapper', prepend ? 'ruyi-input-wapper-prepend' : null, append ? 'ruyi-input-wapper-append' : null ]">
@@ -12,7 +12,7 @@
         </div>
         <input
             :type="currentType"
-            :class="['ruyi-input', !background ? 'no-background' : null]"
+            :class="['ruyi-input', !background ? 'no-background' : null, error ? 'ruyi-form-error' : null ]"
             ref="input"
             :placeholder="placeholder"
             :value="currentValue"
@@ -122,7 +122,8 @@ export default {
         return {
             currentValue: this.value,
             currentType: this.type,
-            currentPassword: this.password
+            currentPassword: this.password,
+            error: true
         }
     },
     methods: {
@@ -271,5 +272,13 @@ export default {
     border-left: 0px;
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
+}
+
+.ruyi-form-error{
+    border-color: @danger-color;
+}
+.ruyi-form-error:focus{
+    border-color: @danger-color;
+     box-shadow: 0 0 0 2px rgba(237,64,20,.2);
 }
 </style>

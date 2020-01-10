@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2020-01-09 16:52:13
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-09 21:40:41
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-10 10:32:29
  -->
 <template>
     <div class="ruyi-form-item">
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import AsyncValidator from 'async';
 export default {
     inject: ['ruyi-form'],
     props: {
@@ -38,22 +39,29 @@ export default {
     },
     computed: {
         labelWidth() {
-            return parseInt(this.width) + 'px'
+            if (this.currentWidth) {
+               return this.currentWidth
+            } else if (parseInt(this.width)) {
+                return parseInt(this.width) + 'px'
+            } else {
+                return '80px'
+            }
+
         }
     },
     data() {
         return {
             hide: false,
             currentRules: '',
+            currentWidth: '',
         }
     },
     mounted() {
         this['ruyi-form'].$on("on-rulse", val => {
-            console.log(val[this.prop]);
             this.currentRules = val[this.prop]
         });
         this['ruyi-form'].$on("label-width", val => {
-            console.log(val)
+            this.currentWidth = val;
         })
     }
 }

@@ -2,8 +2,8 @@
  * @Descripttion:
  * @Author: lvjing
  * @Date: 2019-12-26 15:39:00
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-09 20:38:58
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-10 09:33:14
  -->
 <template>
     <div class="ruyi-select" ref="ruyi-select" style="width: 180px">
@@ -33,7 +33,9 @@
             </div>
 
             <div slot="reference"
-                :class="['ruyi-select-content', reverse ? 'ruyi-select-content-fouce' : null]"
+                :class="['ruyi-select-content', reverse && !error ? 'ruyi-select-content-fouce' : null,
+                    error ? 'ruyi-form-error' : null,
+                    error && reverse ? 'ruyi-form-error-fouce' : null]"
                 @mouseenter="handleChangeIcon" @mouseleave="handleChangeIcon">
 
                 <div v-if="multiple && showInput" class="ruyi-select-multiple-wapper">
@@ -193,7 +195,8 @@ export default {
             // 设置popper的宽度
             offsetWidth: {
                 width: '180px'
-            }
+            },
+            error: true
         }
     },
     methods: {
@@ -430,5 +433,16 @@ export default {
         font-size: 13px;
         cursor: pointer;
     }
+}
+
+.ruyi-form-error{
+    border-color: @danger-color;
+}
+.ruyi-form-error:hover{
+    border-color: @danger-color;
+}
+.ruyi-form-error-fouce{
+    border-color: @danger-color;
+    box-shadow: 0 0 0 2px rgba(237,64,20,.2);
 }
 </style>

@@ -2,13 +2,13 @@
  * @Descripttion: form 表单
  * @Author: lvjing
  * @Date: 2020-01-09 16:47:36
- * @LastEditors  : lving
- * @LastEditTime : 2020-01-09 21:39:18
+ * @LastEditors  : lvjing
+ * @LastEditTime : 2020-01-10 10:17:13
  -->
 <template>
-    <div>
+    <form class="ruyi-form">
         <slot></slot>
-    </div>
+    </form>
 </template>
 
 <script>
